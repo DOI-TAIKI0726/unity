@@ -179,7 +179,6 @@ GameObject:
   - component: {fileID: 743517879}
   - component: {fileID: 743517878}
   - component: {fileID: 743517877}
-  - component: {fileID: 743517881}
   m_Layer: 0
   m_Name: switch2
   m_TagString: Untagged
@@ -261,21 +260,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &743517881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743517876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c005d9dfc88323f43bb8e6b80d757d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
 --- !u!1 &746178323
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +467,6 @@ GameObject:
   - component: {fileID: 1314595899}
   - component: {fileID: 1314595898}
   - component: {fileID: 1314595897}
-  - component: {fileID: 1314595896}
   m_Layer: 0
   m_Name: rotateCube1
   m_TagString: Untagged
@@ -491,18 +474,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1314595896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1314595895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3c3415a93f19744ab99464cd57b416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1314595897
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -859,7 +830,6 @@ GameObject:
   - component: {fileID: 1578179790}
   - component: {fileID: 1578179789}
   - component: {fileID: 1578179788}
-  - component: {fileID: 1578179787}
   m_Layer: 0
   m_Name: switch1
   m_TagString: Untagged
@@ -867,21 +837,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1578179787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1578179786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c005d9dfc88323f43bb8e6b80d757d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
 --- !u!65 &1578179788
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -968,7 +923,6 @@ GameObject:
   - component: {fileID: 1599379863}
   - component: {fileID: 1599379862}
   - component: {fileID: 1599379861}
-  - component: {fileID: 1599379860}
   m_Layer: 0
   m_Name: rotateCube3
   m_TagString: Untagged
@@ -976,18 +930,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1599379860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599379859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3c3415a93f19744ab99464cd57b416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1599379861
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1075,7 +1017,6 @@ GameObject:
   - component: {fileID: 1614171212}
   - component: {fileID: 1614171211}
   - component: {fileID: 1614171210}
-  - component: {fileID: 1614171214}
   m_Layer: 0
   m_Name: switch3
   m_TagString: Untagged
@@ -1157,21 +1098,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1614171214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614171209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c005d9dfc88323f43bb8e6b80d757d9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
 --- !u!1 &1904486532
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,7 +1110,6 @@ GameObject:
   - component: {fileID: 1904486536}
   - component: {fileID: 1904486535}
   - component: {fileID: 1904486534}
-  - component: {fileID: 1904486533}
   m_Layer: 0
   m_Name: rotateCube2
   m_TagString: Untagged
@@ -1192,18 +1117,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1904486533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1904486532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3c3415a93f19744ab99464cd57b416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1904486534
 BoxCollider:
   m_ObjectHideFlags: 0
