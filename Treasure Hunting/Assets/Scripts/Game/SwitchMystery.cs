@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwitchMystery : MonoBehaviour
 {
-    public GameObject door;     //ドアのオブジェクト
+    private GameObject door;     //ドアのオブジェクト
     float g, b;                 //マテリアルの値
     Renderer render;            //レンダラー
 
@@ -13,6 +13,7 @@ public class SwitchMystery : MonoBehaviour
     {
         //レンダラーの情報の取得
         render = GetComponent<Renderer>();
+        door = GameObject.Find("door");
 
         //g,bの値をレンダラーから取得
         g = render.material.color.g;

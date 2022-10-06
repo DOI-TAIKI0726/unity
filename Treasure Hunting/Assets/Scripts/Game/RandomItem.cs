@@ -9,7 +9,7 @@ public class RandomItem : MonoBehaviour
     float count = 0.0f;         //カウント
     float itemcount = 0.0f;     //アイテム表示時間
     bool roulette = false;      //ルーレット中かどうか
-    public GameObject photo;    //画像のオブジェクト
+    private GameObject photo;    //画像のオブジェクト
     Image Img;                  //Image
     public Sprite buff;         //バフのスプライト
     public Sprite debuff;       //デバフのスプライト
@@ -19,6 +19,7 @@ public class RandomItem : MonoBehaviour
     void Start()
     {
         //Imageの情報の取得
+        photo = GameObject.Find("Image");
         Img = photo.GetComponent<Image>();
     }
 

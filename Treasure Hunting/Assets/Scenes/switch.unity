@@ -339,7 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ac2aae2a8eb714aa61791da8e7a3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 1769278068}
 --- !u!65 &1398752349
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -510,7 +509,7 @@ GameObject:
   - component: {fileID: 1769278070}
   - component: {fileID: 1769278069}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
