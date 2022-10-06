@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    // Start is called before the first frame update
     void Start()
     {
-        int chinko = 1;
-        if (chinko == 1)
-        {
-            chinko = 2;
-        }
+        
     }
 
+    // Update is called once per frame
     void Update()
     {
         
