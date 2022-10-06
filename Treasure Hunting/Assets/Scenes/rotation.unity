@@ -225,12 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1baf076b37c5b4aa4546435ee843fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchName1: switch1
-  switchName2: switch2
-  switchName3: switch3
-  objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
+  switchName1: switch2
+  objName1: rotateCube2
 --- !u!1 &597965095
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,11 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchName1: switch1
-  switchName2: switch2
-  switchName3: switch3
   objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
 --- !u!65 &597965097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -577,12 +569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1baf076b37c5b4aa4546435ee843fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchName1: switch1
-  switchName2: switch2
-  switchName3: switch3
-  objName1: rotateCube1
-  objName2: rotateCube2
-  objName3: rotateCube3
+  switchName1: switch3
+  objName1: rotateCube3
 --- !u!65 &1085092804
 BoxCollider:
   m_ObjectHideFlags: 0
