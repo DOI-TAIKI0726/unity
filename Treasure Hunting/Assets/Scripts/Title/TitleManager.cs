@@ -27,16 +27,21 @@ public class TitleManager : MonoBehaviour
     private GameObject pak;
     //FadePanel
     private GameObject fadePanel;
+    //QuitPanel
+    private GameObject quitPanel;
+
     //タイトルロゴの初期位置
     private float defaultPos = 700.0f;
     //FadepanelのImage
     private Image panelImage;
     //パネルの色管理(赤、緑、青、透明度)
-    public float red, green, blue, alpha;
+    private float red, green, blue, alpha;
     //タイトルロゴが止まったかどうか
-    private bool isStop = false;
+    private bool isStopTitleLogo = false;
     //press any keyがtrueになった状態でキーを押したら
     private bool isInputKey = false;
+    //Quitpanelが表示されているか
+    private bool isQuitPanel = false;
 
     void Start()
     {
@@ -45,9 +50,12 @@ public class TitleManager : MonoBehaviour
         titlelogo = GameObject.Find("Titlelogo");
         pak = GameObject.Find("press any key");
         fadePanel = GameObject.Find("FadePanel");
+        quitPanel = GameObject.Find("QuitPanel");
 
-        //最初はpress any keyを見えなくする
+        //\press any keyを非アクティブにしておく
         pak.SetActive(false);
+        //QuitPanelを非アクティブにしておく
+        quitPanel.SetActive(false);
         //タイトルロゴを初期位置に設定
         titlelogo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, defaultPos);
         //FadePanelのCollarを取得
@@ -62,45 +70,59 @@ public class TitleManager : MonoBehaviour
 
     void Update()
     {
-        if (isStop == false)
+        SwitchQuitPanel();
+
+        //QuitPanelが非アクティブなら
+        if(quitPanel.activeSelf == false)
         {
-            //停止座標Yにタイトルロゴがないなら
-            if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y < stopTitlelogoPosY)
+            //タイトルロゴが止まっていないなら
+            if (isStopTitleLogo == false)
             {
-                titlelogo.transform.Translate(0.0f, moveTitlelogoSpeed, 0.0f);
-            }
-            if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y > stopTitlelogoPosY)
-            {
-                titlelogo.transform.Translate(0.0f, -moveTitlelogoSpeed, 0.0f);
-            }
+                //停止座標Yにタイトルロゴがないなら
+                if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y < stopTitlelogoPosY)
+                {
+                    titlelogo.transform.Translate(0.0f, moveTitlelogoSpeed, 0.0f);
+                }
+                if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y > stopTitlelogoPosY)
+                {
+                    titlelogo.transform.Translate(0.0f, -moveTitlelogoSpeed, 0.0f);
+                }
 
-            //移動中に何かキーを押したら
-            if (Input.anyKeyDown)
-            {
-                titlelogo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, stopTitlelogoPosY);
-            }
+                //移動中に何かキーを押したら
+                if (Input.anyKeyDown)
+                {
+                    if (Input.GetKey(KeyCode.Escape) == false)
+                    {
+                        titlelogo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, stopTitlelogoPosY);
+                    }
+                }
 
-            //ロゴが停止位置に来たら
-            if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y <= stopTitlelogoPosY)
-            {
-                isStop = true;
+                //タイトルロゴが停止位置に来たら
+                if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y <= stopTitlelogoPosY)
+                {
+                    isStopTitleLogo = true;
+                }
             }
         }
 
-        //ロゴが止まったなら
-        if (isStop == true)
+        //タイトルロゴが止まったなら
+        if (isStopTitleLogo == true)
         {
             //アクティブにする
             pak.SetActive(true);
         }
 
         //press any keyがアクティブなら
-        if(pak.activeSelf == true)
+        if (pak.activeSelf == true)
         {
             //なにかキーを押したら
-            if(Input.anyKeyDown)
+            if (Input.anyKey)
             {
-                isInputKey = true;
+                //押したキーescapeキーじゃないなら
+                if (Input.GetKey(KeyCode.Escape) == false)
+                {
+                    isInputKey = true;
+                }
             }
         }
 
@@ -109,17 +131,64 @@ public class TitleManager : MonoBehaviour
             //アルファ値を加算していく
             alpha += fadeSpeed;
             SetCollar();
-        }
 
-        if(panelImage.color.a >= 1)
+            //アルファ値が1を超えたら(完全に透過されなくなったら)
+            if (panelImage.color.a >= 1)
+            {
+                SceneManager.LoadScene("Game");
+            }
+        }
+    }
+
+    //QuitPanel表示非表示切り替え
+    public void SwitchQuitPanel()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Game");
+            if (quitPanel.activeSelf == false)
+            {
+                //QuitPanelをアクティブにする
+                quitPanel.SetActive(true);
+                return;
+            }
+
+            //QuitPanelがアクティブなら
+            if (quitPanel.activeSelf == true)
+            {
+                //QuitPanelを非アクティブにする
+                quitPanel.SetActive(false);
+                return;
+            }
         }
     }
 
     //Collarの変更を反映する
     public void SetCollar()
     {
+        //変えた色の反映
         panelImage.color = new Color(red, green, blue, alpha);
+    }
+
+    //QuitButtonを押したら
+    public void SelectQuitButton()
+    {
+        //SE
+
+        //ゲームの終了
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+        UnityEngine.Application.Quit();
+#endif
+    }
+
+    //BackButton
+    public void SelectBackbutton()
+    {
+        //SE
+
+        //QuitPanelを閉じる
+        quitPanel.SetActive(false);
+        isQuitPanel = false;
     }
 }
