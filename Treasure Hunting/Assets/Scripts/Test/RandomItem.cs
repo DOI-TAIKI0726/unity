@@ -5,23 +5,23 @@ using UnityEngine.UI;
 
 public class RandomItem : MonoBehaviour
 {
-    float rnd = 0.0f;                //乱数
-    int type = 0;                    //バフデバフの種類
-    float count = 0.0f;              //アイテムが決まるまでの時間
-    float itemcount = 0.0f;          //アイテムの表示時間
-    bool roulette = false;           //ルーレット中かどうか
-    Image Img;                       //バフデバフのImage
+    private　float rnd = 0.0f;               //乱数
+    private int type = 0;                    //バフデバフの種類
+    private float count = 0.0f;              //アイテムが決まるまでの時間
+    private float itemcount = 0.0f;          //アイテムの表示時間
+    private bool roulette = false;           //ルーレット中かどうか
+    private Image Img;                       //バフデバフのImage
     [SerializeField]
-    private Sprite[] buff = null;    //バフのスプライト
+    private Sprite[] buff = null;            //バフのスプライト
     [SerializeField]
-    private Sprite[] debuff = null;  //デバフのスプライト
-    float data = 0.1f;               //ルーレット中の切り替えの間隔
+    private Sprite[] debuff = null;          //デバフのスプライト
+    private float data = 0.1f;               //ルーレット中の切り替えの間隔
 
     // Start is called before the first frame update
     void Start()
     {
         //Imageの情報の取得
-        Img = GameObject.Find("Image").GetComponent<Image>();
+        Img = GameObject.Find("BuffDebuff").GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -128,10 +128,12 @@ public class RandomItem : MonoBehaviour
             //2秒後にアイテム非表示
             if (itemcount > 0.0f)
             {
+                //表示時間の減算
                 itemcount -= Time.deltaTime;
             }
             else
             {
+                //アイテムを非表示
                 Img.enabled = false;
             }
         }

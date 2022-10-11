@@ -13,6 +13,7 @@ public class ItemCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //チェック用テキストの情報を取得
         CheckText = GameObject.Find("CheckText").GetComponent<Text>();
     }
 
@@ -24,10 +25,12 @@ public class ItemCheck : MonoBehaviour
         //ここから
         if(Input.GetKeyDown(KeyCode.Tab))
         {
+            //テキスト表示
             CheckText.enabled = true;
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
+            //テキスト非表示
             CheckText.enabled = false;
         }
         //ここまで
@@ -43,6 +46,7 @@ public class ItemCheck : MonoBehaviour
         //加算
         Item += Data;       //宝物を吐き出す場合
         return Item;
+
         //Item++;           //宝物を吐き出さない場合
     }
 }

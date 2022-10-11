@@ -34,21 +34,25 @@ public class Checkplayer : MonoBehaviour
         
         //チェック用
         //スペース押したら宝物を吐き出す
+        //吐き出さない場合はいらない処理
+        //ここから
         if(Input.GetKeyDown(KeyCode.Space))
         {
             //アイテム数が0より大きい場合
             if(ItemCount>0)
             {
                 //減算
-                ItemCount = GameObject.Find("GameObject").GetComponent<ItemCheck>().Add(-1);
+                ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
 
                 //アイテムの生成
                 Vector3 position = new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z);
                 GameObject NewItem = Instantiate(Item, position, transform.rotation);
             }
         }
+        //ここまで
     }
 
+    //プレイヤースクリプトにコピーしたい処理
     //当たり判定
     void OnCollisionEnter(Collision col)
     {
@@ -59,7 +63,7 @@ public class Checkplayer : MonoBehaviour
             Destroy(col.gameObject);
 
             //加算
-            ItemCount = GameObject.Find("GameObject").GetComponent<ItemCheck>().Add(1);
+            ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(1);
         }
     }
 }

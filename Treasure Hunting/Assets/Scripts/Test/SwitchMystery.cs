@@ -5,8 +5,8 @@ using UnityEngine;
 public class SwitchMystery : MonoBehaviour
 {
     private GameObject door;     //ドアのオブジェクト
-    float g, b;                 //マテリアルの値
-    Renderer render;            //レンダラー
+    private float g, b;                 //マテリアルの値
+    private Renderer render;            //レンダラー
 
     // Start is called before the first frame update
     void Start()
@@ -28,13 +28,13 @@ public class SwitchMystery : MonoBehaviour
     }
 
     //接地判定
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
         //当たったオブジェクトのタグ
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "Switch") 
         {
             //アクティブの切り替え
-            door.SetActive(!door.activeSelf);
+            door.SetActive(false);
             //g,bに0を代入
             g = 0;
             b = 0;
@@ -44,10 +44,10 @@ public class SwitchMystery : MonoBehaviour
     void OnTriggerExit(Collider col)
     {
         //当たったオブジェクトのタグ
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" || col.gameObject.tag == "Switch")
         {
             //アクティブの切り替え
-            door.SetActive(!door.activeSelf);
+            door.SetActive(true);
             //g,bに1を代入
             g = 1;
             b = 1;
