@@ -17,11 +17,11 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rigidBody = this.GetComponent<Rigidbody>();
+        rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
 
     }
 
-    void FixeUpdate()
+    void FixedUpdate()
     {
         //移動キーの入力を取得
         //縦
