@@ -21,7 +21,7 @@ public class RandomItem : MonoBehaviour
     void Start()
     {
         //Imageの情報の取得
-        Img = GameObject.Find("BuffDebuff").GetComponent<Image>();
+        Img = GameObject.Find("BuffImage").GetComponent<Image>();
     }
 
     // Update is called once per frame

@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 1881999774}
   - component: {fileID: 1881999773}
   m_Layer: 5
-  m_Name: BuffDebuff
+  m_Name: BuffImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
