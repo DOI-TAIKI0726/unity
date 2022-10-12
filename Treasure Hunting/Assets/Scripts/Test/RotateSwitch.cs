@@ -1,73 +1,57 @@
-﻿using System.Collections;
+﻿//回転するスイッチクラス
+//Author : 藤田育昂
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateSwitch : MonoBehaviour
 {
-    //回転するモデル
-    GameObject obj1;
-    
+    //回転するモデル名格納先
+    private GameObject rotateObj;
 
-    //スイッチ名
-    [SerializeField]
-    private string switchName1 = "switch1";
-    
     //回転するオブジェクトの名前
     [SerializeField]
-    private string objName1 = "rotateCube1";
+    private string rotateObjName = "rotateCube";
 
     void Start()
     {
-        //モデル名取得
-        obj1 = GameObject.Find(objName1);
+        //回転させるモデル名取得
+        rotateObj = GameObject.Find(rotateObjName);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    ////当たり続けている間
-    void OnTriggerStay(Collider collider)
+    //プレイヤーと当たり続けている間の判定
+    //void OnTriggerStay(Collider collider)
+    //{
+    //    //プレイヤータグついたやつと当たっているとき
+    //    if (collider.gameObject.tag == "Player")
+    //    {
+    //        //Spaceボタンが入力
+    //        if (Input.GetKeyDown(KeyCode.Space))
+    //        {
+    //            //指定されてるObjctを90°回転する
+    //            rotateObj.transform.Rotate(0, 90, 0);
+    //        }
+    //    }
+    //}
+
+    void OnCollisionStay(Collision col)
     {
-        if (collider.gameObject.tag == "Player")
+        //プレイヤータグついたやつと当たっているとき
+        if (col.gameObject.tag == "Player")
         {
+            //Spaceボタンが入力
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                //回転させるスイッチと接触してるとき
-                if (gameObject.name == switchName1)
-                {
-                    obj1.transform.Rotate(0, 90, 0);
-                }
-                
+                //指定されてるObjctを90°回転する
+                rotateObj.transform.Rotate(0, 90, 0);
             }
         }
     }
-
-
-    //void OnCollisionStay(Collision collision)
-    //{
-    //    if(collision.gameObject.tag == "Player")
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.Space))
-    //        {
-    //            //回転させるスイッチと接触してるとき
-    //            if (gameObject.name == switchName1)
-    //            {
-    //                obj1.transform.Rotate(0, 90, 0);
-    //            }
-    //            else if (gameObject.name == switchName2)
-    //            {
-    //                obj2.transform.Rotate(0, 90, 0);
-    //            }
-    //            else if (gameObject.name == switchName3)
-    //            {
-    //                obj3.transform.Rotate(0, 90, 0);
-    //            }
-    //        }
-    //    }
-    //
-    //    
-    //}
 }

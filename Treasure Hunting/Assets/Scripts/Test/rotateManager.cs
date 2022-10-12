@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿//回転するオブジェクトの向き管理クラス
+//Auther：藤田育昂
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class rotateManager : MonoBehaviour
 {
-    GameObject obj1;
-    GameObject obj2;
-    GameObject obj3;
+    //回転するオブジェクト格納先
+    private GameObject obj1;
+    private GameObject obj2;
+    private GameObject obj3;
 
 
     //回転させるオブジェクト名
@@ -21,6 +24,7 @@ public class rotateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //回転するオブジェクト情報取得
         obj1 = GameObject.Find(objName1);
         obj2 = GameObject.Find(objName2);
         obj3 = GameObject.Find(objName3);
