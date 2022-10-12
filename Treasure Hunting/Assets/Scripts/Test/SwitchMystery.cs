@@ -5,14 +5,15 @@ using UnityEngine;
 public class SwitchMystery : MonoBehaviour
 {
     private GameObject door;     //ドアのオブジェクト
-    private float g, b;                 //マテリアルの値
-    private Renderer render;            //レンダラー
+    private float g, b;          //マテリアルの値
+    private Renderer render;     //レンダラー
 
     // Start is called before the first frame update
     void Start()
     {
         //レンダラーの情報の取得
         render = GetComponent<Renderer>();
+        //ドアのオブジェクトの情報取得
         door = GameObject.Find("door");
 
         //g,bの値をレンダラーから取得
