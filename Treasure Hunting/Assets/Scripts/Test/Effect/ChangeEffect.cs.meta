@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0b71f00c2758ed44f8c64d432da3dea1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - buff: {fileID: 6508439642068166137, guid: 34805769565c2a549beda50d5b782485, type: 3}
+  - confetti: {fileID: 4752718158621254898, guid: 1707722adeca41b428fb46d0ccaa700b,
+      type: 3}
+  - Kirakira: {fileID: 5083168517605524871, guid: 04bce11e219941044adb557a086e22eb,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
