@@ -1,14 +1,22 @@
-﻿using System.Collections;
+﻿//各シーンの共通処理
+//Author:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//=======================
+//オブジェクトに入れない
+//=======================
+
 public class Manager : MonoBehaviour
 {
-    //QUitPanel
+    //QuitPanel
     [System.NonSerialized]
     public GameObject quitPanel;
 
-    //Managerでの初期化等処理
+    //各Managerでの初期化等処理
     public void StartManager()
     {
         //各要素にアクセス
@@ -27,6 +35,7 @@ public class Manager : MonoBehaviour
             {
                 //QuitPanelをアクティブにする
                 quitPanel.SetActive(true);
+
                 return;
             }
 
@@ -35,6 +44,7 @@ public class Manager : MonoBehaviour
             {
                 //QuitPanelを非アクティブにする
                 quitPanel.SetActive(false);
+
                 return;
             }
         }

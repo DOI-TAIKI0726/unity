@@ -86,9 +86,15 @@ public class TitleManager : Manager
                 //移動中に何かキーを押したら
                 if (Input.anyKeyDown)
                 {
+                    //押したキーがescapeじゃないなら
                     if (Input.GetKey(KeyCode.Escape) == false)
                     {
-                        titlelogo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, stopTitlelogoPosY);
+                        //マウスの左右クリックのどちらも押されていないなら
+                        if (Input.GetMouseButton(0) == false && Input.GetMouseButton(1) == false)
+                        {
+                            //タイトルロゴのPosYをstopTitlelogoPosYと同じにする
+                            titlelogo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, stopTitlelogoPosY);
+                        }
                     }
                 }
 
@@ -116,7 +122,11 @@ public class TitleManager : Manager
                 //押したキーescapeキーじゃないなら
                 if (Input.GetKey(KeyCode.Escape) == false)
                 {
-                    isInputKey = true;
+                    //マウスの左右クリックのどちらも押されていないなら
+                    if (Input.GetMouseButton(0) == false && Input.GetMouseButton(1) == false)
+                    {
+                        isInputKey = true;
+                    }
                 }
             }
         }
