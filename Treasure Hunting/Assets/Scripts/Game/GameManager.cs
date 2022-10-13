@@ -1,18 +1,26 @@
-﻿using System.Collections;
+﻿//ゲームシーン管理クラス
+//Author:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Manager
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        StartManager();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        SwitchQuitPanel();
+
+        //QuitPanelが非アクティブなら
+        if (quitPanel.activeSelf == false)
+        {
+
+        }
     }
 }

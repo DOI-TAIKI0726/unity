@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : Manager
 {
     //タイトルロゴの移動速度
     [SerializeField]
@@ -27,8 +27,6 @@ public class TitleManager : MonoBehaviour
     private GameObject pak;
     //FadePanel
     private GameObject fadePanel;
-    //QuitPanel
-    private GameObject quitPanel;
 
     //タイトルロゴの初期位置
     private float defaultPos = 700.0f;
@@ -40,8 +38,6 @@ public class TitleManager : MonoBehaviour
     private bool isStopTitleLogo = false;
     //press any keyがtrueになった状態でキーを押したら
     private bool isInputKey = false;
-    //Quitpanelが表示されているか
-    private bool isQuitPanel = false;
 
     void Start()
     {
@@ -50,7 +46,7 @@ public class TitleManager : MonoBehaviour
         titlelogo = GameObject.Find("Titlelogo");
         pak = GameObject.Find("press any key");
         fadePanel = GameObject.Find("FadePanel");
-        quitPanel = GameObject.Find("QuitPanel");
+        StartManager();
 
         //\press any keyを非アクティブにしておく
         pak.SetActive(false);
@@ -65,7 +61,6 @@ public class TitleManager : MonoBehaviour
         green = panelImage.color.g;
         blue = panelImage.color.b;
         alpha = panelImage.color.a;
-
     }
 
     void Update()
@@ -140,55 +135,11 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    //QuitPanel表示非表示切り替え
-    public void SwitchQuitPanel()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (quitPanel.activeSelf == false)
-            {
-                //QuitPanelをアクティブにする
-                quitPanel.SetActive(true);
-                return;
-            }
-
-            //QuitPanelがアクティブなら
-            if (quitPanel.activeSelf == true)
-            {
-                //QuitPanelを非アクティブにする
-                quitPanel.SetActive(false);
-                return;
-            }
-        }
-    }
 
     //Collarの変更を反映する
     public void SetCollar()
     {
         //変えた色の反映
         panelImage.color = new Color(red, green, blue, alpha);
-    }
-
-    //QuitButtonを押したら
-    public void SelectQuitButton()
-    {
-        //SE
-
-        //ゲームの終了
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-        UnityEngine.Application.Quit();
-#endif
-    }
-
-    //BackButton
-    public void SelectBackbutton()
-    {
-        //SE
-
-        //QuitPanelを閉じる
-        quitPanel.SetActive(false);
-        isQuitPanel = false;
     }
 }
