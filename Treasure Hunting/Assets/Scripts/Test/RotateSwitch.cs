@@ -8,25 +8,31 @@ using UnityEngine;
 public class RotateSwitch : MonoBehaviour
 {
     //プレイヤーオブジェクト情報格納先
-    private GameObject player_Obj;
+    private GameObject player_obj;
     //スイッチオブジェクトの子(回転するオブジェクト)情報格納
-    private GameObject Child;
+    private GameObject rotate_obj;
 
     private rotateManager rotManager;//クリア判定取得用
-    private bool bUsedButton;//スペースキーが押されたかの判定
-    
+    private bool bUsedButton;//左クリックが押されたかの判定
+
+
+    //テスト用,後で消す
+    [SerializeField]
+    private Vector3 vec;
+
 
     void Start()
     {
+        
         //クリア判定取得のために親オブジェクト情報取得
         GameObject objParent = transform.parent.gameObject;
         rotManager = objParent.GetComponent<rotateManager>();
 
         //プレイヤーの情報をPlayertagから取得
-        player_Obj = GameObject.FindGameObjectWithTag("Player");
+        player_obj = GameObject.FindGameObjectWithTag("Player");
         
-        //スイッチオブジェクトの子(回転するオブジェクト)の情報取得
-        Child = transform.GetChild(0).gameObject;
+        //回転するobjの情報はスイッチobjの子から取得 
+        rotate_obj = transform.GetChild(0).gameObject;
 
     }
 
@@ -48,7 +54,7 @@ public class RotateSwitch : MonoBehaviour
         while (Cnt < 90 / speed)
         {
             Cnt++;
-            Child.transform.Rotate(0, speed, 0);
+            rotate_obj.transform.Rotate(0, speed, 0);
             yield return null;
         }
         bUsedButton = false;
@@ -64,7 +70,7 @@ public class RotateSwitch : MonoBehaviour
             //スイッチオブジェクトがプレイヤータグついたやつと当たった
             if (col.gameObject.tag == "Player")
             {
-                //Spaceボタンが入力
+                //左クリックボタンが入力
                 if (Input.GetMouseButton(0) && bUsedButton == false)
                 {
                     bUsedButton = true;

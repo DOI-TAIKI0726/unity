@@ -13,6 +13,7 @@ public class rotateManager : MonoBehaviour
 
     //正解の向き格納先
     private Vector3 TrueVec;
+
      private enum VectorType
     {
         foward,back,left,right,
@@ -28,7 +29,7 @@ public class rotateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //スイッチOBJの数分の配列を確保
+        //スイッチobjの数分の配列を確保
         GameObject[] childSwitchObj = new GameObject[transform.childCount];
 
         //回転するオブジェクトの数文配列を確保
@@ -57,11 +58,6 @@ public class rotateManager : MonoBehaviour
         {
             CheckRotate();
         }
-        else
-        {
-            Debug.Log("クリア");
-        }
-        
     }
 
     //回転OBJの向きが揃っているかチェック
@@ -72,12 +68,17 @@ public class rotateManager : MonoBehaviour
         //正解の向きに回転するOBJが向いているとき
         while(childRotateObj[nCnt].transform.forward == TrueVec)
         {
-            nCnt++;
+            
             //正解の方向に回転OBJが全て揃っていたら
-            if(nCnt >= transform.childCount-1)
+            if (nCnt >= transform.childCount-1)
             {
+                Debug.Log("クリア");
                 bEnd = true;
                 break;
+            }
+            else
+            {
+                nCnt++;
             }
         }
     }
