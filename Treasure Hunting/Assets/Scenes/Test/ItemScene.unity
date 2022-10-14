@@ -570,6 +570,8 @@ MonoBehaviour:
   debuff:
   - {fileID: 21300000, guid: c523981906d2fac45b7a7450eaefdd6c, type: 3}
   - {fileID: 21300000, guid: 114f61449edeb314eb765006ffd2ae9a, type: 3}
+  max: 100
+  buffratio: 0.6
 --- !u!4 &2024666022
 Transform:
   m_ObjectHideFlags: 0
