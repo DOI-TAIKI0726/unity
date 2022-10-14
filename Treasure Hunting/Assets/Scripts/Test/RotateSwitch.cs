@@ -55,8 +55,6 @@ public class RotateSwitch : MonoBehaviour
         
     }
 
-    
-
     //プレイヤーと当たり続けている間の判定
     void OnCollisionStay(Collision col)
     {

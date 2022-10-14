@@ -44,24 +44,9 @@ public class rotateManager : MonoBehaviour
             childRotateObj[nCnt] = childSwitchObj[nCnt].transform.GetChild(0).gameObject;
         }
 
-        //正解の向き設定
-        if(vecType ==VectorType.foward)
-        {
-            TrueVec = new Vector3(0,0,1);
-        }
-        else if(vecType == VectorType.back)
-        {
-            TrueVec = new Vector3(0, 0, -1);
-        }
-        else if(vecType == VectorType.left)
-        {
-            TrueVec = new Vector3(-1, 0, 0);
-        }
-        else if(vecType == VectorType.right)
-        {
-            TrueVec = new Vector3(1, 0, 0);
-        }
-
+        //正解の向きを設定
+        SetVector(vecType);
+        
     }
 
     // Update is called once per frame
@@ -94,6 +79,31 @@ public class rotateManager : MonoBehaviour
                 bEnd = true;
                 break;
             }
+        }
+    }
+
+    void SetVector(VectorType vec)
+    {
+        
+        if (vec == VectorType.foward)
+        {
+            //正面
+            TrueVec = new Vector3(0, 0, 1);
+        }
+        else if (vec == VectorType.back)
+        {
+            //後ろ
+            TrueVec = new Vector3(0, 0, -1);
+        }
+        else if (vec == VectorType.left)
+        {
+            //左
+            TrueVec = new Vector3(-1, 0, 0);
+        }
+        else if (vec == VectorType.right)
+        {
+            //右
+            TrueVec = new Vector3(1, 0, 0);
         }
     }
 }
