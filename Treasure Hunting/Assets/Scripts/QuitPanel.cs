@@ -10,14 +10,14 @@ using UnityEngine;
 //オブジェクトに入れない
 //=======================
 
-public class Manager : MonoBehaviour
+public class QuitPanel : MonoBehaviour
 {
     //QuitPanel
     [System.NonSerialized]
     public GameObject quitPanel;
 
     //各Managerでの初期化等処理
-    public void StartManager()
+    public void StartQuitPanel()
     {
         //各要素にアクセス
         quitPanel = GameObject.Find("QuitPanel");
