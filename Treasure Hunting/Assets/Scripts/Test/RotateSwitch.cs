@@ -16,15 +16,10 @@ public class RotateSwitch : MonoBehaviour
     private bool bUsedButton;//左クリックが押されたかの判定
 
 
-    //テスト用,後で消す
-    [SerializeField]
-    private Vector3 vec;
-
-
     void Start()
     {
         
-        //クリア判定取得のために親オブジェクト情報取得
+        //クリア判定取得のために親オブジェクト(rotateManager)情報取得
         GameObject objParent = transform.parent.gameObject;
         rotManager = objParent.GetComponent<rotateManager>();
 
@@ -57,8 +52,11 @@ public class RotateSwitch : MonoBehaviour
             rotate_obj.transform.Rotate(0, speed, 0);
             yield return null;
         }
-        bUsedButton = false;
         
+        //向きが揃っているかチェック
+        rotManager.CheckRotate();
+
+        bUsedButton = false;
     }
 
     //プレイヤーと当たり続けている間の判定
