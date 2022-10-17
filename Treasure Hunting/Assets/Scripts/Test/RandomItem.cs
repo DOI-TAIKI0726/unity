@@ -7,15 +7,24 @@ public class RandomItem : MonoBehaviour
 {
     private　float rnd = 0.0f;               //乱数
     private int type = 0;                    //バフデバフの種類
+    private float data = 0.1f;               //ルーレット中の切り替えの間隔
     private float count = 0.0f;              //アイテムが決まるまでの時間
     private float itemcount = 0.0f;          //アイテムの表示時間
     private bool roulette = false;           //ルーレット中かどうか
     private Image Img;                       //バフデバフのImage
+
+    //バフのスプライト
     [SerializeField]
-    private Sprite[] buff = null;            //バフのスプライト
+    private Sprite[] buff = null;
+    //デバフのスプライト
     [SerializeField]
-    private Sprite[] debuff = null;          //デバフのスプライト
-    private float data = 0.1f;               //ルーレット中の切り替えの間隔
+    private Sprite[] debuff = null;
+    //ルーレットの最大値
+    [SerializeField]
+    private float max = 0.0f;
+    //バフの割合,1.0～0.0の間
+    [SerializeField]
+    private float buffratio = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +41,7 @@ public class RandomItem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             //ルーレット中じゃない場合
-            if (!roulette)
+            if (!roulette&&!Img.enabled)
             {
                 //ルーレット中に切り替える
                 roulette = true;
@@ -65,20 +74,21 @@ public class RandomItem : MonoBehaviour
                 data -= Time.deltaTime;
 
                 //表示の切り替え処理
-                if (data <= 0f)
+                if (data <= 0.0f)
                 {
                     //バフデバフ表示の乱数を設定
-                    rnd = Random.Range(0f, 1f);
+                    //0は固定
+                    rnd = Random.Range(0.0f, max);
 
                     //デバフが表示されていた場合
                     //バフに切り替える
-                    if (rnd > 0 && rnd <= 0.5)
+                    if (rnd > 0 && rnd <= max * buffratio)
                     {
                         //表示するバフの種類を決定
                         type = Random.Range(0, buff.Length);
                         //Imageにバフのスプライトを代入
                         Img.sprite = buff[type];
-                        Debug.Log("buff");
+                        //Debug.Log("buff");
                     }
                     //バフが表示されていた場合
                     //デバフに切り替える
@@ -88,7 +98,7 @@ public class RandomItem : MonoBehaviour
                         type = Random.Range(0, debuff.Length);
                         //Imageにデバフのスプライトを代入
                         Img.sprite = debuff[type];
-                        Debug.Log("debuff");
+                        //Debug.Log("debuff");
                     }
 
                     //切り替えの間隔を設定
@@ -101,12 +111,16 @@ public class RandomItem : MonoBehaviour
                 //ルーレット終了
                 roulette = false;
                 //乱数の設定
-                rnd = Random.Range(0.1f, 10.0f);
+                //0は固定
+                rnd = Random.Range(0.0f, max);
 
                 //バフ
-                if (rnd >= 0.1f && rnd <= 6.0f)
+                //0は固定
+                //buffratioの値によって確率が変わる
+                if (rnd >= 0.0f && rnd <= max * buffratio)
                 {
                     //バフの種類を決定
+                    //0は固定
                     type = Random.Range(0, buff.Length);
                     Img.sprite = buff[type];
                 }
@@ -114,6 +128,7 @@ public class RandomItem : MonoBehaviour
                 else
                 {
                     //デバフの種類を決定
+                    //0は固定
                     type = Random.Range(0, debuff.Length);
                     Img.sprite = debuff[type];
                 }
@@ -136,6 +151,31 @@ public class RandomItem : MonoBehaviour
                 //アイテムを非表示
                 Img.enabled = false;
             }
+        }
+    }
+
+    //ルーレットの開始の処理
+    public void RouletteStart()
+    {
+        //ルーレット中じゃない場合
+        if (!roulette&&!Img.enabled)
+        {
+            //ルーレット中に切り替える
+            roulette = true;
+
+            //アイテムの表示
+            Img.enabled = true;
+
+            //ルーレットの始まりはbuff[0]始まり固定
+            Img.sprite = buff[0];
+
+            //アイテムが決まるまでの時間を設定
+            count = 2.0f;
+            //アイテム決定後の表示時間の設定
+            itemcount = 2.0f;
+
+            //確認用
+            Debug.Log("ok");
         }
     }
 }

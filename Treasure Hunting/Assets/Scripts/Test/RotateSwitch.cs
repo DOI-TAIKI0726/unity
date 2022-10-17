@@ -7,50 +7,76 @@ using UnityEngine;
 
 public class RotateSwitch : MonoBehaviour
 {
-    //回転するモデル名格納先
-    private GameObject rotateObj;
+    //プレイヤーオブジェクト情報格納先
+    private GameObject player_obj;
+    //スイッチオブジェクトの子(回転するオブジェクト)情報格納
+    private GameObject rotate_obj;
 
-    //回転するオブジェクトの名前
+    private rotateManager rotManager;//クリア判定取得用
+    private bool bUsedButton;//左クリックが押されたかの判定
+
+
+    //テスト用,後で消す
     [SerializeField]
-    private string rotateObjName = "rotateCube";
+    private Vector3 vec;
+
 
     void Start()
     {
-        //回転させるモデル名取得
-        rotateObj = GameObject.Find(rotateObjName);
+        
+        //クリア判定取得のために親オブジェクト情報取得
+        GameObject objParent = transform.parent.gameObject;
+        rotManager = objParent.GetComponent<rotateManager>();
+
+        //プレイヤーの情報をPlayertagから取得
+        player_obj = GameObject.FindGameObjectWithTag("Player");
+        
+        //回転するobjの情報はスイッチobjの子から取得 
+        rotate_obj = transform.GetChild(0).gameObject;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    //徐々に回転させる処理
+    IEnumerator Rotate()
+    {
+        //回転速度
+        float speed = 1f;
+        //回転カウント
+        int Cnt = 0;
+
+        //90回カウントする
+        while (Cnt < 90 / speed)
+        {
+            Cnt++;
+            rotate_obj.transform.Rotate(0, speed, 0);
+            yield return null;
+        }
+        bUsedButton = false;
+        
     }
 
     //プレイヤーと当たり続けている間の判定
-    //void OnTriggerStay(Collider collider)
-    //{
-    //    //プレイヤータグついたやつと当たっているとき
-    //    if (collider.gameObject.tag == "Player")
-    //    {
-    //        //Spaceボタンが入力
-    //        if (Input.GetKeyDown(KeyCode.Space))
-    //        {
-    //            //指定されてるObjctを90°回転する
-    //            rotateObj.transform.Rotate(0, 90, 0);
-    //        }
-    //    }
-    //}
-
     void OnCollisionStay(Collision col)
     {
-        //プレイヤータグついたやつと当たっているとき
-        if (col.gameObject.tag == "Player")
+        //正解の向きに揃っていない場合
+        if (rotManager.bEnd == false)
         {
-            //Spaceボタンが入力
-            if (Input.GetKeyDown(KeyCode.Space))
+            //スイッチオブジェクトがプレイヤータグついたやつと当たった
+            if (col.gameObject.tag == "Player")
             {
-                //指定されてるObjctを90°回転する
-                rotateObj.transform.Rotate(0, 90, 0);
+                //左クリックボタンが入力
+                if (Input.GetMouseButton(0) && bUsedButton == false)
+                {
+                    bUsedButton = true;
+                    //オブジェクトを回転させるコルーチンスタート
+                    StartCoroutine(Rotate());
+                }
             }
         }
     }

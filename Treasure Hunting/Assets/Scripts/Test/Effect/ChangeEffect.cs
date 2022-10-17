@@ -4,70 +4,55 @@ using UnityEngine;
 
 public class ChangeEffect : MonoBehaviour
 {
-    //バフエフェクト
+    //エフェクトの数の配列
+    private GameObject[] EffectNumber;
+    //エフェクトの切り替えカウント
     [SerializeField]
-    private GameObject buff;
-    //紙吹雪エフェクト
+    private int ChangeCount;
+    //子の総数
     [SerializeField]
-    private GameObject confetti;
-    //キラキラエフェクト
-    [SerializeField]
-    private GameObject Kirakira;
-    //カウント用
-    [SerializeField]
-    private int Count;
+    private int ChildTotalCount;
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        //バフエフェクトの取得
-        buff = GameObject.Find("Buff");
-        //紙吹雪エフェクトの取得
-        confetti = GameObject.Find("Confetti");
-        //キラキラエフェクトの取得
-        Kirakira = GameObject.Find("KiraKira");
-        //カウント初期化
-        Count = 0;
-    }
 
+        //子の総数を取得して格納
+        ChildTotalCount = transform.childCount;
+
+        EffectNumber = new GameObject[ChildTotalCount];
+
+        //子の総数分回す
+        for (int COUNT = 0;COUNT < ChildTotalCount; COUNT++)
+        {
+            EffectNumber[COUNT] = this.transform.GetChild(COUNT).gameObject;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        //Tキー押したら
-        if (Input.GetKeyDown("t"))
-        {
-            Count++;
-            if (Count >= 4)
-            {
-                Count = 0;
-            }
-        }
         //カウントされた数字で切り替え
-        switch (Count)
+        switch (ChangeCount)
         {
-            //全エフェクト非アクティブ
-            case 0:       
-                buff.SetActive(false);
-                confetti.SetActive(false);
-                Kirakira.SetActive(false);
-                break;
             //バフエフェクトON
-            case 1:
-                buff.SetActive(true);
-                confetti.SetActive(false);
-                Kirakira.SetActive(false);
+            case 0:
+                EffectNumber[0].SetActive(true);
+                EffectNumber[1].SetActive(false);
+                EffectNumber[2].SetActive(false);
                 break;
             //紙吹雪エフェクトON
-            case 2:
-                buff.SetActive(false);
-                confetti.SetActive(true);
-                Kirakira.SetActive(false);
+            case 1:
+                EffectNumber[0].SetActive(false);
+                EffectNumber[1].SetActive(true);
+                EffectNumber[2].SetActive(false);
                 break;
             //キラキラエフェクトON
-            case 3:
-                buff.SetActive(false);
-                confetti.SetActive(false);
-                Kirakira.SetActive(true);
+            case 2:
+                EffectNumber[0].SetActive(false);
+                EffectNumber[1].SetActive(false);
+                EffectNumber[2].SetActive(true);
                 break;
         }
     }
