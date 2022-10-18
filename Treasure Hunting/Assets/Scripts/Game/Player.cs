@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -16,12 +17,20 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     //GameManagerスクリプト
     private GameManager gameManagerScript;
+    //入手したアイテム数
+    private int getItemNum;
+    //入手したアイテム数テキスト
+    private Text getItemNumText;
 
     void Start()
     {
         //各要素参照
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
+
+        //最初は非表示にしておく
+        getItemNumText.enabled = false;
     }
 
     void FixedUpdate()
@@ -48,6 +57,22 @@ public class Player : MonoBehaviour
         {
             //動きを止める
             rigidBody.velocity = Vector3.zero;
+        }
+    }
+
+    void Update()
+    {
+        //getItemNumTextの表示
+        getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
+
+        //tab押したら
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            getItemNumText.enabled = true;
+        }
+        else
+        {
+            getItemNumText.enabled = false;
         }
     }
 }
