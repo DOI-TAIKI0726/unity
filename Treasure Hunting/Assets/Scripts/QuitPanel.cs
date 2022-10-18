@@ -1,4 +1,4 @@
-﻿//各シーンの共通処理
+﻿//QuitPanelの共通処理
 //Author:寺下琉生
 
 using System.Collections;
