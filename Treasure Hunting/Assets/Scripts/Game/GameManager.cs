@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Manager
+public class GameManager : QuitPanel
 {
     void Start()
     {
-        StartManager();
+        StartQuitPanel();
     }
 
     void Update()

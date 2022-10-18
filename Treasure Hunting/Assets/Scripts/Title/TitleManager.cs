@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : Manager
+public class TitleManager : QuitPanel
 {
     //タイトルロゴの移動速度
     [SerializeField]
@@ -46,7 +46,7 @@ public class TitleManager : Manager
         titlelogo = GameObject.Find("Titlelogo");
         pak = GameObject.Find("press any key");
         fadePanel = GameObject.Find("FadePanel");
-        StartManager();
+        StartQuitPanel();
 
         //\press any keyを非アクティブにしておく
         pak.SetActive(false);
