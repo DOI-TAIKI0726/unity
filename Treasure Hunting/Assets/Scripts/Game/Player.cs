@@ -9,10 +9,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
 
+    //自身に設定されているアニメーター
+    private Animator animetor;
+    //アニメーターのパラメーターisRun
+    private const string param_isRun = "isRun";
+    //アニメーターのパラメーターisJump
+    private const string param_isJump = "isJump";
     //カメラの正面方向
     private Vector3 cameraForward;
     //移動方向ベクトル
-    private Vector3 moveVector;
+    private Vector3 moveForward;
     //リジットボディ参照
     private Rigidbody rigidBody;
     //GameManagerスクリプト
@@ -25,6 +31,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         //各要素参照
+        animetor = this.GetComponent<Animator>();
+
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
@@ -47,13 +55,29 @@ public class Player : MonoBehaviour
             //カメラの方向からXZ平面の単位ベクトル取得
             cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             //移動方向ベクトルを設定
-            moveVector = cameraForward * vertical + Camera.main.transform.right * horizonal;
+            moveForward = cameraForward * vertical + Camera.main.transform.right * horizonal;
 
-            //移動
-            rigidBody.AddForce(new Vector3(moveVector.x, 0, moveVector.z) * moveSpeed, ForceMode.Force);
+            ////移動
+            rigidBody.velocity = moveForward * moveSpeed + new Vector3(0, rigidBody.velocity.y, 0);
+
+            // キャラクターの向きを進行方向に
+            if (moveForward != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(moveForward);
+            }
+
+            //移動したらアニメーション遷移
+            if (horizonal != 0 || vertical != 0)
+            {
+                this.animetor.SetBool(param_isRun, true);
+            }
+            else
+            {
+                this.animetor.SetBool(param_isRun, false);
+            }
         }
         //QuitPanelがアクティブなら
-        else if(gameManagerScript.quitPanel.activeSelf == true)
+        else if (gameManagerScript.quitPanel.activeSelf == true)
         {
             //動きを止める
             rigidBody.velocity = Vector3.zero;
@@ -66,7 +90,7 @@ public class Player : MonoBehaviour
         getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
 
         //tab押したら
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             getItemNumText.enabled = true;
         }
