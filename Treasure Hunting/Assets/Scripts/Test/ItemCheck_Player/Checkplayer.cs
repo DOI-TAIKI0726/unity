@@ -10,9 +10,8 @@ public class Checkplayer : MonoBehaviour
     public float WalkSpeed = 3.0f;                  //移動の速さ
     public float gravity = 9.8f;                    //重力
     private Rigidbody rb;                           //リジッドボディ
-    private bool keyuse = false;                    //キーが入手されているか
     
-    //アイテム吐き出す場合必要な変数
+    //プレイヤースクリプトにコピーしたい変数
     //ここから
     //アイテム
     [SerializeField]
@@ -24,6 +23,9 @@ public class Checkplayer : MonoBehaviour
     private int[] oldtype;                          //上記の前に取得したアイテムの種類
     //確認用
     private int ItemCount = 0;              //アイテム数
+    //キーが入手されているか
+    [System.NonSerialized]
+    public bool keyuse = false;
     //ここまで
 
     // Start is called before the first frame update
@@ -31,6 +33,8 @@ public class Checkplayer : MonoBehaviour
     {
         //リジッドボディの情報の格納
         rb = GetComponent<Rigidbody>();
+
+        //プレイヤースクリプトにコピー
         //oldtypeのデータ数の更新
         oldtype = new int[DataCnt];
     }
@@ -43,6 +47,8 @@ public class Checkplayer : MonoBehaviour
         z = Input.GetAxis("Vertical") * WalkSpeed;
         rb.velocity = new Vector3(x, rb.velocity.y, z);
         
+
+        //プレイヤースクリプトにコピーしたい処理
         //チェック用
         //スペース押したら宝物を吐き出す
         //吐き出さない場合はいらない処理
@@ -124,7 +130,6 @@ public class Checkplayer : MonoBehaviour
                     break;
                 }
             }
-            //ここまで
         }
 
         //当たったオブジェクトのタグがRouletteの場合
@@ -181,4 +186,5 @@ public class Checkplayer : MonoBehaviour
             Debug.Log("stay");
         }
     }
+    //ここまで
 }

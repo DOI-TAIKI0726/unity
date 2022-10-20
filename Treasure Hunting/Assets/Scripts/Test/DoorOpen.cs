@@ -33,11 +33,13 @@ public class DoorOpen : MonoBehaviour
 
     }
 
+    //ドアを閉じる処理を呼び出す
     public void CloseDoor()
     {
         StartCoroutine("CloseRotate");
     }
 
+    //ドアを閉じる
     IEnumerator CloseRotate()
     {
         for (int turn = 0; turn < 90; turn++)

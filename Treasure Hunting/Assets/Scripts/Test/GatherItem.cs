@@ -5,8 +5,9 @@ using UnityEngine;
 public class GatherItem : MonoBehaviour
 {
     //キーアイテム
-    [SerializeField]
-    GameObject KeyItem;
+    //[SerializeField]
+    //GameObject KeyItem;
+
     private int TotalGather;
 
     // Start is called before the first frame update
@@ -22,7 +23,9 @@ public class GatherItem : MonoBehaviour
         if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount >= TotalGather)
         {
             //キーを生成
-            Instantiate(KeyItem, KeyItem.transform.position,transform.rotation);
+            //Instantiate(KeyItem, KeyItem.transform.position,transform.rotation);
+
+            GameObject.Find("Player").GetComponent<Checkplayer>().keyuse = true;
 
             //処理が一度がしか通らないよう
             //収集したアイテムの数を0に戻す
