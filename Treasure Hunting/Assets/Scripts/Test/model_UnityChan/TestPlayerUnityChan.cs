@@ -14,12 +14,15 @@ public class TestPlayerUnityChan : MonoBehaviour
     //走る速度
     [SerializeField]
     private float runSpeed;
+    //スタミナ回復速度
+    [SerializeField]
+    private float recoveryStamina;
     //走っているときのスタミナ消費
     [SerializeField]
     private float consumptionStamina;
 
-    //スタミナの最大値
-    private float MaxStamina;
+    //最大スタミナ
+    private float maxStamina;
     //スタミナゲージのRectTransform
     private RectTransform staminagage;
     //現在のスタミナ
@@ -46,6 +49,8 @@ public class TestPlayerUnityChan : MonoBehaviour
     private bool isMove = false;
     //スタミナが減少中か
     private bool isStamina = false;
+    //スタミナが減った後、最大まで回復したか
+    private bool isMaxStamina = false;
 
     void Start()
     {
@@ -55,8 +60,8 @@ public class TestPlayerUnityChan : MonoBehaviour
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
-        MaxStamina = 200;
-        nowStamina = MaxStamina;
+        maxStamina = 200;
+        nowStamina = maxStamina;
 
         //最初は非表示にしておく
         getItemNumText.enabled = false;
@@ -78,16 +83,20 @@ public class TestPlayerUnityChan : MonoBehaviour
             //移動方向ベクトルを設定
             moveForward = cameraForward * vertical + Camera.main.transform.right * horizonal;
 
-            //移動方法切り替え
+            //移動状態切り替え
+            //走り状態に切り替え
             if (Input.GetKey(KeyCode.LeftShift) == true)
             {
-                //スタミナを減少状態にする
-                isStamina = true;
-                //走る状態にする
-                isMove = true;
+                if (isMaxStamina == false)
+                {
+                    //スタミナを減少状態にする
+                    isStamina = true;
+                    //走る状態にする
+                    isMove = true;
+                }
 
                 //スタミナが切れたら
-                if(nowStamina <= 0)
+                if (nowStamina <= 0)
                 {
                     //スタミナ減少状態を解除
                     isStamina = false;
@@ -95,6 +104,7 @@ public class TestPlayerUnityChan : MonoBehaviour
                     isMove = false;
                 }
             }
+            //歩き状態に切り替え
             if (Input.GetKey(KeyCode.LeftShift) == false)
             {
                 //スタミナ減少状態を解除
@@ -104,18 +114,23 @@ public class TestPlayerUnityChan : MonoBehaviour
             }
 
             //移動切り替え
+            //歩く
             if (isMove == false)
             {
                 //歩く移動
                 rigidBody.velocity = moveForward * walkSpeed + new Vector3(0, rigidBody.velocity.y, 0);
             }
-
+            //走る
             if (isMove == true)
             {
-                //走る移動
-                rigidBody.velocity = moveForward * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
-                //スタミナ減少
-                Stamina(consumptionStamina);
+                //スタミナを使い切った後回復していないなら
+                if (isMaxStamina == false)
+                {
+                    //走る移動
+                    rigidBody.velocity = moveForward * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
+                    //スタミナ減少
+                    nowStamina -= consumptionStamina;
+                }
             }
 
             //移動中ではないなら
@@ -165,30 +180,27 @@ public class TestPlayerUnityChan : MonoBehaviour
         //スタミナが減少状態ではないなら
         if (isStamina == false)
         {
-            //スタミナを加算していく
-            nowStamina++;
+            //スタミナを回復
+            nowStamina+=recoveryStamina;
             //スタミナの上限を超えないようにする
-            if (nowStamina >= MaxStamina)
+            if (nowStamina >= maxStamina)
             {
-                nowStamina = MaxStamina;
+                nowStamina = maxStamina;
             }
+        }
+
+        //スタミナを使い切ったら
+        if(nowStamina <= 0)
+        {
+            isMaxStamina = true;
+        }
+        //スタミナが回復しきったら
+        if(nowStamina >= maxStamina)
+        {
+            isMaxStamina = false;
         }
 
         //スタミナゲージの更新
         staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
-    }
-
-
-
-    void Stamina(float stamina)
-    {
-        //走っているときのスタミナ消費
-        if (isMove == true)
-        {
-            nowStamina -= stamina;
-        }
-
-        //ジャンプのスタミナ消費
-
     }
 }
