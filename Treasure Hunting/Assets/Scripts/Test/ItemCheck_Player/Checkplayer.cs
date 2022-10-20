@@ -10,6 +10,7 @@ public class Checkplayer : MonoBehaviour
     public float WalkSpeed = 3.0f;                  //移動の速さ
     public float gravity = 9.8f;                    //重力
     private Rigidbody rb;                           //リジッドボディ
+    private bool keyuse = false;                    //キーが入手されているか
     
     //アイテム吐き出す場合必要な変数
     //ここから
@@ -125,6 +126,7 @@ public class Checkplayer : MonoBehaviour
             }
             //ここまで
         }
+
         //当たったオブジェクトのタグがRouletteの場合
         if(col.gameObject.tag=="Roulette")
         {
@@ -133,6 +135,50 @@ public class Checkplayer : MonoBehaviour
 
             //ルーレット開始の処理
             GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
+        }
+
+        //タグがGatherだった場合
+        if (col.gameObject.tag=="Gather")
+        {
+            //アイテムの削除
+            Destroy(col.gameObject);
+
+            //収集したアイテム数の加算
+            GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
+        }
+
+        //タグがKeyだった場合
+        if (col.gameObject.tag == "Key")
+        {
+            //アイテムの削除
+            Destroy(col.gameObject);
+
+            //キーを入手
+            keyuse = true;
+        }
+        
+    }
+
+    //オブジェクトに触れ続けている場合
+    void OnCollisionStay(Collision col)
+    {
+        //タグがKeyDoorだった場合
+        if (col.gameObject.name == "KeyDoor")
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                //キーが入手していた場合
+                if (keyuse)
+                {
+                    //ドアを動かす処理
+                    col.gameObject.GetComponent<DoorOpen>().DoorMove();
+
+                    //キーを使えない状態にする
+                    keyuse = false;
+                }
+            }
+            //チェック用
+            Debug.Log("stay");
         }
     }
 }

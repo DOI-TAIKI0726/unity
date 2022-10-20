@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SwitchMystery : MonoBehaviour
 {
-    private GameObject door;     //ドアのオブジェクト
-    private float g, b;          //マテリアルの値
-    private Renderer render;     //レンダラー
+    private GameObject door;    //ドアのオブジェクト
+    private float g, b;         //マテリアルの値
+    private Renderer render;    //レンダラー
+    private bool open = false;  //ドアが開いているか
 
     // Start is called before the first frame update
     void Start()
@@ -34,11 +35,19 @@ public class SwitchMystery : MonoBehaviour
         //当たったオブジェクトのタグ
         if (col.gameObject.tag == "Player" || col.gameObject.tag == "Switch") 
         {
-            //アクティブの切り替え
-            door.SetActive(false);
             //g,bに0を代入
             g = 0;
             b = 0;
+
+            //開いていない場合
+            if (!open)
+            {
+                //ドアを開ける
+                door.GetComponent<DoorOpen>().DoorMove();
+            }
+
+            //ドアを開いている状態
+            open = true;
         }
     }
 
@@ -47,11 +56,19 @@ public class SwitchMystery : MonoBehaviour
         //当たったオブジェクトのタグ
         if (col.gameObject.tag == "Player" || col.gameObject.tag == "Switch")
         {
-            //アクティブの切り替え
-            door.SetActive(true);
             //g,bに1を代入
             g = 1;
             b = 1;
+
+            //ドアが開いている場合
+            if (open)
+            {
+                //ドアを閉める
+                door.GetComponent<DoorOpen>().CloseDoor();
+            }
+
+            //ドアが閉まった状態
+            open = false;
         }
     }
 }

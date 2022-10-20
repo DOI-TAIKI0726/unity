@@ -7,6 +7,9 @@ TagManager:
   - Treasure
   - Item
   - Switch
+  - Roulette
+  - Gather
+  - Key
   layers:
   - Default
   - TransparentFX

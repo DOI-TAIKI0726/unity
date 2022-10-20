@@ -32,4 +32,18 @@ public class DoorOpen : MonoBehaviour
         }
 
     }
+
+    public void CloseDoor()
+    {
+        StartCoroutine("CloseRotate");
+    }
+
+    IEnumerator CloseRotate()
+    {
+        for (int turn = 0; turn < 90; turn++)
+        {
+            transform.Rotate(0, -1, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
 }
