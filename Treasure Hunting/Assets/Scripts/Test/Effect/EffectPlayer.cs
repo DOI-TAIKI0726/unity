@@ -33,8 +33,8 @@ public class EffectPlayer : MonoBehaviour
         //各要素参照
         animetor = this.GetComponent<Animator>();
 
-        rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
-        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        rigidBody = GameObject.Find("EffectPlayer").GetComponent<Rigidbody>();
+        gameManagerScript = GameObject.Find("EffectManager").GetComponent<GameManager>();
         getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
 
         //最初は非表示にしておく

@@ -8,8 +8,10 @@ using UnityEngine.SceneManagement;
 
 public class EffectGameManager : QuitPanel
 {
+    
     void Start()
     {
+        
         StartQuitPanel();
     }
 
