@@ -17,6 +17,7 @@ public class RandomItemEffect : MonoBehaviour
     private GameObject Confetti;                //紙吹雪エフェクト用変数
     private GameObject Kirakira;                //キラキラエフェクト用変数
     private GameObject Debuff;              //デバフエフェクト用変数
+    private GameObject LandingDust;         //土埃エフェクト
 
     //バフデバフの表示時間計測用
     [SerializeField]
@@ -41,17 +42,19 @@ public class RandomItemEffect : MonoBehaviour
         //Imageの情報の取得
         Img = GameObject.Find("BuffImage").GetComponent<Image>();
 
-        //デバフエフェクトを探す
+        //全てのエフェクトをFind
         Buff = GameObject.Find("Buff");
         Confetti = GameObject.Find("Confetti");
         Kirakira = GameObject.Find("KiraKira");
         Debuff = GameObject.Find("Debuff");
+        LandingDust = GameObject.Find("LandingDust");
 
-        //最初は全部非表示
+        //最初は全てのオブジェクトを非アクティブ
         Buff.SetActive(false);
         Confetti.SetActive(false);
         Kirakira.SetActive(false);
         Debuff.SetActive(false);
+        LandingDust.SetActive(false);
 
     }
 
@@ -145,7 +148,7 @@ public class RandomItemEffect : MonoBehaviour
                     //0は固定
                     type = Random.Range(0, buff.Length);
                     Img.sprite = buff[type];
-                    //バフエフェクト発生
+                    //バフエフェクトをアクティブ化
                     Buff.SetActive(true);
                 }
                 //デバフ
@@ -156,7 +159,7 @@ public class RandomItemEffect : MonoBehaviour
                     type = Random.Range(0, debuff.Length);
                     Img.sprite = debuff[type];
 
-                    //デバフエフェクト発生
+                    //デバフエフェクトをアクティブ化
                     Debuff.SetActive(true);
                 }
 
@@ -177,7 +180,7 @@ public class RandomItemEffect : MonoBehaviour
             {
                 //アイテムを非表示
                 Img.enabled = false;
-                //バフデバフエフェクトの非表示
+                //バフデバフエフェクトを非アクティブ化
                 Buff.SetActive(false);
                 Debuff.SetActive(false);
             }
