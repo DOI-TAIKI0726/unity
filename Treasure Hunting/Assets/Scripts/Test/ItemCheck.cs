@@ -43,21 +43,23 @@ public class ItemCheck : MonoBehaviour
             //テキスト表示
             //宝の数チェックのテキスト
             CheckText.enabled = true;
-
-            //収集するアイテムを指定数集められた場合
-            //収集するアイテムのテキストとアイコンを表示
-            if (GatherCount > 0 && GatherCount < TotalGather)
-            {
-                GatherIcon.enabled = true;
-                GatherText.enabled = true;
-            }
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             //テキスト非表示
             //宝の数チェックのテキスト
             CheckText.enabled = false;
+        }
 
+        //収集するアイテムを指定数集められた場合
+        //収集するアイテムのテキストとアイコンを表示
+        if (GatherCount > 0 && GatherCount < TotalGather)
+        {
+            GatherIcon.enabled = true;
+            GatherText.enabled = true;
+        }
+        else
+        {
             //収集するアイテムのテキストとアイコンを非表示
             GatherIcon.enabled = false;
             GatherText.enabled = false;

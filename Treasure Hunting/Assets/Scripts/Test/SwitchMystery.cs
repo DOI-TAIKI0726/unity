@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//正解のスイッチにアタッチする
 public class SwitchMystery : MonoBehaviour
 {
     private GameObject door;    //ドアのオブジェクト

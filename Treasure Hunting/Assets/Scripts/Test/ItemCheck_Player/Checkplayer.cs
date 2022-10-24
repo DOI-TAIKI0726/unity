@@ -26,6 +26,9 @@ public class Checkplayer : MonoBehaviour
     //キーが入手されているか
     [System.NonSerialized]
     public bool keyuse = false;
+    //移動可能か
+    [System.NonSerialized]
+    public bool isMove = true;
     //ここまで
 
     // Start is called before the first frame update
@@ -45,8 +48,10 @@ public class Checkplayer : MonoBehaviour
         //移動の処理
         x = Input.GetAxis("Horizontal") * WalkSpeed;
         z = Input.GetAxis("Vertical") * WalkSpeed;
-        rb.velocity = new Vector3(x, rb.velocity.y, z);
-        
+        if(isMove)
+        {
+            rb.velocity = new Vector3(x, rb.velocity.y, z);
+        }
 
         //プレイヤースクリプトにコピーしたい処理
         //チェック用

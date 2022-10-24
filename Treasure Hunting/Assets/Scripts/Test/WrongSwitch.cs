@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//不正解のスイッチのオブジェクトにアタッチする
 public class WrongSwitch : MonoBehaviour
 {
     private float g, b;         //マテリアルの値
