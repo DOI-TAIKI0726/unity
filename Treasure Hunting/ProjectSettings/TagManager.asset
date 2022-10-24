@@ -10,6 +10,7 @@ TagManager:
   - Roulette
   - Gather
   - Key
+  - Door
   layers:
   - Default
   - TransparentFX

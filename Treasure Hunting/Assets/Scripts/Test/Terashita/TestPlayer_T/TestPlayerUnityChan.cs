@@ -46,7 +46,7 @@ public class TestPlayerUnityChan : MonoBehaviour
     //入手したアイテム数テキスト
     private Text getItemNumText;
     //移動方法切り替え
-    private bool isMove = false;
+    private bool isMoveMode = false;
     //スタミナが減少中か
     private bool isStamina = false;
     //スタミナが減った後、最大まで回復したか
@@ -54,7 +54,7 @@ public class TestPlayerUnityChan : MonoBehaviour
 
     void Start()
     {
-        //各要素参照
+        //各要素の参照や初期化
         animetor = this.GetComponent<Animator>();
         staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>(); ;
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
@@ -68,6 +68,56 @@ public class TestPlayerUnityChan : MonoBehaviour
     }
 
     void FixedUpdate()
+    {
+        Move();
+    }
+
+    void Update()
+    {
+        //getItemNumTextの表示
+        getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
+
+        //tab押したら
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            //テキスト表示
+            getItemNumText.enabled = true;
+        }
+        else
+        {
+            //テキスト非表示
+            getItemNumText.enabled = false;
+        }
+
+        //スタミナが減少状態ではないなら
+        if (isStamina == false)
+        {
+            //スタミナを回復
+            nowStamina += recoveryStamina;
+            //スタミナの上限を超えないようにする
+            if (nowStamina >= maxStamina)
+            {
+                nowStamina = maxStamina;
+            }
+        }
+
+        //スタミナを使い切ったら
+        if (nowStamina <= 0)
+        {
+            isMaxStamina = true;
+        }
+        //スタミナが回復しきったら
+        if (nowStamina >= maxStamina)
+        {
+            isMaxStamina = false;
+        }
+
+        //スタミナゲージの更新
+        staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
+    }
+
+    //移動関連処理
+    void Move()
     {
         //QuitPanelが非アクティブなら
         if (gameManagerScript.quitPanel.activeSelf == false)
@@ -84,56 +134,62 @@ public class TestPlayerUnityChan : MonoBehaviour
             moveForward = cameraForward * vertical + Camera.main.transform.right * horizonal;
 
             //移動状態切り替え
-            //走り状態に切り替え
-            if (Input.GetKey(KeyCode.LeftShift) == true)
-            {
-                if (isMaxStamina == false)
-                {
-                    //スタミナを減少状態にする
-                    isStamina = true;
-                    //走る状態にする
-                    isMove = true;
-                }
-
-                //スタミナが切れたら
-                if (nowStamina <= 0)
-                {
-                    //スタミナ減少状態を解除
-                    isStamina = false;
-                    //歩く状態にする
-                    isMove = false;
-                }
-            }
             //歩き状態に切り替え
             if (Input.GetKey(KeyCode.LeftShift) == false)
             {
                 //スタミナ減少状態を解除
                 isStamina = false;
                 //歩く状態にする
-                isMove = false;
+                isMoveMode = false;
+            }
+            //走り状態に切り替え
+            if (Input.GetKey(KeyCode.LeftShift) == true)
+            {
+                if (isMaxStamina == false)
+                {
+                    if (moveForward != Vector3.zero)
+                    {
+                        //スタミナを減少状態にする
+                        isStamina = true;
+                    }
+                    //走る状態にする
+                    isMoveMode = true;
+                }
+            }
+
+            //スタミナが切れたら
+            if (nowStamina <= 0)
+            {
+                //スタミナ減少状態を解除
+                isStamina = false;
+                //歩く状態にする
+                isMoveMode = false;
             }
 
             //移動切り替え
             //歩く
-            if (isMove == false)
+            if (isMoveMode == false)
             {
                 //歩く移動
                 rigidBody.velocity = moveForward * walkSpeed + new Vector3(0, rigidBody.velocity.y, 0);
             }
             //走る
-            if (isMove == true)
+            if (isMoveMode == true)
             {
                 //スタミナを使い切った後回復していないなら
                 if (isMaxStamina == false)
                 {
                     //走る移動
                     rigidBody.velocity = moveForward * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
-                    //スタミナ減少
-                    nowStamina -= consumptionStamina;
+                    if (moveForward != Vector3.zero)
+                    {
+                        //スタミナ減少
+                        nowStamina -= consumptionStamina;
+                    }
                 }
             }
 
-            //移動中ではないなら
+            //移動中なら
             if (moveForward != Vector3.zero)
             {
                 //キャラクターの向きを進行方向に
@@ -160,47 +216,31 @@ public class TestPlayerUnityChan : MonoBehaviour
         }
     }
 
-    void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        //getItemNumTextの表示
-        getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
-
-        //tab押したら
-        if (Input.GetKeyDown(KeyCode.Tab))
+        //タグがKeyのオブジェクトに当たったら
+        if (collision.gameObject.tag == "Key")
         {
-            //テキスト表示
-            getItemNumText.enabled = true;
+            //当たった鍵の削除
+            Destroy(collision.gameObject);
         }
-        else
-        {
-            //テキスト非表示
-            getItemNumText.enabled = false;
-        }
+    }
 
-        //スタミナが減少状態ではないなら
-        if (isStamina == false)
+    void OnCollisionStay(Collision collision)
+    {
+        //タグがDoorのオブジェクトに当たったら
+        if (collision.gameObject.tag == "Door")
         {
-            //スタミナを回復
-            nowStamina+=recoveryStamina;
-            //スタミナの上限を超えないようにする
-            if (nowStamina >= maxStamina)
+            if (Input.GetKey(KeyCode.E))
             {
-                nowStamina = maxStamina;
+                //当たったドアのスクリプト中のisOpenDoorがtrueなら
+                if (collision.gameObject.GetComponent<KeyDoor>().isOpenDoor == true)
+                {
+                    //ドアを動かす
+
+                    Debug.Log("ドア開く");
+                }
             }
         }
-
-        //スタミナを使い切ったら
-        if(nowStamina <= 0)
-        {
-            isMaxStamina = true;
-        }
-        //スタミナが回復しきったら
-        if(nowStamina >= maxStamina)
-        {
-            isMaxStamina = false;
-        }
-
-        //スタミナゲージの更新
-        staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
     }
 }
