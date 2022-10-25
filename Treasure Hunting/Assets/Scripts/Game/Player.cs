@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//プレイヤーの操作関連クラス
+//Author:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

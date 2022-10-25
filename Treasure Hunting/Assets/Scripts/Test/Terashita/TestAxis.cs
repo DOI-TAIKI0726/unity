@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//カメラの操作関連テスト
+//Author:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

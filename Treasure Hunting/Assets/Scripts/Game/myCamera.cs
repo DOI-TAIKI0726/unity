@@ -1,11 +1,11 @@
-﻿//カメラの描画テスト用
+﻿//カメラの描画関連クラス
 //Author:寺下琉生
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestCamera : MonoBehaviour
+public class myCamera : MonoBehaviour
 {
     //レイを出す間隔
     [SerializeField]
@@ -37,7 +37,7 @@ public class TestCamera : MonoBehaviour
         if (rayTime >= rayCT)
         {
             //playerHeadObjと自身の間にレイを出し、レイに何かが当たったなら
-            if(Physics.Linecast(playerHeadObj.transform.position, this.transform.position, out hit) == true)
+            if (Physics.Linecast(playerHeadObj.transform.position, this.transform.position, out hit) == true)
             {
                 //当たったオブジェクトのMeshRendererをfalseにする
                 hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -60,8 +60,12 @@ public class TestCamera : MonoBehaviour
             }
             else
             {
-                //レイが当たらなくなったオブジェクトのMeshRendererをtrueに戻す
-                hitCollider.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                //hitColliderに何か入っているなら
+                if (hitCollider != null)
+                {
+                    //レイが当たらなくなったオブジェクトのMeshRendererをtrueに戻す
+                    hitCollider.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
             }
 
             //時間リセット

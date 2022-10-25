@@ -1,11 +1,11 @@
-﻿//カメラ操作クラス
+﻿//カメラの移動操作クラス
 //Author:寺下琉生
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class camera : MonoBehaviour
+public class Axis : MonoBehaviour
 {
     //Cameraの回転スピード
     [SerializeField]
@@ -34,6 +34,8 @@ public class camera : MonoBehaviour
         myCamera = Camera.main;
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        //マイナスをかけてインスペクタービューで見やすくする
+        cameraDistance = cameraDistance * (-1);
         //CameraのAxisに相対的な位置をlocalPositionで指定
         myCamera.transform.localPosition = new Vector3(0, 0, -3);
         //CameraとAxisの向きを最初だけそろえる
@@ -53,12 +55,6 @@ public class camera : MonoBehaviour
         {
             //Axisの位置をPlayer＋axisPosで決める
             transform.position = player.transform.position + axisPos;
-
-            //Cameraの位置、Z軸にスクロール分を加える
-            myCamera.transform.localPosition
-                = new Vector3(myCamera.transform.localPosition.x,
-                myCamera.transform.localPosition.y,
-                myCamera.transform.localPosition.z);
 
             //Cameraの角度にマウスからとった値を入れる
             transform.eulerAngles += new Vector3(0, Input.GetAxis("Mouse X") * rotate_speed, 0);
