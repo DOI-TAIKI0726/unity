@@ -1,5 +1,5 @@
-﻿//ゲームシーン管理クラス
-//Author:寺下琉生
+﻿//エフェクトゲームシーン管理クラス
+//Author:
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,10 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class EffectGameManager : QuitPanel
 {
-    
     void Start()
     {
-        
         StartQuitPanel();
     }
 

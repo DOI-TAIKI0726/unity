@@ -34,7 +34,9 @@ public class EffectPlayer : MonoBehaviour
         animetor = this.GetComponent<Animator>();
 
         rigidBody = GameObject.Find("EffectPlayer").GetComponent<Rigidbody>();
-        gameManagerScript = GameObject.Find("EffectManager").GetComponent<GameManager>();
+        Debug.Log(rigidBody);
+        gameManagerScript = GameObject.Find("EffectGameManager").GetComponent<GameManager>();
+        Debug.Log(gameManagerScript);
         getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
 
         //最初は非表示にしておく
@@ -86,8 +88,8 @@ public class EffectPlayer : MonoBehaviour
 
     void Update()
     {
-        ////getItemNumTextの表示
-        //getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
+        //getItemNumTextの表示
+        getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
 
         //tab押したら
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -98,5 +100,6 @@ public class EffectPlayer : MonoBehaviour
         {
             getItemNumText.enabled = false;
         }
+
     }
 }
