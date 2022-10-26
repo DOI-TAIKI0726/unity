@@ -5,14 +5,25 @@ using UnityEngine;
 public class Checkplayer : MonoBehaviour
 {
     //移動
-    private float x;                                //x方向の移動
-    private float z;                                //z方向の移動
-    public float WalkSpeed = 3.0f;                  //移動の速さ
-    public float gravity = 9.8f;                    //重力
+    //歩く速度
+    [SerializeField]
+    private float walkSpeed;
+    //走る速度
+    [SerializeField]
+    private float runSpeed;
+    //移動方向ベクトル
+    private Vector3 moveForward;
+    //カメラの正面方向
+    private Vector3 cameraForward;
+
     private Rigidbody rb;                           //リジッドボディ
-    
+
     //プレイヤースクリプトにコピーしたい変数
     //ここから
+    //スピードの倍率
+    private float Speedup = 1f;
+    //バフの時間
+    private float BuffCnt;
     //アイテム
     [SerializeField]
     private GameObject[] Item = null;
@@ -29,6 +40,8 @@ public class Checkplayer : MonoBehaviour
     //移動可能か
     [System.NonSerialized]
     public bool isMove = true;
+    //バフ中か
+    private bool buff = false;
     //ここまで
 
     // Start is called before the first frame update
@@ -42,23 +55,43 @@ public class Checkplayer : MonoBehaviour
         oldtype = new int[DataCnt];
     }
 
+    void FixedUpdate()
+    {
+        Move();
+    }
+
     // Update is called once per frame
     void Update()
     {
         //移動の処理
-        x = Input.GetAxis("Horizontal") * WalkSpeed;
-        z = Input.GetAxis("Vertical") * WalkSpeed;
-        if(isMove)
-        {
-            rb.velocity = new Vector3(x, rb.velocity.y, z);
-        }
+        //Move();
 
         //プレイヤースクリプトにコピーしたい処理
+        //ここから
+        //バフ中
+        if (buff)
+        {
+            //バフの経過時間
+            BuffCnt -= Time.deltaTime;
+
+            //BuffCnt秒経ったらバフ終了
+            if (BuffCnt <= 0)
+            {
+                BuffCnt = 0f;
+
+                //スピードの倍率を設定
+                Speedup = 1f;
+
+                //バフ終了状態にする
+                buff = false;
+
+                Debug.Log("end");
+            }
+        }
         //チェック用
         //スペース押したら宝物を吐き出す
         //吐き出さない場合はいらない処理
-        //ここから
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             //アイテム数が0より大きい場合
             if (ItemCount > 0)
@@ -89,6 +122,32 @@ public class Checkplayer : MonoBehaviour
             }
         }
         //ここまで
+    }
+
+    void Move()
+    {
+        //移動キーの入力を取得
+        //縦
+        float horizonal = Input.GetAxis("Horizontal");
+        //横
+        float vertical = Input.GetAxis("Vertical");
+
+        //カメラの方向からXZ平面の単位ベクトル取得
+        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+        
+        //移動可能
+        if(isMove)
+        {
+            //移動方向ベクトルを設定
+            moveForward = cameraForward * vertical + Camera.main.transform.right * horizonal;
+        }
+        //移動不可能
+        else
+        {
+            moveForward = Vector3.zero;
+        }
+
+        rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
     }
 
     //プレイヤースクリプトにコピーしたい処理
@@ -190,6 +249,18 @@ public class Checkplayer : MonoBehaviour
             //チェック用
             Debug.Log("stay");
         }
+    }
+
+    //スピード系バフの処理
+    public void BuffSpeed(float speed,float Bufftime)
+    {
+        //スピードの倍率を設定
+        Speedup = speed;
+        //バフの時間を設定
+        BuffCnt = Bufftime;
+
+        //バフ中の状態にする
+        buff = true;
     }
     //ここまで
 }

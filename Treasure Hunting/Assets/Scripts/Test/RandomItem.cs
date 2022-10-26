@@ -25,12 +25,19 @@ public class RandomItem : MonoBehaviour
     //バフの割合,1.0～0.0の間
     [SerializeField]
     private float buffratio = 0.0f;
+    //プレイヤー
+    private GameObject player;
+    //バフの時間
+    private float buffTime = 5.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         //Imageの情報の取得
         Img = GameObject.Find("BuffImage").GetComponent<Image>();
+
+        //プレイヤーの情報を取得
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -56,9 +63,6 @@ public class RandomItem : MonoBehaviour
                 count = 2.0f;
                 //アイテム決定後の表示時間の設定
                 itemcount = 2.0f;
-
-                //確認用
-                Debug.Log("ok");
             }
         }
 
@@ -123,6 +127,20 @@ public class RandomItem : MonoBehaviour
                     //0は固定
                     type = Random.Range(0, buff.Length);
                     Img.sprite = buff[type];
+                    
+                    //名前がbuff[0]と一緒だった場合
+                    if(buff[type].name==buff[0].name)
+                    {
+                        //スピード系のバフの処理
+                        //スピードの倍率、バフ時間の設定
+                        player.GetComponent<Checkplayer>().BuffSpeed(3.0f, buffTime);
+                    }
+                    else
+                    {
+
+                    }
+
+                    Debug.Log(buff[type].name);
                 }
                 //デバフ
                 else
@@ -131,6 +149,20 @@ public class RandomItem : MonoBehaviour
                     //0は固定
                     type = Random.Range(0, debuff.Length);
                     Img.sprite = debuff[type];
+
+                    //名前がdebuff[0]と一緒だった場合
+                    if (debuff[type].name == debuff[0].name)
+                    {
+                        //スピード系のバフの処理
+                        //スピードの倍率、バフ時間の設定
+                        player.GetComponent<Checkplayer>().BuffSpeed(0.5f, buffTime);
+                    }
+                    else
+                    {
+
+                    }
+
+                    Debug.Log(debuff[type].name);
                 }
 
                 //確認用
