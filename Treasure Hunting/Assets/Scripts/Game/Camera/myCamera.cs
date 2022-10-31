@@ -71,7 +71,6 @@ public class myCamera : MonoBehaviour
             //時間リセット
             rayTime = 0.0f;
         }
-
         Debug.DrawLine(playerHeadObj.transform.position, transform.position, Color.red);
     }
 }

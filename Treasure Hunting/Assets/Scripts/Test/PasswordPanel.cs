@@ -104,7 +104,7 @@ public class PasswordPanel : MonoBehaviour
     {
         //パスワードのCanvasを非表示にする
         GameObject.Find("Password").GetComponent<Canvas>().enabled = false;
-        //プレイヤーを移動可能にする
-        Player.GetComponent<Checkplayer>().isMove = true;
+        ////プレイヤーを移動可能にする
+        //Player.GetComponent<Checkplayer>().isMove = true;
     }
 }

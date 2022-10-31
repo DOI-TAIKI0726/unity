@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : QuitPanel
 {
+    //
+
     void Start()
     {
         StartQuitPanel();
@@ -15,12 +17,25 @@ public class GameManager : QuitPanel
 
     void Update()
     {
-        SwitchQuitPanel();
-
-        //QuitPanelが非アクティブなら
-        if (quitPanel.activeSelf == false)
+        if (GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
+            SwitchQuitPanel();
+        }
 
+
+        //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
+        if (quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+        {
+            //マウスカーソルを非表示
+            Cursor.visible = false;
+        }
+        else
+        {
+            //マウスカーソルを画面内に固定
+            Cursor.lockState = CursorLockMode.Confined;
+
+            //マウスカーソルを表示
+            Cursor.visible = true;
         }
     }
 }

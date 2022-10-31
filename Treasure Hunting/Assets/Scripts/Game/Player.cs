@@ -10,16 +10,19 @@ public class Player : MonoBehaviour
 {
     //歩く速度
     [SerializeField]
-    private float walkSpeed;
+    private float walkSpeed = 5.0f;
     //走る速度
     [SerializeField]
-    private float runSpeed;
+    private float runSpeed = 10.0f;
+    //ジャンプ力
+    [SerializeField]
+    private float jumpPower = 300.0f;
     //スタミナ回復速度
     [SerializeField]
-    private float recoveryStamina;
+    private float recoveryStamina = 0.1f;
     //走っているときのスタミナ消費
     [SerializeField]
-    private float consumptionStamina;
+    private float consumptionStamina = 0.7f;
 
     //最大スタミナ
     private float maxStamina;
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour
     private bool isStamina = false;
     //スタミナが減った後、最大まで回復したか
     private bool isMaxStamina = false;
+    //地面についているか
+    private bool isGround = true;
 
     void Start()
     {
@@ -60,7 +65,7 @@ public class Player : MonoBehaviour
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
-        maxStamina = 200;
+        maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
 
         //最初は非表示にしておく
@@ -119,8 +124,8 @@ public class Player : MonoBehaviour
     //移動関連処理
     void Move()
     {
-        //QuitPanelが非アクティブなら
-        if (gameManagerScript.quitPanel.activeSelf == false)
+        //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
+        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
             //移動キーの入力を取得
             //縦
@@ -196,6 +201,16 @@ public class Player : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveForward);
             }
 
+            //地面についてるなら
+            if (isGround == true)
+            {
+                //SPACEキーを押したら
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    rigidBody.AddForce(0.0f, jumpPower, 0.0f);
+                    isGround = false;
+                }
+            }
             //移動したらアニメーション遷移
             if (horizonal != 0 || vertical != 0)
             {
@@ -209,10 +224,12 @@ public class Player : MonoBehaviour
             }
         }
         //QuitPanelがアクティブなら
-        else if (gameManagerScript.quitPanel.activeSelf == true)
+        else
         {
             //動きを止める
             rigidBody.velocity = Vector3.zero;
+            //移動アニメーション終了
+            this.animetor.SetBool(param_isRun, false);
         }
     }
 
@@ -223,6 +240,11 @@ public class Player : MonoBehaviour
         {
             //当たった鍵の削除
             Destroy(collision.gameObject);
+        }
+        //タグがGroundのオブジェクトに当たったら
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = true;
         }
     }
 

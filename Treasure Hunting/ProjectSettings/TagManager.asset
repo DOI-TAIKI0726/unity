@@ -11,6 +11,7 @@ TagManager:
   - Gather
   - Key
   - Door
+  - Ground
   layers:
   - Default
   - TransparentFX
