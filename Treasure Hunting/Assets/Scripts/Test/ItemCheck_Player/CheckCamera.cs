@@ -11,7 +11,7 @@ public class CheckCamera : MonoBehaviour
     private Vector3 axisPos;
     //カメラをどれくらい離すか
     [SerializeField]
-    private float cameraDistance;
+    private float cameraDistance = 0;
 
     //プレイヤー
     private GameObject player;

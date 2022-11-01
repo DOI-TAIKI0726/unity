@@ -11,15 +11,37 @@ public class Checkplayer : MonoBehaviour
     //走る速度
     [SerializeField]
     private float runSpeed;
+    //スタミナ回復速度
+    [SerializeField]
+    private float recoveryStamina;
+    //走っているときのスタミナ消費
+    [SerializeField]
+    private float consumptionStamina;
+
     //移動方向ベクトル
     private Vector3 moveForward;
     //カメラの正面方向
     private Vector3 cameraForward;
 
+    //最大スタミナ
+    private float maxStamina;
+    //スタミナゲージのRectTransform
+    private RectTransform staminagage;
+    //現在のスタミナ
+    private float nowStamina;
+    //移動方法切り替え
+    private bool isMoveMode = false;
+    //スタミナが減少中か
+    private bool isStamina = false;
+    //スタミナが減った後、最大まで回復したか
+    private bool isMaxStamina = false;
+
     private Rigidbody rb;                           //リジッドボディ
 
     //プレイヤースクリプトにコピーしたい変数
     //ここから
+    //スタミナ無限か
+    private bool isLimit = false;
     //スピードの倍率
     private float Speedup = 1f;
     //バフの時間
@@ -49,10 +71,14 @@ public class Checkplayer : MonoBehaviour
     {
         //リジッドボディの情報の格納
         rb = GetComponent<Rigidbody>();
+        staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
 
         //プレイヤースクリプトにコピー
         //oldtypeのデータ数の更新
         oldtype = new int[DataCnt];
+
+        maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
+        nowStamina = maxStamina;
     }
 
     void FixedUpdate()
@@ -63,83 +89,183 @@ public class Checkplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //移動の処理
-        //Move();
-
-        //プレイヤースクリプトにコピーしたい処理
-        //ここから
-        //バフ中
-        if (buff)
+        if(isMove)
         {
-            //バフの経過時間
-            BuffCnt -= Time.deltaTime;
-
-            //BuffCnt秒経ったらバフ終了
-            if (BuffCnt <= 0)
+            //スタミナが減少状態ではないなら
+            if (isStamina == false || isLimit == true) 
             {
-                BuffCnt = 0f;
-
-                //スピードの倍率を設定
-                Speedup = 1f;
-
-                //バフ終了状態にする
-                buff = false;
-
-                Debug.Log("end");
-            }
-        }
-        //チェック用
-        //スペース押したら宝物を吐き出す
-        //吐き出さない場合はいらない処理
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //アイテム数が0より大きい場合
-            if (ItemCount > 0)
-            {
-                //減算
-                ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
-
-                //アイテムの生成
-                //生成する位置を取得
-                Vector3 position = new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z);
-                //生成
-                GameObject NewItem = Instantiate(Item[Itemtype], position, transform.rotation);
-                
-                //次生成するアイテムの更新
-                for (int cnt = 0; cnt < oldtype.Length; cnt++)
+                //スタミナを回復
+                nowStamina += recoveryStamina;
+                //スタミナの上限を超えないようにする
+                if (nowStamina >= maxStamina)
                 {
-                    //次に生成するアイテムの種類を取得
-                    if (cnt == 0)
+                    nowStamina = maxStamina;
+                }
+            }
+
+            //スタミナを使い切ったら
+            if (nowStamina <= 0)
+            {
+                isMaxStamina = true;
+            }
+            //スタミナが回復しきったら
+            if (nowStamina >= maxStamina)
+            {
+                isMaxStamina = false;
+            }
+
+            //スタミナゲージの更新
+            staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
+
+            //プレイヤースクリプトにコピーしたい処理
+            //ここから
+            //バフ中
+            if (buff)
+            {
+                //バフの経過時間
+                BuffCnt -= Time.deltaTime;
+
+                //BuffCnt秒経ったらバフ終了
+                if (BuffCnt <= 0)
+                {
+                    //バフの時間を0にする
+                    BuffCnt = 0f;
+
+                    //tagがbuffのオブジェクトを削除
+                    Destroy(GameObject.FindGameObjectWithTag("buff"));
+                    
+                    //スタミナ無限状態じゃなくする
+                    isLimit = false;
+
+                    //スピードの倍率を設定
+                    Speedup = 1f;
+
+                    //バフ終了状態にする
+                    buff = false;
+
+                    Debug.Log("end");
+                }
+            }
+            
+            //チェック用
+            //スペース押したら宝物を吐き出す
+            //吐き出さない場合はいらない処理
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //アイテム数が0より大きい場合
+                if (ItemCount > 0)
+                {
+                    //減算
+                    ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
+
+                    //アイテムの生成
+                    //生成する位置を取得
+                    Vector3 position = new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z);
+                    //生成
+                    GameObject NewItem = Instantiate(Item[Itemtype], position, transform.rotation);
+
+                    //次生成するアイテムの更新
+                    for (int cnt = 0; cnt < oldtype.Length; cnt++)
                     {
-                        Itemtype = oldtype[cnt];
-                    }
-                    //生成するアイテムの順番の更新
-                    else
-                    {
-                        oldtype[cnt - 1] = oldtype[cnt];
+                        //次に生成するアイテムの種類を取得
+                        if (cnt == 0)
+                        {
+                            Itemtype = oldtype[cnt];
+                        }
+                        //生成するアイテムの順番の更新
+                        else
+                        {
+                            oldtype[cnt - 1] = oldtype[cnt];
+                        }
                     }
                 }
             }
+            //ここまで
         }
-        //ここまで
     }
 
     void Move()
     {
-        //移動キーの入力を取得
-        //縦
-        float horizonal = Input.GetAxis("Horizontal");
-        //横
-        float vertical = Input.GetAxis("Vertical");
-
-        //カメラの方向からXZ平面の単位ベクトル取得
-        cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
-        
         //移動可能
         if(isMove)
         {
+            //移動キーの入力を取得
+            //縦
+            float horizonal = Input.GetAxis("Horizontal");
+            //横
+            float vertical = Input.GetAxis("Vertical");
+
+            //カメラの方向からXZ平面の単位ベクトル取得
+            cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
             //移動方向ベクトルを設定
             moveForward = cameraForward * vertical + Camera.main.transform.right * horizonal;
+
+            //移動状態切り替え
+            //歩き状態に切り替え
+            if (Input.GetKey(KeyCode.LeftShift) == false)
+            {
+                //スタミナ減少状態を解除
+                isStamina = false;
+                //歩く状態にする
+                isMoveMode = false;
+            }
+            //走り状態に切り替え
+            if (Input.GetKey(KeyCode.LeftShift) == true)
+            {
+                if (isMaxStamina == false)
+                {
+                    if (moveForward != Vector3.zero)
+                    {
+                        //スタミナを減少状態にする
+                        isStamina = true;
+                    }
+                    //走る状態にする
+                    isMoveMode = true;
+                }
+            }
+
+            //スタミナが切れたら
+            if (nowStamina <= 0)
+            {
+                //スタミナ減少状態を解除
+                isStamina = false;
+                //歩く状態にする
+                isMoveMode = false;
+            }
+
+            //移動切り替え
+            //歩く
+            if (isMoveMode == false)
+            {
+                //歩く移動
+                rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
+            }
+            //走る
+            if (isMoveMode == true)
+            {
+                //スタミナを使い切った後回復していないなら
+                if (isMaxStamina == false)
+                {
+                    //走る移動
+                    rb.velocity = moveForward * runSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
+                    if (moveForward != Vector3.zero)
+                    {
+                        //スタミナ無限状態じゃなかった場合
+                        if(!isLimit)
+                        {
+                            //スタミナ減少
+                            nowStamina -= consumptionStamina;
+                        }
+                    }
+                }
+            }
+
+            //移動中なら
+            if (moveForward != Vector3.zero)
+            {
+                //キャラクターの向きを進行方向に
+                transform.rotation = Quaternion.LookRotation(moveForward);
+            }
         }
         //移動不可能
         else
@@ -147,7 +273,7 @@ public class Checkplayer : MonoBehaviour
             moveForward = Vector3.zero;
         }
 
-        rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
+        //rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
     }
 
     //プレイヤースクリプトにコピーしたい処理
@@ -258,6 +384,29 @@ public class Checkplayer : MonoBehaviour
         Speedup = speed;
         //バフの時間を設定
         BuffCnt = Bufftime;
+
+        //バフ中の状態にする
+        buff = true;
+    }
+
+    //サーチのバフ処理
+    public void BuffSerch(float Bufftime)
+    {
+        //バフの時間を設定
+        BuffCnt = Bufftime;
+
+        //バフ中の状態にする
+        buff = true;
+    }
+
+    //スタミナ無限バフの処理
+    public void BuffStamina(bool isLimitless, float Bufftime)
+    {
+        //バフの時間を設定
+        BuffCnt = Bufftime;
+
+        //スタミナ無限状態にする
+        isLimit = isLimitless;
 
         //バフ中の状態にする
         buff = true;

@@ -25,6 +25,9 @@ public class RandomItem : MonoBehaviour
     //バフの割合,1.0～0.0の間
     [SerializeField]
     private float buffratio = 0.0f;
+    //サーチのオブジェクト
+    [SerializeField]
+    private GameObject Serch;
     //プレイヤー
     private GameObject player;
     //バフの時間
@@ -129,15 +132,23 @@ public class RandomItem : MonoBehaviour
                     Img.sprite = buff[type];
                     
                     //名前がbuff[0]と一緒だった場合
-                    if(buff[type].name==buff[0].name)
+                    if(buff[type].name== "SpeedUp")
                     {
                         //スピード系のバフの処理
                         //スピードの倍率、バフ時間の設定
-                        player.GetComponent<Checkplayer>().BuffSpeed(3.0f, buffTime);
+                        player.GetComponent<Checkplayer>().BuffSpeed(2.0f, buffTime);
                     }
-                    else
+                    else if(buff[type].name== "Tresure Direction")
                     {
-
+                        //バフ時間の設定
+                        player.GetComponent<Checkplayer>().BuffSerch(buffTime);
+                        //サーチのオブジェクトを生成
+                        Instantiate(Serch, player.transform.position, Serch.transform.rotation);
+                    }
+                    else if(buff[type].name == "Stamina Limitless")
+                    {
+                        //スタミナ無限状態、バフ時間の設定
+                        player.GetComponent<Checkplayer>().BuffStamina(true, buffTime);
                     }
 
                     Debug.Log(buff[type].name);
@@ -151,15 +162,17 @@ public class RandomItem : MonoBehaviour
                     Img.sprite = debuff[type];
 
                     //名前がdebuff[0]と一緒だった場合
-                    if (debuff[type].name == debuff[0].name)
+                    if (debuff[type].name == "SpeedDown")
                     {
                         //スピード系のバフの処理
                         //スピードの倍率、バフ時間の設定
                         player.GetComponent<Checkplayer>().BuffSpeed(0.5f, buffTime);
                     }
-                    else
+                    else if(debuff[type].name=="Operation Reversal")
                     {
-
+                        //スピード系のバフの処理
+                        //スピードの倍率、バフ時間の設定
+                        player.GetComponent<Checkplayer>().BuffSpeed(-1f, buffTime);
                     }
 
                     Debug.Log(debuff[type].name);
