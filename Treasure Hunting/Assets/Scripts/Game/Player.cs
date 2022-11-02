@@ -259,7 +259,6 @@ public class Player : MonoBehaviour
                 if (collision.gameObject.GetComponent<KeyDoor>().isOpenDoor == true)
                 {
                     //ドアを動かす
-
                     Debug.Log("ドア開く");
                 }
             }

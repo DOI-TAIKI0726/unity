@@ -16,7 +16,7 @@ public class SwitchMystery : MonoBehaviour
         //レンダラーの情報の取得
         render = GetComponent<Renderer>();
         //ドアのオブジェクトの情報取得
-        door = GameObject.Find("door");
+        door = GameObject.Find("CheckObj/door");
 
         //g,bの値をレンダラーから取得
         g = render.material.color.g;
