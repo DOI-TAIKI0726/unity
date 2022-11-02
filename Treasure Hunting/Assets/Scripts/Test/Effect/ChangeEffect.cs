@@ -42,6 +42,7 @@ public class ChangeEffect : MonoBehaviour
                 EffectNumber[1].SetActive(false);
                 EffectNumber[2].SetActive(false);
                 EffectNumber[3].SetActive(false);
+                EffectNumber[4].SetActive(false);
                 break;
             //紙吹雪エフェクトON
             case 1:
@@ -49,6 +50,7 @@ public class ChangeEffect : MonoBehaviour
                 EffectNumber[1].SetActive(true);
                 EffectNumber[2].SetActive(false);
                 EffectNumber[3].SetActive(false);
+                EffectNumber[4].SetActive(false);
                 break;
             //キラキラエフェクトON
             case 2:
@@ -56,6 +58,7 @@ public class ChangeEffect : MonoBehaviour
                 EffectNumber[1].SetActive(false);
                 EffectNumber[2].SetActive(true);
                 EffectNumber[3].SetActive(false);
+                EffectNumber[4].SetActive(false);
                 break;
             //デバフエフェクトON
             case 3:
@@ -63,7 +66,17 @@ public class ChangeEffect : MonoBehaviour
                 EffectNumber[1].SetActive(false);
                 EffectNumber[2].SetActive(false);
                 EffectNumber[3].SetActive(true);
+                EffectNumber[4].SetActive(false);
                 break;
+            case 4:
+                EffectNumber[0].SetActive(false);
+                EffectNumber[1].SetActive(false);
+                EffectNumber[2].SetActive(false);
+                EffectNumber[3].SetActive(false);
+                EffectNumber[4].SetActive(true);
+                break;
+
+
 
         }
     }
