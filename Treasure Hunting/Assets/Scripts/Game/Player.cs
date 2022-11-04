@@ -20,9 +20,10 @@ public class Player : MonoBehaviour
     //スタミナ回復速度
     [SerializeField]
     private float recoveryStamina = 0.1f;
-    //走っているときのスタミナ消費
+    //走っているときのスタミナ消費量
     [SerializeField]
     private float consumptionStamina = 0.7f;
+    //ジャンプしたときのスタミナ消費量
 
     //最大スタミナ
     private float maxStamina;
@@ -186,6 +187,7 @@ public class Player : MonoBehaviour
                 {
                     //走る移動
                     rigidBody.velocity = moveForward * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
+                    //走る移動中なら
                     if (moveForward != Vector3.zero)
                     {
                         //スタミナ減少
@@ -207,7 +209,9 @@ public class Player : MonoBehaviour
                 //SPACEキーを押したら
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    //上に力を加えてジャンプする
                     rigidBody.AddForce(0.0f, jumpPower, 0.0f);
+                
                     isGround = false;
                 }
             }
@@ -222,6 +226,10 @@ public class Player : MonoBehaviour
                 //移動アニメーション終了
                 this.animetor.SetBool(param_isRun, false);
             }
+
+            //ジャンプしたらアニメーション遷移
+
+
         }
         //QuitPanelがアクティブなら
         else
@@ -245,6 +253,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGround = true;
+            Debug.Log(isGround);
         }
     }
 
