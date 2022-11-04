@@ -71,13 +71,13 @@ public class Checkplayer : MonoBehaviour
     {
         //リジッドボディの情報の格納
         rb = GetComponent<Rigidbody>();
-        staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
+        //staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
 
         //プレイヤースクリプトにコピー
         //oldtypeのデータ数の更新
         oldtype = new int[DataCnt];
 
-        maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
+        //maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
     }
 
@@ -114,8 +114,8 @@ public class Checkplayer : MonoBehaviour
                 isMaxStamina = false;
             }
 
-            //スタミナゲージの更新
-            staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
+            ////スタミナゲージの更新
+            //staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
 
             //プレイヤースクリプトにコピーしたい処理
             //ここから
