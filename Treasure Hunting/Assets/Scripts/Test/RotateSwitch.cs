@@ -25,9 +25,9 @@ public class RotateSwitch : MonoBehaviour
 
         //プレイヤーの情報をPlayertagから取得
         player_obj = GameObject.FindGameObjectWithTag("Player");
-        
+
         //回転するobjの情報はスイッチobjの子から取得 
-        rotate_obj = transform.GetChild(0).gameObject;
+        rotate_obj = transform.Find("RotateObject").gameObject;
 
     }
 
@@ -80,6 +80,25 @@ public class RotateSwitch : MonoBehaviour
     //}
 
     //プレイヤーと当たり続けている間の判定
+    void OnTriggerStay(Collider col)
+    {
+        //正解の向きに揃っていない場合
+        if (rotManager.bEnd == false)
+        {
+            //スイッチオブジェクトがプレイヤータグついたやつと当たった
+            if (col.gameObject.tag == "Player")
+            {
+                //左クリックボタンが入力
+                if (Input.GetMouseButton(0) && bUsedButton == false)
+                {
+                    bUsedButton = true;
+                    //オブジェクトを回転させるコルーチンスタート
+                    StartCoroutine(Rotate());
+                }
+            }
+        }
+    }
+
     void OnTriggerStay(Collider col)
     {
         //正解の向きに揃っていない場合

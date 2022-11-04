@@ -44,17 +44,17 @@ public class RandomItemEffect : MonoBehaviour
 
         //全てのエフェクトをFind
         Buff = GameObject.Find("Buff");
-        Confetti = GameObject.Find("Confetti");
-        Kirakira = GameObject.Find("KiraKira");
+        //Confetti = GameObject.Find("Confetti");
+        //Kirakira = GameObject.Find("KiraKira");
         Debuff = GameObject.Find("Debuff");
-        LandingDust = GameObject.Find("LandingDust");
+        //LandingDust = GameObject.Find("LandingDust");
 
         //最初は全てのオブジェクトを非アクティブ
         Buff.SetActive(false);
-        Confetti.SetActive(false);
-        Kirakira.SetActive(false);
+        //Confetti.SetActive(false);
+        //Kirakira.SetActive(false);
         Debuff.SetActive(false);
-        LandingDust.SetActive(false);
+       // LandingDust.SetActive(false);
 
     }
 
