@@ -32270,6 +32270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 10
+  jumpPower: 300
   recoveryStamina: 0.1
   consumptionStamina: 0.7
 --- !u!1 &5939575131921274030
@@ -32306,15 +32307,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8315dceef493ba64c8b624c9dd174289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CountTime: 0
+  CountTime: 2
   buff:
-  - {fileID: 21300000, guid: ee980ccfe9b5fe648b550b2e9bf8c8b5, type: 3}
-  - {fileID: 21300000, guid: 5a71fdfdc69ce9646ba37655b001743c, type: 3}
+  - {fileID: 21300000, guid: e3509ff473b64f448bcbdc577e204b48, type: 3}
+  - {fileID: 21300000, guid: 68524384162af754995e1a9df7a1888b, type: 3}
+  - {fileID: 21300000, guid: 3f8569dfbb1cec74b97f626933be0bc6, type: 3}
   debuff:
-  - {fileID: 21300000, guid: c523981906d2fac45b7a7450eaefdd6c, type: 3}
-  - {fileID: 21300000, guid: 114f61449edeb314eb765006ffd2ae9a, type: 3}
-  max: 0.6
-  buffratio: 100
+  - {fileID: 21300000, guid: 3bcd60604f34f394bab6a0aa1aeabc1f, type: 3}
+  - {fileID: 21300000, guid: 5848ad2d5bc1e664abf216cc7f5d09ae, type: 3}
+  max: 100
+  buffratio: 0.6
 --- !u!114 &5939575131921274032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46741,7 +46743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6508439643750887849}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 5, z: -0}
+  m_LocalPosition: {x: 0, y: 4, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1513602755}
