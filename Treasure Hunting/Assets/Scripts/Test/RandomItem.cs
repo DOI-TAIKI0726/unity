@@ -131,7 +131,7 @@ public class RandomItem : MonoBehaviour
                     type = Random.Range(0, buff.Length);
                     Img.sprite = buff[type];
                     
-                    //名前がbuff[0]と一緒だった場合
+                    //名前が現在表示されている画像と一緒だった場合
                     if(buff[type].name== "SpeedUp")
                     {
                         //スピード系のバフの処理
@@ -142,8 +142,9 @@ public class RandomItem : MonoBehaviour
                     {
                         //バフ時間の設定
                         player.GetComponent<Checkplayer>().BuffSerch(buffTime);
+                        Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
                         //サーチのオブジェクトを生成
-                        Instantiate(Serch, player.transform.position, Serch.transform.rotation);
+                        Instantiate(Serch, playerPos, Serch.transform.rotation);
                     }
                     else if(buff[type].name == "Stamina Limitless")
                     {
@@ -161,7 +162,7 @@ public class RandomItem : MonoBehaviour
                     type = Random.Range(0, debuff.Length);
                     Img.sprite = debuff[type];
 
-                    //名前がdebuff[0]と一緒だった場合
+                    //名前が現在表示されている画像と一緒だった場合
                     if (debuff[type].name == "SpeedDown")
                     {
                         //スピード系のバフの処理
