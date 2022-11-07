@@ -14188,7 +14188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d911af58a61cf45a73eabfa685ae4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 20
+  walkSpeed: 5
   runSpeed: 20
   jumpPower: 300
   recoveryStamina: 100
