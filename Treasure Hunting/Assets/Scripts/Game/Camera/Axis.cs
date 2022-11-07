@@ -50,8 +50,8 @@ public class Axis : MonoBehaviour
 
     void Update()
     {
-        //QuitPanelが非アクティブなら
-        if (gameManagerScript.quitPanel.activeSelf == false)
+        //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
+        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
             //Axisの位置をPlayer＋axisPosで決める
             transform.position = player.transform.position + axisPos;
