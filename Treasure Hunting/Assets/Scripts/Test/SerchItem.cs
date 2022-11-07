@@ -25,7 +25,7 @@ public class SerchItem : MonoBehaviour
         target = SerchObj(player, "Item");
 
         //プレイヤーに追従
-        transform.position = player.transform.position;
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
 
         //targetがnullだった場合
         if (target == null)
@@ -48,6 +48,8 @@ public class SerchItem : MonoBehaviour
         //ターゲットのオブジェクト
         GameObject tarObj = null;
         
+        //複数のtagNameのオブジェクトの情報を取得
+        //playerとtagNameのオブジェクトの距離を計測
         foreach (GameObject obs in GameObject.FindGameObjectsWithTag(tagName))
         {
             //アイテムとプレイヤーの距離

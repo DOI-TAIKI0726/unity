@@ -11,6 +11,9 @@ public class Checkplayer : MonoBehaviour
     //走る速度
     [SerializeField]
     private float runSpeed;
+    //ジャンプ力
+    [SerializeField]
+    private float jumpPower = 300.0f;
     //スタミナ回復速度
     [SerializeField]
     private float recoveryStamina;
@@ -29,12 +32,22 @@ public class Checkplayer : MonoBehaviour
     private RectTransform staminagage;
     //現在のスタミナ
     private float nowStamina;
+    //自身に設定されているアニメーター
+    private Animator animetor;
+    //アニメーターのパラメーターisRun
+    private const string param_isRun = "isRun";
+    //アニメーターのパラメーターisJump
+    private const string param_isJump = "isJump";
     //移動方法切り替え
     private bool isMoveMode = false;
     //スタミナが減少中か
     private bool isStamina = false;
     //スタミナが減った後、最大まで回復したか
     private bool isMaxStamina = false;
+    //GameManagerスクリプト
+    private GameManager gameManagerScript;
+    //地面についているか
+    private bool isGround = true;
 
     private Rigidbody rb;                           //リジッドボディ
 
@@ -69,15 +82,18 @@ public class Checkplayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animetor = this.GetComponent<Animator>();
+
         //リジッドボディの情報の格納
         rb = GetComponent<Rigidbody>();
-        //staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
+        staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         //プレイヤースクリプトにコピー
         //oldtypeのデータ数の更新
         oldtype = new int[DataCnt];
 
-        //maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
+        maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
     }
 
@@ -89,7 +105,7 @@ public class Checkplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isMove)
+        if(gameManagerScript.quitPanel.activeSelf == false)
         {
             //スタミナが減少状態ではないなら
             if (isStamina == false || isLimit == true) 
@@ -114,8 +130,8 @@ public class Checkplayer : MonoBehaviour
                 isMaxStamina = false;
             }
 
-            ////スタミナゲージの更新
-            //staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
+            //スタミナゲージの更新
+            staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
 
             //プレイヤースクリプトにコピーしたい処理
             //ここから
@@ -150,36 +166,40 @@ public class Checkplayer : MonoBehaviour
             //チェック用
             //スペース押したら宝物を吐き出す
             //吐き出さない場合はいらない処理
-            if (Input.GetKeyDown(KeyCode.Space))
+            if(GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
             {
-                //アイテム数が0より大きい場合
-                if (ItemCount > 0)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    //減算
-                    ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
-
-                    //アイテムの生成
-                    //生成する位置を取得
-                    Vector3 position = new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z);
-                    //生成
-                    GameObject NewItem = Instantiate(Item[Itemtype], position, transform.rotation);
-
-                    //次生成するアイテムの更新
-                    for (int cnt = 0; cnt < oldtype.Length; cnt++)
+                    //アイテム数が0より大きい場合
+                    if (ItemCount > 0)
                     {
-                        //次に生成するアイテムの種類を取得
-                        if (cnt == 0)
+                        //減算
+                        ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
+
+                        //アイテムの生成
+                        //生成する位置を取得
+                        Vector3 position = new Vector3(transform.position.x + 2f, transform.position.y+1f, transform.position.z);
+                        //生成
+                        GameObject NewItem = Instantiate(Item[Itemtype], position, transform.rotation);
+
+                        //次生成するアイテムの更新
+                        for (int cnt = 0; cnt < oldtype.Length; cnt++)
                         {
-                            Itemtype = oldtype[cnt];
-                        }
-                        //生成するアイテムの順番の更新
-                        else
-                        {
-                            oldtype[cnt - 1] = oldtype[cnt];
+                            //次に生成するアイテムの種類を取得
+                            if (cnt == 0)
+                            {
+                                Itemtype = oldtype[cnt];
+                            }
+                            //生成するアイテムの順番の更新
+                            else
+                            {
+                                oldtype[cnt - 1] = oldtype[cnt];
+                            }
                         }
                     }
                 }
             }
+            
             //ここまで
         }
     }
@@ -187,7 +207,7 @@ public class Checkplayer : MonoBehaviour
     void Move()
     {
         //移動可能
-        if(isMove)
+        if(gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
             //移動キーの入力を取得
             //縦
@@ -264,13 +284,37 @@ public class Checkplayer : MonoBehaviour
             if (moveForward != Vector3.zero)
             {
                 //キャラクターの向きを進行方向に
-                transform.rotation = Quaternion.LookRotation(moveForward);
+                transform.rotation = Quaternion.LookRotation(moveForward*Speedup);
+            }
+
+            //地面についてるなら
+            if (isGround == true)
+            {
+                //SPACEキーを押したら
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    rb.AddForce(0.0f, jumpPower, 0.0f);
+                    isGround = false;
+                }
+            }
+            //移動したらアニメーション遷移
+            if (horizonal != 0 || vertical != 0)
+            {
+                //移動アニメーション開始
+                this.animetor.SetBool(param_isRun, true);
+            }
+            else
+            {
+                //移動アニメーション終了
+                this.animetor.SetBool(param_isRun, false);
             }
         }
         //移動不可能
         else
         {
-            moveForward = Vector3.zero;
+            rb.velocity = Vector3.zero;
+            //移動アニメーション終了
+            this.animetor.SetBool(param_isRun, false);
         }
 
         //rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
@@ -280,8 +324,13 @@ public class Checkplayer : MonoBehaviour
     //当たり判定
     void OnCollisionEnter(Collision col)
     {
+        //タグがGroundのオブジェクトに当たったら
+        if (col.gameObject.tag == "Ground")
+        {
+            isGround = true;
+        }
         //当たったオブジェクトのタグがItemだった場合
-        if(col.gameObject.tag=="Item")
+        if (col.gameObject.tag=="Item")
         {
             //アイテムの削除
             Destroy(col.gameObject);
@@ -366,7 +415,8 @@ public class Checkplayer : MonoBehaviour
                 if (keyuse)
                 {
                     //ドアを動かす処理
-                    col.gameObject.GetComponent<DoorOpen>().DoorMove();
+                    //col.gameObject.GetComponent<DoorOpen>().DoorMove();
+                    GameObject.Find("KeyDoorManager").GetComponent<DoorOpen>().DoorMove();
 
                     //キーを使えない状態にする
                     keyuse = false;
