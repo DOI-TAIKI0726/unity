@@ -18,7 +18,6 @@ public class RotateSwitch : MonoBehaviour
 
     void Start()
     {
-        
         //クリア判定取得のために親オブジェクト(rotateManager)情報取得
         GameObject objParent = transform.parent.gameObject;
         rotManager = objParent.GetComponent<rotateManager>();
@@ -59,37 +58,17 @@ public class RotateSwitch : MonoBehaviour
         bUsedButton = false;
     }
 
-    ////プレイヤーと当たり続けている間の判定
-    //void OnCollisionStay(Collision col)
-    //{
-    //    //正解の向きに揃っていない場合
-    //    if (rotManager.bEnd == false)
-    //    {
-    //        //スイッチオブジェクトがプレイヤータグついたやつと当たった
-    //        if (col.gameObject.tag == "Player")
-    //        {
-    //            //左クリックボタンが入力
-    //            if (Input.GetMouseButton(0) && bUsedButton == false)
-    //            {
-    //                bUsedButton = true;
-    //                //オブジェクトを回転させるコルーチンスタート
-    //                StartCoroutine(Rotate());
-    //            }
-    //        }
-    //    }
-    //}
 
-
-    void OnTriggerStay(Collider col)
+    void OnTriggerEnter(Collider collider)
     {
         //正解の向きに揃っていない場合
         if (rotManager.bEnd == false)
         {
             //スイッチオブジェクトがプレイヤータグついたやつと当たった
-            if (col.gameObject.tag == "Player")
+            if (collider.gameObject.tag == "Player")
             {
                 //左クリックボタンが入力
-                if (Input.GetMouseButton(0) && bUsedButton == false)
+                if (bUsedButton == false)
                 {
                     bUsedButton = true;
                     //オブジェクトを回転させるコルーチンスタート
