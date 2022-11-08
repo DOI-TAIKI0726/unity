@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 284563550}
   m_Layer: 0
   m_Name: RouletteItem
-  m_TagString: Roulette
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2828,7 +2828,7 @@ GameObject:
   - component: {fileID: 2095795908}
   - component: {fileID: 2095795907}
   m_Layer: 5
-  m_Name: CheckText
+  m_Name: GetTreasureNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3178,7 +3178,7 @@ GameObject:
   - component: {fileID: 2891060417985932162}
   m_Layer: 0
   m_Name: CheckItem
-  m_TagString: Item
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10612,7 +10612,7 @@ GameObject:
   - component: {fileID: 5022718187482924008}
   m_Layer: 0
   m_Name: CheckItem_Capsule
-  m_TagString: Item
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

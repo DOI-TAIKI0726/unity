@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : QuitPanel
 {
-    //
-
     void Start()
     {
         StartQuitPanel();

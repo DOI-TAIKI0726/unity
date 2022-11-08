@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private float nowStamina;
     //自身に設定されているアニメーター
     private Animator animetor;
-    //
+    //アニメーターのパラメーターisIdel
     private const string param_isIdel = "isIdel";
     //アニメーターのパラメーターisRun
     private const string param_isRun = "isRun";
@@ -43,14 +43,18 @@ public class Player : MonoBehaviour
     private Vector3 cameraForward;
     //移動方向ベクトル
     private Vector3 moveForward;
-    //リジットボディ参照
+    //リジットボディ
     private Rigidbody rigidBody;
     //GameManagerスクリプト
     private GameManager gameManagerScript;
-    //入手したアイテム数
-    private int getItemNum;
-    //入手したアイテム数テキスト
-    private Text getItemNumText;
+    //スピードの倍率
+    private float speedUp = 1f;
+    //バフの時間
+    private float buffTime;
+    //バフ効果中かどうか
+    private bool isBuff;
+    //スタミナ無限か
+    private bool isStaminaLimit = false;
     //移動方法切り替え
     private bool isMoveMode = false;
     //スタミナが減少中か
@@ -64,6 +68,14 @@ public class Player : MonoBehaviour
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
 
+
+    //キーが入手されているか
+    [System.NonSerialized]
+    public bool isKeyuse = false;
+    //移動可能か
+    [System.NonSerialized]
+    public bool isMove = true;
+
     void Start()
     {
         //各要素の参照や初期化
@@ -71,12 +83,9 @@ public class Player : MonoBehaviour
         staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>(); ;
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-        getItemNumText = GameObject.Find("GetItemNum").GetComponent<Text>();
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
 
-        //最初は非表示にしておく
-        getItemNumText.enabled = false;
     }
 
     void FixedUpdate()
@@ -86,23 +95,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //getItemNumTextの表示
-        getItemNumText.text = "入手した宝の数:" + getItemNum.ToString();
-
-        //tab押したら
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            //テキスト表示
-            getItemNumText.enabled = true;
-        }
-        else
-        {
-            //テキスト非表示
-            getItemNumText.enabled = false;
-        }
-
-        //スタミナが減少状態ではないなら
-        if (isStamina == false)
+        //スタミナが減少状態ではないならorスタミナが無限なら
+        if (isStamina == false || isStaminaLimit == true)
         {
             //スタミナを回復
             nowStamina += recoveryStamina;
@@ -126,6 +120,34 @@ public class Player : MonoBehaviour
 
         //スタミナゲージの更新
         staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
+
+        //バフ効果時間なら
+        if (isBuff == true)
+        {
+            //バフの経過時間
+            buffTime -= Time.deltaTime;
+
+            //BuffTime秒経ったらバフ終了
+            if (buffTime <= 0)
+            {
+                //バフの時間を0にする
+                buffTime = 0f;
+
+                //tagがbuffのオブジェクトを削除
+                Destroy(GameObject.FindGameObjectWithTag("buff"));
+
+                //スタミナ無限状態じゃなくする
+                isStaminaLimit = false;
+
+                //スピードの倍率を設定
+                speedUp = 1f;
+
+                //バフ終了状態にする
+                isBuff = false;
+
+                Debug.Log("end");
+            }
+        }
     }
 
     //移動関連処理
@@ -183,7 +205,7 @@ public class Player : MonoBehaviour
             if (isMoveMode == false)
             {
                 //歩く移動
-                rigidBody.velocity = moveForward * walkSpeed + new Vector3(0, rigidBody.velocity.y, 0);
+                rigidBody.velocity = moveForward * speedUp * walkSpeed + new Vector3(0, rigidBody.velocity.y, 0);
             }
             //走る
             if (isMoveMode == true)
@@ -192,7 +214,7 @@ public class Player : MonoBehaviour
                 if (isMaxStamina == false)
                 {
                     //走る移動
-                    rigidBody.velocity = moveForward * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
+                    rigidBody.velocity = moveForward * speedUp * runSpeed + new Vector3(0, rigidBody.velocity.y, 0);
                     //走る移動中なら
                     if (moveForward != Vector3.zero)
                     {
@@ -206,7 +228,7 @@ public class Player : MonoBehaviour
             if (moveForward != Vector3.zero)
             {
                 //キャラクターの向きを進行方向に
-                transform.rotation = Quaternion.LookRotation(moveForward);
+                transform.rotation = Quaternion.LookRotation(moveForward * speedUp);
             }
 
             //地面についてるなら
@@ -285,6 +307,45 @@ public class Player : MonoBehaviour
             isGround = true;
             Debug.Log(isGround);
         }
+
+        //タグがTreasureのオブジェクトに当たったら
+        if(collision.gameObject.tag == "Treasure")
+        {
+            //当たったオブジェクトの削除
+            Destroy(collision.gameObject);
+            //入手した宝の数に加算する
+            GameObject.Find("GameManager").GetComponent<ItemCheck>().AddTreasureNum(1);
+        }
+
+        //タグがItemのオブジェクトに当たったら
+        if (collision.gameObject.tag == "Item")
+        {
+            //アイテムの削除
+            Destroy(collision.gameObject);
+
+            //ルーレット開始の処理
+            GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
+        }
+
+        //タグがGatherだった場合
+        if (collision.gameObject.tag == "Gather")
+        {
+            //アイテムの削除
+            Destroy(collision.gameObject);
+
+            //収集したアイテム数の加算
+            GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
+        }
+
+        //タグがKeyだった場合
+        if (collision.gameObject.tag == "Key")
+        {
+            //アイテムの削除
+            Destroy(collision.gameObject);
+
+            //キーを入手
+            isKeyuse = true;
+        }
     }
 
     void OnCollisionStay(Collision collision)
@@ -302,5 +363,40 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    //スピード系バフの処理
+    public void BuffSpeed(float Speed, float Bufftime)
+    {
+        //スピードの倍率を設定
+        speedUp = Speed;
+        //バフの時間を設定
+        buffTime = Bufftime;
+
+        //バフ中の状態にする
+        isBuff = true;
+    }
+
+    //サーチのバフ処理
+    public void BuffSerch(float Bufftime)
+    {
+        //バフの時間を設定
+        buffTime = Bufftime;
+
+        //バフ中の状態にする
+        isBuff = true;
+    }
+
+    //スタミナ無限バフの処理
+    public void BuffStamina(bool isLimitless, float Bufftime)
+    {
+        //バフの時間を設定
+        buffTime = Bufftime;
+
+        //スタミナ無限状態にする
+        isStaminaLimit = isLimitless;
+
+        //バフ中の状態にする
+        isBuff = true;
     }
 }

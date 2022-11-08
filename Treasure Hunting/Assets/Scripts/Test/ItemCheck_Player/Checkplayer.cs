@@ -174,7 +174,7 @@ public class Checkplayer : MonoBehaviour
                     if (ItemCount > 0)
                     {
                         //減算
-                        ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(-1);
+                        ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().AddTreasureNum(-1);
 
                         //アイテムの生成
                         //生成する位置を取得
@@ -336,7 +336,7 @@ public class Checkplayer : MonoBehaviour
             Destroy(col.gameObject);
 
             //加算
-            ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().Add(1);
+            ItemCount = GameObject.Find("GameManager").GetComponent<ItemCheck>().AddTreasureNum(1);
 
             //アイテムを吐き出す場合必要な処理
             //ここから
@@ -371,8 +371,8 @@ public class Checkplayer : MonoBehaviour
             }
         }
 
-        //当たったオブジェクトのタグがRouletteの場合
-        if(col.gameObject.tag=="Roulette")
+        //当たったオブジェクトのタグがItemの場合
+        if(col.gameObject.tag=="Item")
         {
             //アイテムの削除
             Destroy(col.gameObject);
