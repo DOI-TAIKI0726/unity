@@ -77,6 +77,10 @@ public class Checkplayer : MonoBehaviour
     public bool isMove = true;
     //バフ中か
     private bool buff = false;
+    //メインで使っているライト
+    private Light MainLight;
+    //PlayerHeadのライト
+    private Light PlayerHeadLight;
     //ここまで
 
     // Start is called before the first frame update
@@ -88,6 +92,10 @@ public class Checkplayer : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //ライトの情報を取得
+        MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        PlayerHeadLight = GameObject.Find("PlayerHead/Point Light").GetComponent<Light>();
 
         //プレイヤースクリプトにコピー
         //oldtypeのデータ数の更新
@@ -148,8 +156,16 @@ public class Checkplayer : MonoBehaviour
                     BuffCnt = 0f;
 
                     //tagがbuffのオブジェクトを削除
-                    Destroy(GameObject.FindGameObjectWithTag("buff"));
-                    
+                    foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
+                    {
+                        //削除
+                        Destroy(obs);
+                    }
+
+                    //ライトを表示する
+                    MainLight.gameObject.SetActive(true);
+                    PlayerHeadLight.gameObject.SetActive(true);
+
                     //スタミナ無限状態じゃなくする
                     isLimit = false;
 
@@ -457,6 +473,20 @@ public class Checkplayer : MonoBehaviour
 
         //スタミナ無限状態にする
         isLimit = isLimitless;
+
+        //バフ中の状態にする
+        buff = true;
+    }
+
+    //視界系のバフの処理
+    public void BuffLight(float Bufftime)
+    {
+        //バフの時間を設定
+        BuffCnt = Bufftime;
+
+        //ライトの非表示
+        MainLight.gameObject.SetActive(false);
+        PlayerHeadLight.gameObject.SetActive(false);
 
         //バフ中の状態にする
         buff = true;

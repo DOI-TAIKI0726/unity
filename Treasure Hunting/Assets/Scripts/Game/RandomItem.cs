@@ -33,6 +33,12 @@ public class RandomItem : MonoBehaviour
     private GameObject player;
     //バフの時間
     private float buffTime = 5.0f;
+    //デバフのライト
+    [SerializeField]
+    private GameObject debuffLight;
+    //デバフ中にプレイヤーを照らすライト
+    [SerializeField]
+    private GameObject playerLight;
 
     // Start is called before the first frame update
     void Start()
@@ -269,6 +275,24 @@ public class RandomItem : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "Game")
             {
                 player.GetComponent<Player>().BuffSpeed(-1f, buffTime);
+            }
+        }
+        //視界デバフ(仮)
+        else if (debuff[type].name == "debuff0_Check")
+        {
+            if(SceneManager.GetActiveScene().name== "ItemCheckScene")
+            {
+                player.GetComponent<Checkplayer>().BuffLight(buffTime);
+
+                //デバフライトの生成位置
+                Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 7f, player.transform.position.z);
+                //デバフライトを生成
+                var LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
+                //デバフライトをplayerの子オブジェクトに設定
+                LightObj.transform.parent = player.transform;
+
+                //視界デバフ中にプレイヤーを照らすライトを生成
+                Instantiate(playerLight, playerLight.transform.position, playerLight.transform.rotation);
             }
         }
 
