@@ -229,6 +229,7 @@ public class EffectPlayer : MonoBehaviour
             {
                 //移動アニメーション終了
                 this.animetor.SetBool(param_isRun, false);
+                DushDustEffect.Stop();
 
             }
         }
