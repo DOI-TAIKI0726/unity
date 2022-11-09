@@ -8,9 +8,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : QuitPanel
 {
+    //timerスクリプト
+    private timer timerScript;
+
     void Start()
     {
         StartQuitPanel();
+
+        timerScript = GameObject.Find("Timer").GetComponent<timer>();
     }
 
     void Update()
@@ -20,6 +25,11 @@ public class GameManager : QuitPanel
             SwitchQuitPanel();
         }
 
+        //タイムアップしたら
+        if(timerScript.isTimeUp == true)
+        {
+            this.GetComponent<AudioSource>().enabled = false;
+        }
 
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
         if (quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)

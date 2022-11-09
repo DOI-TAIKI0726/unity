@@ -11,12 +11,21 @@ public class timer : MonoBehaviour
     private int changeColSecond = 30; //色を変え始める秒数
 
     private float seconds;　　//秒
-    private float oldSeconds;//前のUpdateの時の秒数
-    private Text timerText;　//タイマー表示用テキスト
-    private Color textColor; //文字の色変更用
+    private float oldSeconds; //前のUpdateの時の秒数
+    private Text timerText;   //タイマー表示用テキスト
+    private Color textColor;  //文字の色変更用
 
+    //オーディオソース
+    private AudioSource audioSource;
     //GameManager
     private GameManager gameManagerScript;
+
+    //タイムアップしたか
+    [System.NonSerialized]
+    public bool isTimeUp = false;
+
+    //タイムアップSE
+    public AudioClip timeUpSE;
 
     void Start()
     {
@@ -26,36 +35,58 @@ public class timer : MonoBehaviour
         //赤くする
         textColor = new Color(1, 0, 0, 1);
 
+        audioSource = this.GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     //aaaaa
     void Update()
     {
-        if (gameManagerScript.quitPanel.activeSelf == false)
+        //タイムアップ
+        if(minute == 0 && seconds <= 0)
         {
-            //毎秒引いていく
-            seconds -= Time.deltaTime;
-
-            //0秒以下になったら分を1引く
-            if (seconds <= 0f)
+            audioSource.PlayOneShot(timeUpSE);
+            isTimeUp = true;
+        }
+        else
+        {
+            if (gameManagerScript.quitPanel.activeSelf == false)
             {
-                minute--;
-                seconds = 60f + seconds;
-            }
 
-            //　値が変わった時だけテキストUIを更新
-            if ((int)seconds != (int)oldSeconds)
-            {
-                timerText.text = minute.ToString("0") + ":" + ((int)seconds).ToString("00");
-            }
+                //0秒以下になったら分を1引く
+                if (seconds <= 0f)
+                {
+                    minute--;
+                    seconds = 60f + seconds;
+                }
 
-            oldSeconds = seconds;
+                //　値が変わった時だけテキストUIを更新
+                if ((int)seconds != (int)oldSeconds)
+                {
+                    timerText.text = minute.ToString("0") + ":" + ((int)seconds).ToString("00");
+                }
 
-            //00:30のとき文字を赤くする
-            if (minute == 0 && seconds <= changeColSecond)
-            {
-                timerText.color = textColor;
+                oldSeconds = seconds;
+
+                //00:30のとき文字を赤くする
+                if (minute == 0 && seconds <= changeColSecond)
+                {
+                    timerText.color = textColor;
+                }
+
+                if(minute <= 0)
+                {
+                    minute = 0;
+                }
+                if(seconds <= 0)
+                {
+                    seconds = 0;
+                }
+                else
+                {
+                    //毎秒引いていく
+                    seconds -= Time.deltaTime;
+                }
             }
         }
     }

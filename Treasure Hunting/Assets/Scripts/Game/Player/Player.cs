@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     //GameManagerスクリプト
     private GameManager gameManagerScript;
-    //スピードの倍率
+    //スピード関連のバフデバフを反映させる時に掛ける倍率
     private float speedUp = 1f;
     //バフの時間
     private float buffTime;
@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
     private bool isRunAnimetion = false;
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
-
 
     //キーが入手されているか
     [System.NonSerialized]
@@ -376,7 +375,6 @@ public class Player : MonoBehaviour
         //バフ中の状態にする
         isBuff = true;
     }
-
     //サーチのバフ処理
     public void BuffSerch(float Bufftime)
     {
@@ -386,7 +384,6 @@ public class Player : MonoBehaviour
         //バフ中の状態にする
         isBuff = true;
     }
-
     //スタミナ無限バフの処理
     public void BuffStamina(bool isLimitless, float Bufftime)
     {

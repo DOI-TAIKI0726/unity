@@ -216,6 +216,7 @@ public class RandomItem : MonoBehaviour
             }
 
             Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
+
             //サーチのオブジェクトを生成
             Instantiate(Serch, playerPos, Serch.transform.rotation);
         }
