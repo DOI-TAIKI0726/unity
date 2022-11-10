@@ -222,7 +222,6 @@ public class RandomItem : MonoBehaviour
             }
 
             Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
-
             //サーチのオブジェクトを生成
             Instantiate(Serch, playerPos, Serch.transform.rotation);
         }
@@ -279,14 +278,14 @@ public class RandomItem : MonoBehaviour
             }
         }
         //視界デバフ(仮)
-        else if (debuff[type].name == "debuff0_Check")
+        else if (debuff[type].name == "失明アイコン")
         {
             if(SceneManager.GetActiveScene().name== "ItemCheckScene")
             {
                 player.GetComponent<Checkplayer>().BuffLight(buffTime);
 
                 //デバフライトの生成位置
-                Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 7f, player.transform.position.z);
+                Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 2f, player.transform.position.z);
                 //デバフライトを生成
                 var LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
                 //デバフライトをplayerの子オブジェクトに設定

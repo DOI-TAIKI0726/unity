@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 284563550}
   m_Layer: 0
   m_Name: RouletteItem
-  m_TagString: Treasure
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -383,6 +383,116 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &342213290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342213291}
+  - component: {fileID: 342213295}
+  - component: {fileID: 342213294}
+  - component: {fileID: 342213293}
+  - component: {fileID: 342213292}
+  m_Layer: 5
+  m_Name: Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &342213291
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342213290}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.42343998, y: 0.42343998, z: 0.42343998}
+  m_Children: []
+  m_Father: {fileID: 1240828462}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &342213292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342213290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205b22877bd6827498f68f3e9253b24f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minute: 3
+  changeColSecond: 30
+  timeUpSE: {fileID: 0}
+--- !u!114 &342213293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342213290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!114 &342213294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342213290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 90
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 95
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0:00
+--- !u!222 &342213295
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342213290}
+  m_CullTransparentMesh: 0
 --- !u!1 &389005421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1862,7 @@ RectTransform:
   - {fileID: 554201695}
   - {fileID: 1679197759}
   - {fileID: 389005422}
+  - {fileID: 342213291}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2745,7 +2856,7 @@ MonoBehaviour:
   debuff:
   - {fileID: 21300000, guid: 3bcd60604f34f394bab6a0aa1aeabc1f, type: 3}
   - {fileID: 21300000, guid: 5848ad2d5bc1e664abf216cc7f5d09ae, type: 3}
-  - {fileID: 21300000, guid: c523981906d2fac45b7a7450eaefdd6c, type: 3}
+  - {fileID: 21300000, guid: db75cb3b364cb5d4ba54451b0eec56b1, type: 3}
   max: 10
   buffratio: 0
   Serch: {fileID: 4609056727903115142, guid: 53d9fd3f32958df4a8c1219550fabed6, type: 3}
@@ -3795,7 +3906,6 @@ GameObject:
   - component: {fileID: 3077581600945899565}
   - component: {fileID: 3077581600945899564}
   - component: {fileID: 3077581600945899571}
-  - component: {fileID: 3077581600945899570}
   - component: {fileID: 3077581600945899572}
   m_Layer: 8
   m_Name: Player
@@ -3804,23 +3914,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3077581600945899570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3077581600945899569}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d911af58a61cf45a73eabfa685ae4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 20
-  runSpeed: 20
-  jumpPower: 300
-  recoveryStamina: 100
-  consumptionStamina: 0.7
 --- !u!136 &3077581600945899571
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10532,7 +10625,7 @@ GameObject:
   - component: {fileID: 7635828940436077716}
   m_Layer: 0
   m_Name: CheckItem_Cube
-  m_TagString: Item
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -29,6 +29,9 @@ public class ItemCheck : MonoBehaviour
         GatherIcon = GameObject.Find("GatherIcon").GetComponent<Image>();
         //収集するアイテム数のテキストの情報を取得
         GatherText = GameObject.Find("GatherText").GetComponent<Text>();
+
+        //Gatherのオブジェクト数を取得
+        TotalCount("Gather");
     }
 
     void Update()
@@ -65,7 +68,7 @@ public class ItemCheck : MonoBehaviour
         //入手した宝の数チェックのテキスト
         GetTreasureNumText.text = "入手した宝物の数:" + GetTreasureNum.ToString();
         //収集するアイテムのテキスト
-        GatherText.text = "×" + GatherCount.ToString();
+        GatherText.text = ":" + GatherCount.ToString() + "/" + TotalGather;
     }
 
     //入手した宝の数を加算
@@ -83,5 +86,13 @@ public class ItemCheck : MonoBehaviour
     public void GatherAdd()
     {
         GatherCount++;
+    }
+
+    //tagNameのオブジェクト数の合計を取得する処理
+    void TotalCount(string tagName)
+    {
+        GameObject[] tagObj = GameObject.FindGameObjectsWithTag(tagName);
+
+        TotalGather = tagObj.Length;
     }
 }

@@ -36,6 +36,8 @@ public class Checkplayer : MonoBehaviour
     private Animator animetor;
     //アニメーターのパラメーターisRun
     private const string param_isRun = "isRun";
+    //アニメーターのパラメーターisIdel
+    private const string param_isIdel = "isIdel";
     //アニメーターのパラメーターisJump
     private const string param_isJump = "isJump";
     //移動方法切り替え
@@ -143,47 +145,46 @@ public class Checkplayer : MonoBehaviour
 
             //プレイヤースクリプトにコピーしたい処理
             //ここから
-            //バフ中
-            if (buff)
-            {
-                //バフの経過時間
-                BuffCnt -= Time.deltaTime;
-
-                //BuffCnt秒経ったらバフ終了
-                if (BuffCnt <= 0)
-                {
-                    //バフの時間を0にする
-                    BuffCnt = 0f;
-
-                    //tagがbuffのオブジェクトを削除
-                    foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
-                    {
-                        //削除
-                        Destroy(obs);
-                    }
-
-                    //ライトを表示する
-                    MainLight.gameObject.SetActive(true);
-                    PlayerHeadLight.gameObject.SetActive(true);
-
-                    //スタミナ無限状態じゃなくする
-                    isLimit = false;
-
-                    //スピードの倍率を設定
-                    Speedup = 1f;
-
-                    //バフ終了状態にする
-                    buff = false;
-
-                    Debug.Log("end");
-                }
-            }
-            
             //チェック用
             //スペース押したら宝物を吐き出す
             //吐き出さない場合はいらない処理
             if(GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
             {
+                //バフ中
+                if (buff)
+                {
+                    //バフの経過時間
+                    BuffCnt -= Time.deltaTime;
+
+                    //BuffCnt秒経ったらバフ終了
+                    if (BuffCnt <= 0)
+                    {
+                        //バフの時間を0にする
+                        BuffCnt = 0f;
+
+                        //tagがbuffのオブジェクトを削除
+                        foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
+                        {
+                            //削除
+                            Destroy(obs);
+                        }
+
+                        //ライトを表示する
+                        MainLight.gameObject.SetActive(true);
+                        PlayerHeadLight.gameObject.SetActive(true);
+
+                        //スタミナ無限状態じゃなくする
+                        isLimit = false;
+
+                        //スピードの倍率を設定
+                        Speedup = 1f;
+
+                        //バフ終了状態にする
+                        buff = false;
+
+                        Debug.Log("end");
+                    }
+                }
                 if (Input.GetMouseButtonDown(0))
                 {
                     //アイテム数が0より大きい場合
@@ -255,6 +256,11 @@ public class Checkplayer : MonoBehaviour
                         //スタミナを減少状態にする
                         isStamina = true;
                     }
+                    else
+                    {
+                        //スタミナ減少状態を解除
+                        isStamina = false;
+                    }
                     //走る状態にする
                     isMoveMode = true;
                 }
@@ -313,6 +319,17 @@ public class Checkplayer : MonoBehaviour
                     isGround = false;
                 }
             }
+            //動いていないならアニメーション遷移
+            if (horizonal == 0 && vertical == 0)
+            {
+                //待機アニメーション開始
+                this.animetor.SetBool(param_isIdel, true);
+            }
+            else
+            {
+                //待機アニメーション開始
+                this.animetor.SetBool(param_isIdel, false);
+            }
             //移動したらアニメーション遷移
             if (horizonal != 0 || vertical != 0)
             {
@@ -331,6 +348,8 @@ public class Checkplayer : MonoBehaviour
             rb.velocity = Vector3.zero;
             //移動アニメーション終了
             this.animetor.SetBool(param_isRun, false);
+            //待機アニメーション開始
+            this.animetor.SetBool(param_isIdel, true);
         }
 
         //rb.velocity = moveForward * walkSpeed * Speedup + new Vector3(0, rb.velocity.y, 0);
@@ -346,7 +365,7 @@ public class Checkplayer : MonoBehaviour
             isGround = true;
         }
         //当たったオブジェクトのタグがItemだった場合
-        if (col.gameObject.tag=="Item")
+        if (col.gameObject.tag=="Treasure")
         {
             //アイテムの削除
             Destroy(col.gameObject);
@@ -405,6 +424,8 @@ public class Checkplayer : MonoBehaviour
 
             //収集したアイテム数の加算
             GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
+
+            Debug.Log("Gather");
         }
 
         //タグがKeyだった場合

@@ -15,14 +15,14 @@ public class SerchItem : MonoBehaviour
         //プレイヤーの情報を取得
         player = GameObject.Find("Player");
         //一番近くのアイテムを取得
-        target = SerchObj(player, "Item");
+        target = SerchObj(player, "Treasure");
     }
 
     // Update is called once per frame
     void Update()
     {
         //一番近くのアイテムを取得
-        target = SerchObj(player, "Item");
+        target = SerchObj(player, "Treasure");
 
         //プレイヤーに追従
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
