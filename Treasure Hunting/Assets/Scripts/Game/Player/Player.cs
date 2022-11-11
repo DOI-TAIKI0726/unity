@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     //GameManagerスクリプト
     private GameManager gameManagerScript;
-    //スピード関連のバフデバフを反映させる時に掛ける倍率
+    //スピードの倍率
     private float speedUp = 1f;
     //バフの時間
     private float buffTime;
@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
     private bool isRunAnimetion = false;
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
+
 
     //キーが入手されているか
     [System.NonSerialized]
@@ -294,12 +295,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //タグがKeyのオブジェクトに当たったら
-        if (collision.gameObject.tag == "Key")
-        {
-            //当たった鍵の削除
-            Destroy(collision.gameObject);
-        }
+        
         //タグがGroundのオブジェクトに当たったら
         if (collision.gameObject.tag == "Ground")
         {
@@ -336,15 +332,7 @@ public class Player : MonoBehaviour
             GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
         }
 
-        //タグがKeyだった場合
-        if (collision.gameObject.tag == "Key")
-        {
-            //アイテムの削除
-            Destroy(collision.gameObject);
-
-            //キーを入手
-            isKeyuse = true;
-        }
+        
     }
 
     void OnCollisionStay(Collision collision)
@@ -354,11 +342,12 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                //当たったドアのスクリプト中のisOpenDoorがtrueなら
-                if (collision.gameObject.GetComponent<KeyDoor>().isOpenDoor == true)
+                //Keyが3つ揃っていたら
+                if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3)
                 {
-                    //ドアを動かす
-                    Debug.Log("ドア開く");
+                    //ドアを開く
+                    collision.transform.parent.gameObject.GetComponent<DoorOpen>().DoorMove();
+                    isKeyuse = true;
                 }
             }
         }
@@ -375,6 +364,7 @@ public class Player : MonoBehaviour
         //バフ中の状態にする
         isBuff = true;
     }
+
     //サーチのバフ処理
     public void BuffSerch(float Bufftime)
     {
@@ -384,6 +374,7 @@ public class Player : MonoBehaviour
         //バフ中の状態にする
         isBuff = true;
     }
+
     //スタミナ無限バフの処理
     public void BuffStamina(bool isLimitless, float Bufftime)
     {
