@@ -10,13 +10,14 @@ public class PasswordPanel : MonoBehaviour
     //パスワードの入力されている値
     private int[] pwData;
     //答えの値  0～pwSpriteデータ数までの値
+    [SerializeField]
     private int[] Answer = { 0, 1, 2 };
-    //パスワードの値のスプライト
+    //パスワードの値の最大値
     [SerializeField]
-    private Sprite[] pwSprite;
-    //パスワードのボタン
+    private int pwMax;
+    //パスワードのテキスト
     [SerializeField]
-    private Image[] pwButton;
+    private Text[] pwText;
     //ドアのオブジェクト
     private GameObject door;
     //クリアしたか
@@ -34,6 +35,13 @@ public class PasswordPanel : MonoBehaviour
         door = GameObject.Find("PwDoor");
         //プレイヤーの情報を取得
         Player = GameObject.Find("Player");
+
+        //pwDataに初期値を代入
+        for(int i=0;i<pwData.Length;i++)
+        {
+            pwData[i] = 0;
+            pwText[i].text = pwData[i].ToString();
+        }
     }
 
     // Update is called once per frame
@@ -58,7 +66,7 @@ public class PasswordPanel : MonoBehaviour
         int tmp = pwData[position];
         //加算
         tmp++;
-        tmp %= pwSprite.Length;
+        tmp %= pwMax;
         //position番目のパスワードの値にtmpを代入
         pwData[position] = tmp;
     }
@@ -68,8 +76,8 @@ public class PasswordPanel : MonoBehaviour
     {
         //tmpにposition番目のパスワードの値を代入
         int tmp = pwData[position];
-        //ボタンのスプライトをtmpに切り替える
-        pwButton[position].sprite = pwSprite[tmp];
+        //ボタンのテキストをtmpに切り替える
+        pwText[position].text = tmp.ToString();
     }
 
     //答え合わせの処理
@@ -94,7 +102,7 @@ public class PasswordPanel : MonoBehaviour
             for(int i=0;i<pwData.Length;i++)
             {
                 pwData[i] = 0;
-                pwButton[i].sprite = pwSprite[0];
+                pwText[i].text = pwData[i].ToString();
             }
         }
     }
