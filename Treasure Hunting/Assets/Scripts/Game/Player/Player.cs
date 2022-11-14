@@ -240,7 +240,7 @@ public class Player : MonoBehaviour
                     isGround = false;
                     //上に力を加えてジャンプする
                     rigidBody.AddForce(0.0f, jumpPower, 0.0f);
-                                }
+                }
             }
 
             //動いていないならアニメーション遷移
@@ -290,6 +290,8 @@ public class Player : MonoBehaviour
             rigidBody.velocity = Vector3.zero;
             //移動アニメーション終了
             this.animetor.SetBool(param_isRun, false);
+            //待機アニメーション開始
+            this.animetor.SetBool(param_isIdel, true);
         }
     }
 
