@@ -12,11 +12,10 @@ public class PasswordPanel : MonoBehaviour
     //答えの値  0～pwSpriteデータ数までの値
     [SerializeField]
     private int[] Answer = { 0, 1, 2 };
-    //パスワードの値の最大値
+    //パスワードの値の最大値 1～9
     [SerializeField]
     private int pwMax;
     //パスワードのテキスト
-    [SerializeField]
     private Text[] pwText;
     //ドアのオブジェクト
     private GameObject door;
@@ -35,11 +34,14 @@ public class PasswordPanel : MonoBehaviour
         door = GameObject.Find("PwDoor");
         //プレイヤーの情報を取得
         Player = GameObject.Find("Player");
+        //pwTextのデータ数の設定
+        pwText = new Text[pwData.Length];
 
         //pwDataに初期値を代入
         for(int i=0;i<pwData.Length;i++)
         {
             pwData[i] = 0;
+            pwText[i] = GameObject.Find("pwText" + i.ToString()).GetComponent<Text>();
             pwText[i].text = pwData[i].ToString();
         }
     }

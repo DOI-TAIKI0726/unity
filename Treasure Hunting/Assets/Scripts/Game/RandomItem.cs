@@ -39,6 +39,10 @@ public class RandomItem : MonoBehaviour
     //デバフ中にプレイヤーを照らすライト
     [SerializeField]
     private GameObject playerLight;
+    //GameManager
+    private GameManager gameManagerScript;
+    //パスワードパネル
+    private GameObject pwPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +52,12 @@ public class RandomItem : MonoBehaviour
 
         //プレイヤーの情報を取得
         player = GameObject.Find("Player");
+
+        //ゲームマネージャー
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //パスワードパネル
+        pwPanel = GameObject.Find("Password");
     }
 
     // Update is called once per frame
@@ -72,92 +82,95 @@ public class RandomItem : MonoBehaviour
                 //アイテムが決まるまでの時間を設定
                 count = 2.0f;
                 //アイテム決定後の表示時間の設定
-                itemcount = 2.0f;
+                itemcount = buffTime;
             }
         }
 
-        //ルーレット中
-        if (roulette)
+        if (!gameManagerScript.quitPanel.activeSelf && !pwPanel.GetComponent<Canvas>().enabled)
         {
-            if (count > 0.0f)
+            //ルーレット中
+            if (roulette)
             {
-                //時間経過
-                count -= Time.deltaTime;
-
-                //切り替え
-                data -= Time.deltaTime;
-
-                //表示の切り替え処理
-                if (data <= 0.0f)
+                if (count > 0.0f)
                 {
-                    //バフデバフ表示の乱数を設定
+                    //時間経過
+                    count -= Time.deltaTime;
+
+                    //切り替え
+                    data -= Time.deltaTime;
+
+                    //表示の切り替え処理
+                    if (data <= 0.0f)
+                    {
+                        //バフデバフ表示の乱数を設定
+                        //0は固定
+                        rnd = Random.Range(0.0f, max);
+
+                        //デバフが表示されていた場合
+                        //バフに切り替える
+                        if (rnd > 0 && rnd <= max * buffratio)
+                        {
+                            //表示するバフの種類を決定
+                            type = Random.Range(0, buff.Length);
+                            //Imageにバフのスプライトを代入
+                            Img.sprite = buff[type];
+                            //Debug.Log("buff");
+                        }
+                        //バフが表示されていた場合
+                        //デバフに切り替える
+                        else
+                        {
+                            //表示するデバフの種類を決定
+                            type = Random.Range(0, debuff.Length);
+                            //Imageにデバフのスプライトを代入
+                            Img.sprite = debuff[type];
+                            //Debug.Log("debuff");
+                        }
+
+                        //切り替えの間隔を設定
+                        data = 0.1f;
+                    }
+
+                }
+                else
+                {
+                    //ルーレット終了
+                    roulette = false;
+                    //乱数の設定
                     //0は固定
                     rnd = Random.Range(0.0f, max);
 
-                    //デバフが表示されていた場合
-                    //バフに切り替える
-                    if (rnd > 0 && rnd <= max * buffratio)
+                    //バフ
+                    //0は固定
+                    //buffratioの値によって確率が変わる
+                    if (rnd >= 0.0f && rnd <= max * buffratio)
                     {
-                        //表示するバフの種類を決定
-                        type = Random.Range(0, buff.Length);
-                        //Imageにバフのスプライトを代入
-                        Img.sprite = buff[type];
-                        //Debug.Log("buff");
+                        Buff();
                     }
-                    //バフが表示されていた場合
-                    //デバフに切り替える
+                    //デバフ
                     else
                     {
-                        //表示するデバフの種類を決定
-                        type = Random.Range(0, debuff.Length);
-                        //Imageにデバフのスプライトを代入
-                        Img.sprite = debuff[type];
-                        //Debug.Log("debuff");
+                        Debuff();
                     }
 
-                    //切り替えの間隔を設定
-                    data = 0.1f;
+                    //確認用
+                    Debug.Log(rnd);
                 }
-
             }
+            //ルーレット終了後
             else
             {
-                //ルーレット終了
-                roulette = false;
-                //乱数の設定
-                //0は固定
-                rnd = Random.Range(0.0f, max);
-
-                //バフ
-                //0は固定
-                //buffratioの値によって確率が変わる
-                if (rnd >= 0.0f && rnd <= max * buffratio)
+                //2秒後にアイテム非表示
+                if (itemcount > 0.0f)
                 {
-                    Buff();
+                    //表示時間の減算
+                    itemcount -= Time.deltaTime;
                 }
-                //デバフ
                 else
                 {
-                    Debuff();
+                    //アイテムを非表示
+                    Img.enabled = false;
                 }
-
-                //確認用
-                Debug.Log(rnd);
-            }
-        }
-        //ルーレット終了後
-        else
-        {
-            //2秒後にアイテム非表示
-            if (itemcount > 0.0f)
-            {
-                //表示時間の減算
-                itemcount -= Time.deltaTime;
-            }
-            else
-            {
-                //アイテムを非表示
-                Img.enabled = false;
             }
         }
     }
@@ -180,7 +193,7 @@ public class RandomItem : MonoBehaviour
             //アイテムが決まるまでの時間を設定
             count = 2.0f;
             //アイテム決定後の表示時間の設定
-            itemcount = 2.0f;
+            itemcount = buffTime;
 
             //確認用
             Debug.Log("ok");

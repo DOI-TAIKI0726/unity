@@ -1869,7 +1869,7 @@ GameObject:
   - component: {fileID: 303851455}
   - component: {fileID: 303851454}
   m_Layer: 5
-  m_Name: PasswordText_2
+  m_Name: pwText2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7413,7 +7413,7 @@ GameObject:
   - component: {fileID: 1277332525}
   - component: {fileID: 1277332524}
   m_Layer: 5
-  m_Name: PasswordText_1
+  m_Name: pwText1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9322,10 +9322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Answer: 000000000100000002000000
   pwMax: 10
-  pwText:
-  - {fileID: 1968514640}
-  - {fileID: 1277332524}
-  - {fileID: 303851454}
 --- !u!114 &1603897043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11477,7 +11473,7 @@ GameObject:
   - component: {fileID: 1968514641}
   - component: {fileID: 1968514640}
   m_Layer: 5
-  m_Name: PasswordText_0
+  m_Name: pwText0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

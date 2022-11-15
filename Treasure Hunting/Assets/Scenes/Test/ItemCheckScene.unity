@@ -1924,7 +1924,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5848ad2d5bc1e664abf216cc7f5d09ae, type: 3}
   - {fileID: 21300000, guid: db75cb3b364cb5d4ba54451b0eec56b1, type: 3}
   max: 10
-  buffratio: 0
+  buffratio: 0.7
   Serch: {fileID: 4609056727903115142, guid: 53d9fd3f32958df4a8c1219550fabed6, type: 3}
   debuffLight: {fileID: 2203575415089761528, guid: 5571cb35127c78342b9ea0a4a0e90010,
     type: 3}
@@ -2800,10 +2800,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Answer: 020000000200000000000000
   pwMax: 10
-  pwText:
-  - {fileID: 634813066}
-  - {fileID: 1542027681}
-  - {fileID: 658027805}
 --- !u!114 &2228399604155358628
 MonoBehaviour:
   m_ObjectHideFlags: 0
