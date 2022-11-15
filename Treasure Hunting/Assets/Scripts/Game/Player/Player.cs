@@ -345,7 +345,7 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 //Keyが3つ揃っていたら
-                if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3)
+                if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3 && isKeyuse == false)
                 {
                     //ドアを開く
                     collision.transform.parent.gameObject.GetComponent<DoorOpen>().DoorMove();
