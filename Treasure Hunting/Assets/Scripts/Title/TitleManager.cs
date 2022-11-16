@@ -140,7 +140,7 @@ public class TitleManager : QuitPanel
             //アルファ値が1を超えたら(完全に透過されなくなったら)
             if (panelImage.color.a >= 1)
             {
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("Tutorial");
             }
         }
     }
