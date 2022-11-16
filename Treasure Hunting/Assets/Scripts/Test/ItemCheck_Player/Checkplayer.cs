@@ -148,8 +148,7 @@ public class Checkplayer : MonoBehaviour
             //チェック用
             //スペース押したら宝物を吐き出す
             //吐き出さない場合はいらない処理
-            if(GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
-            {
+            
                 //バフ中
                 if (buff)
                 {
@@ -215,7 +214,7 @@ public class Checkplayer : MonoBehaviour
                         }
                     }
                 }
-            }
+            
             
             //ここまで
         }

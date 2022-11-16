@@ -8679,7 +8679,7 @@ GameObject:
   - component: {fileID: 1507354789}
   - component: {fileID: 1507354788}
   m_Layer: 0
-  m_Name: 'Directional Light '
+  m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20890,11 +20890,14 @@ MonoBehaviour:
   debuff:
   - {fileID: 21300000, guid: 5848ad2d5bc1e664abf216cc7f5d09ae, type: 3}
   - {fileID: 21300000, guid: 3bcd60604f34f394bab6a0aa1aeabc1f, type: 3}
+  - {fileID: 21300000, guid: db75cb3b364cb5d4ba54451b0eec56b1, type: 3}
   max: 10
   buffratio: 0.7
   Serch: {fileID: 4609056727903115142, guid: 53d9fd3f32958df4a8c1219550fabed6, type: 3}
-  debuffLight: {fileID: 0}
-  playerLight: {fileID: 0}
+  debuffLight: {fileID: 2203575415089761528, guid: 5571cb35127c78342b9ea0a4a0e90010,
+    type: 3}
+  playerLight: {fileID: 1220449761186115770, guid: 38b4b40dc1a7bb041b0441d0cd4b8113,
+    type: 3}
 --- !u!4 &4377237923076646141
 Transform:
   m_ObjectHideFlags: 0
