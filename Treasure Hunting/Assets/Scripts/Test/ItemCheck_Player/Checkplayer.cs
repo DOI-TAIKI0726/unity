@@ -148,42 +148,44 @@ public class Checkplayer : MonoBehaviour
             //チェック用
             //スペース押したら宝物を吐き出す
             //吐き出さない場合はいらない処理
-            
-                //バフ中
-                if (buff)
+
+            //バフ中
+            if (buff)
+            {
+                //バフの経過時間
+                BuffCnt -= Time.deltaTime;
+
+                //BuffCnt秒経ったらバフ終了
+                if (BuffCnt <= 0)
                 {
-                    //バフの経過時間
-                    BuffCnt -= Time.deltaTime;
+                    //バフの時間を0にする
+                    BuffCnt = 0f;
 
-                    //BuffCnt秒経ったらバフ終了
-                    if (BuffCnt <= 0)
+                    //tagがbuffのオブジェクトを削除
+                    foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
                     {
-                        //バフの時間を0にする
-                        BuffCnt = 0f;
-
-                        //tagがbuffのオブジェクトを削除
-                        foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
-                        {
-                            //削除
-                            Destroy(obs);
-                        }
-
-                        //ライトを表示する
-                        MainLight.gameObject.SetActive(true);
-                        PlayerHeadLight.gameObject.SetActive(true);
-
-                        //スタミナ無限状態じゃなくする
-                        isLimit = false;
-
-                        //スピードの倍率を設定
-                        Speedup = 1f;
-
-                        //バフ終了状態にする
-                        buff = false;
-
-                        Debug.Log("end");
+                        //削除
+                        Destroy(obs);
                     }
+
+                    //ライトを表示する
+                    MainLight.gameObject.SetActive(true);
+                    PlayerHeadLight.gameObject.SetActive(true);
+
+                    //スタミナ無限状態じゃなくする
+                    isLimit = false;
+
+                    //スピードの倍率を設定
+                    Speedup = 1f;
+
+                    //バフ終了状態にする
+                    buff = false;
+
+                    Debug.Log("end");
                 }
+            }
+            if (GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+            {
                 if (Input.GetMouseButtonDown(0))
                 {
                     //アイテム数が0より大きい場合
@@ -214,6 +216,8 @@ public class Checkplayer : MonoBehaviour
                         }
                     }
                 }
+            }
+
             
             
             //ここまで
