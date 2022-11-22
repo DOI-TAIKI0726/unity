@@ -12635,10 +12635,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Answer: 020000000200000000000000
   pwMax: 10
-  pwText:
-  - {fileID: 1843965233}
-  - {fileID: 626281354}
-  - {fileID: 1098881568}
 --- !u!114 &1925582104
 MonoBehaviour:
   m_ObjectHideFlags: 0
