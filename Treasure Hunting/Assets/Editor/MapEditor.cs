@@ -56,6 +56,9 @@ public class MapEditor : EditorWindow
     {
         try
         {
+            GUILayout.Label("UV展開したモデルの方はScaleがデカすぎて上手く使えないです", EditorStyles.boldLabel);
+
+
             //描画範囲が足りなければスクロールできるようにする
             scrollpos = EditorGUILayout.BeginScrollView(scrollpos);
 
@@ -214,7 +217,7 @@ public class MapEditor : EditorWindow
             for (int y = 0; y < createNumY; y++)
             {
                 //Box.csの関係で1ずつしか動かせないようにしてるので小数点を切り捨てる
-                pos.y = Mathf.Floor(createPosY + createObj.GetComponent<Transform>().localScale.y / 2 + (objIntervalY * y));
+                pos.y = createPosY + (objIntervalY * y);
 
                 for (int z = 0; z < createNumZ; z++)
                 {
