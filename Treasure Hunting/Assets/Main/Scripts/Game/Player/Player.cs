@@ -313,15 +313,15 @@ public class Player : MonoBehaviour
             GameObject.Find("GameManager").GetComponent<ItemCheck>().AddTreasureNum(1);
         }
 
-        //タグがItemのオブジェクトに当たったら
-        if (collision.gameObject.tag == "Item")
-        {
-            //アイテムの削除
-            Destroy(collision.gameObject);
+        ////タグがItemのオブジェクトに当たったら
+        //if (collision.gameObject.tag == "Item")
+        //{
+        //    ////アイテムの削除
+        //    //Destroy(collision.gameObject);
 
-            //ルーレット開始の処理
-            GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
-        }
+        //    //ルーレット開始の処理
+        //    GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
+        //}
 
         //タグがGatherだった場合
         if (collision.gameObject.tag == "Gather")
@@ -349,6 +349,19 @@ public class Player : MonoBehaviour
                     isKeyuse = true;
                 }
             }
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        //タグがItemのオブジェクトに当たったら
+        if (collider.gameObject.tag == "Item")
+        {
+            ////アイテムの削除
+            //Destroy(collision.gameObject);
+
+            //ルーレット開始の処理
+            GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
         }
     }
 
