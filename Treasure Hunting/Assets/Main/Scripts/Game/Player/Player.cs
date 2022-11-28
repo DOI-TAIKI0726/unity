@@ -297,7 +297,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        
         //タグがGroundのオブジェクトに当たったら
         if (collision.gameObject.tag == "Ground")
         {
@@ -333,8 +332,6 @@ public class Player : MonoBehaviour
             //収集したアイテム数の加算
             GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
         }
-
-        
     }
 
     void OnCollisionStay(Collision collision)
