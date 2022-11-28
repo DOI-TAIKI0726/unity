@@ -10,27 +10,19 @@ public class ReSpoonItem : MonoBehaviour
     [SerializeField]
     private GameObject ItemBoxPrefab;
 
-    GameObject ItemBoxObj;//アイテムボックスObj
-
     [SerializeField]
-    private float reSpoonTime = 30;//リスポーンするまでの時間
+    private float reSpoonTime;//リスポーンするまでの時間を測る
+
+    private GameObject ItemBoxObj;//アイテムボックスObj
+    private float      reSpoonCnt;//リスポーン時間の保存
 
     void Start()
     {
-        //子オブジェクトがないとき
-        //設定したItemBoxPrefabを生成
-        if (transform.childCount <= 0)
-        {
-            // ItemBoxPrefabから新しくGameObjectを作成
-            GameObject newItemBoxObj = Instantiate(ItemBoxPrefab, this.transform);
-            // 新しく作成したGameObjectの名前を再設定
-            ItemBoxObj = newItemBoxObj;
-        }
-        else
-        {//子オブジェクトがいるとき
-            ItemBoxObj = transform.GetChild(0).gameObject;
-        }
+        //ItemBoxの情報取得
+        ItemBoxObj = transform.GetChild(0).gameObject;
         
+        //リスポーン時間を代入
+        reSpoonCnt = reSpoonTime;
     }
 
     // Update is called once per frame
@@ -43,7 +35,8 @@ public class ReSpoonItem : MonoBehaviour
             //リスポーン時間が0になったとき
             if (reSpoonTime <= 0)
             {
-                reSpoonTime = 30;
+                //リスポーン時間を代入
+                reSpoonTime = reSpoonCnt;
                 // ItemBoxPrefabから新しくGameObjectを作成
                 GameObject newItemBoxObj = Instantiate(ItemBoxPrefab, this.transform);
 
