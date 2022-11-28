@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ItemSpawn : MonoBehaviour
 {   
-    //生成するItemBox
+    //生成するオブジェクト
     [SerializeField]
-    private GameObject itemBox;
-    //ItemBox生成のCT
+    private GameObject item;
+    //生成のCT
     [SerializeField]
-    private float createItemBoxCT;
+    private float createItemCT;
 
     //子にItemBoxが無いときに進めるカウント
-    private float noItemBoxTime;
+    private float noItemTime;
     //
     private bool isNoChild = false;
 
@@ -27,11 +27,11 @@ public class ItemSpawn : MonoBehaviour
         {
             GameObject child;
 
-            noItemBoxTime += Time.deltaTime;
-            if(noItemBoxTime >= createItemBoxCT)
+            noItemTime += Time.deltaTime;
+            if(noItemTime >= createItemCT)
             {
-                child = Instantiate(itemBox, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity, this.gameObject.transform);
-                noItemBoxTime = 0;
+                child = Instantiate(item, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity, this.gameObject.transform);
+                noItemTime = 0;
                 isNoChild = false;
             }
         }
