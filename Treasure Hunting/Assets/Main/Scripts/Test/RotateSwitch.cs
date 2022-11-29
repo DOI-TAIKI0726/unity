@@ -26,7 +26,7 @@ public class RotateSwitch : MonoBehaviour
         player_obj = GameObject.FindGameObjectWithTag("Player");
 
         //回転するobjの情報はスイッチobjの子から取得 
-        rotate_obj = transform.Find("RotateObject").gameObject;
+        rotate_obj = transform.GetChild(0).gameObject;
 
     }
 

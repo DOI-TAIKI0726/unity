@@ -32,7 +32,10 @@ public class rotateManager : MonoBehaviour
 
     private enum VectorType
     {
-        foward, back, left, right,
+        foward,
+        back,
+        left,
+        right,
     }
 
     //正解の向き格納先
@@ -97,25 +100,47 @@ public class rotateManager : MonoBehaviour
     //正解の向き設定
     void SetVector(VectorType vec)
     {
+        //if (vec == VectorType.foward)
+        //{
+        //    //正面
+        //    TrueVec = new Vector3(0, 0, 1);
+        //}
+        //else if (vec == VectorType.back)
+        //{
+        //    //後ろ
+        //    TrueVec = new Vector3(0, 0, -1);
+        //}
+        //else if (vec == VectorType.left)
+        //{
+        //    //左
+        //    TrueVec = new Vector3(-1, 0, 0);
+        //}
+        //else if (vec == VectorType.right)
+        //{
+        //    //右
+        //    TrueVec = new Vector3(1, 0, 0);
+        //}
+
         if (vec == VectorType.foward)
         {
             //正面
-            TrueVec = new Vector3(0, 0, 1);
+            TrueVec = new Vector3(-1, 0, 0);
         }
         else if (vec == VectorType.back)
         {
             //後ろ
-            TrueVec = new Vector3(0, 0, -1);
+            TrueVec = new Vector3(1, 0, 0);
         }
         else if (vec == VectorType.left)
         {
             //左
-            TrueVec = new Vector3(-1, 0, 0);
+            TrueVec = new Vector3(0, 0, 1);
         }
         else if (vec == VectorType.right)
         {
             //右
-            TrueVec = new Vector3(1, 0, 0);
+            TrueVec = new Vector3(0, 0, -1);
         }
+
     }
 }
