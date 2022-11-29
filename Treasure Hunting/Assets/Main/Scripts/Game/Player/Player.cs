@@ -68,6 +68,10 @@ public class Player : MonoBehaviour
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
 
+    //メインで使っているライト
+    private Light MainLight;
+    //PlayerHeadのライト
+    private Light PlayerHeadLight;
 
     //キーが入手されているか
     [System.NonSerialized]
@@ -86,6 +90,10 @@ public class Player : MonoBehaviour
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
 
+        //ライトの情報を取得
+        MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        PlayerHeadLight = GameObject.Find("PlayerHead/Point Light").GetComponent<Light>();
+
     }
 
     void FixedUpdate()
@@ -95,57 +103,69 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //スタミナが減少状態ではないならorスタミナが無限なら
-        if (isStamina == false || isStaminaLimit == true)
+        if (gameManagerScript.quitPanel.activeSelf == false)
         {
-            //スタミナを回復
-            nowStamina += recoveryStamina;
-            //スタミナの上限を超えないようにする
+            //スタミナが減少状態ではないならorスタミナが無限なら
+            if (isStamina == false || isStaminaLimit == true)
+            {
+                //スタミナを回復
+                nowStamina += recoveryStamina;
+                //スタミナの上限を超えないようにする
+                if (nowStamina >= maxStamina)
+                {
+                    nowStamina = maxStamina;
+                }
+            }
+
+            //スタミナを使い切ったら
+            if (nowStamina <= 0)
+            {
+                isMaxStamina = true;
+            }
+            //スタミナが回復しきったら
             if (nowStamina >= maxStamina)
             {
-                nowStamina = maxStamina;
+                isMaxStamina = false;
             }
-        }
 
-        //スタミナを使い切ったら
-        if (nowStamina <= 0)
-        {
-            isMaxStamina = true;
-        }
-        //スタミナが回復しきったら
-        if (nowStamina >= maxStamina)
-        {
-            isMaxStamina = false;
-        }
+            //スタミナゲージの更新
+            staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
 
-        //スタミナゲージの更新
-        staminagage.sizeDelta = new Vector2(nowStamina, staminagage.sizeDelta.y);
-
-        //バフ効果時間なら
-        if (isBuff == true)
-        {
-            //バフの経過時間
-            buffTime -= Time.deltaTime;
-
-            //BuffTime秒経ったらバフ終了
-            if (buffTime <= 0)
+            //バフ効果時間なら
+            if (isBuff == true)
             {
-                //バフの時間を0にする
-                buffTime = 0f;
+                //バフの経過時間
+                buffTime -= Time.deltaTime;
 
-                //tagがbuffのオブジェクトを削除
-                Destroy(GameObject.FindGameObjectWithTag("buff"));
+                //BuffTime秒経ったらバフ終了
+                if (buffTime <= 0)
+                {
+                    //バフの時間を0にする
+                    buffTime = 0f;
 
-                //スタミナ無限状態じゃなくする
-                isStaminaLimit = false;
+                    //tagがbuffのオブジェクトを削除
+                    foreach (GameObject obs in GameObject.FindGameObjectsWithTag("buff"))
+                    {
+                        //削除
+                        Destroy(obs);
+                    }
 
-                //スピードの倍率を設定
-                speedUp = 1f;
+                    //ライトを表示する
+                    MainLight.gameObject.SetActive(true);
+                    PlayerHeadLight.gameObject.SetActive(true);
 
-                //バフ終了状態にする
-                isBuff = false;
 
-                Debug.Log("end");
+                    //スタミナ無限状態じゃなくする
+                    isStaminaLimit = false;
+
+                    //スピードの倍率を設定
+                    speedUp = 1f;
+
+                    //バフ終了状態にする
+                    isBuff = false;
+
+                    Debug.Log("end");
+                }
             }
         }
     }
@@ -395,6 +415,20 @@ public class Player : MonoBehaviour
 
         //スタミナ無限状態にする
         isStaminaLimit = isLimitless;
+
+        //バフ中の状態にする
+        isBuff = true;
+    }
+
+    //視界系のバフの処理
+    public void BuffLight(float Bufftime)
+    {
+        //バフの時間を設定
+        buffTime = Bufftime;
+
+        //ライトの非表示
+        MainLight.gameObject.SetActive(false);
+        PlayerHeadLight.gameObject.SetActive(false);
 
         //バフ中の状態にする
         isBuff = true;
