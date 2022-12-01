@@ -31,6 +31,8 @@ public class Axis : MonoBehaviour
     private float angleUp = 60f;
     private float angleDown = -60f;
 
+    private bool isHit = false;
+
     void Start()
     {
         //各要素を取得
@@ -84,9 +86,9 @@ public class Axis : MonoBehaviour
             {
                 myCamera.transform.position = hit.point;
             }
-            else
+            if(myCamera.transform.localPosition.z >= cameraPos.z)
             {
-                myCamera.transform.localPosition = cameraPos;
+                myCamera.transform.localPosition -= new Vector3(0.0f, 0.0f, 0.01f);
             }
         }
 
