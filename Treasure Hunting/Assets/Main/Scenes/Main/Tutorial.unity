@@ -9685,11 +9685,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d911af58a61cf45a73eabfa685ae4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 20
-  runSpeed: 20
+  walkSpeed: 5
+  runSpeed: 12
   jumpPower: 300
-  recoveryStamina: 100
-  consumptionStamina: 0.7
+  recoveryStamina: 0.5
+  consumptionStamina: 2
 --- !u!136 &1383113429
 CapsuleCollider:
   m_ObjectHideFlags: 0

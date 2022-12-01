@@ -17,12 +17,16 @@ public class Axis : MonoBehaviour
     [SerializeField]
     private float cameraDistance;
 
+    //プレイヤーの頭
+    private GameObject playerHeadObj;
     //プレイヤー
     private GameObject player;
     //Main Camera
     private Camera myCamera;
     //GameManage
     private GameManager gameManagerScript;
+    //カメラの初期位置
+    private Vector3 cameraPos;
     //X軸の角度を制限するための変数
     private float angleUp = 60f;
     private float angleDown = -60f;
@@ -30,14 +34,11 @@ public class Axis : MonoBehaviour
     void Start()
     {
         //各要素を取得
+        playerHeadObj = GameObject.Find("PlayerHead");
         player = GameObject.Find("Player");
         myCamera = Camera.main;
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        //マイナスをかけてインスペクタービューで見やすくする
-        cameraDistance = cameraDistance * (-1);
-        //CameraのAxisに相対的な位置をlocalPositionで指定
-        myCamera.transform.localPosition = new Vector3(0, 0, -3);
         //CameraとAxisの向きを最初だけそろえる
         myCamera.transform.localRotation = transform.rotation;
 
@@ -45,11 +46,16 @@ public class Axis : MonoBehaviour
         myCamera.transform.localPosition
             = new Vector3(myCamera.transform.localPosition.x,
             myCamera.transform.localPosition.y,
-            myCamera.transform.localPosition.z + cameraDistance);
+            myCamera.transform.localPosition.z - cameraDistance);
+        //カメラの初期位置設定
+        cameraPos = myCamera.transform.localPosition;
     }
 
     void Update()
     {
+        //レイの当たり判定に使用
+        RaycastHit hit;
+
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
         if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
@@ -72,6 +78,18 @@ public class Axis : MonoBehaviour
                 transform.eulerAngles.y,
                 transform.eulerAngles.z
             );
+
+            //playerHeadObjと自身の間にレイを出し、レイに何かが当たったなら
+            if (Physics.Linecast(playerHeadObj.transform.position, myCamera.transform.position, out hit) == true)
+            {
+                myCamera.transform.position = hit.point;
+            }
+            else
+            {
+                myCamera.transform.localPosition = cameraPos;
+            }
         }
+
+        Debug.DrawLine(playerHeadObj.transform.position, myCamera.transform.position, Color.red);
     }
 }

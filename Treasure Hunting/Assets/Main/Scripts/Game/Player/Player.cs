@@ -321,7 +321,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGround = true;
-            Debug.Log(isGround);
         }
 
         //タグがTreasureのオブジェクトに当たったら
