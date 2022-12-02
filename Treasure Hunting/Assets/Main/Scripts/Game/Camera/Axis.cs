@@ -36,7 +36,7 @@ public class Axis : MonoBehaviour
     void Start()
     {
         //各要素を取得
-        playerHeadObj = GameObject.Find("PlayerHead");
+        playerHeadObj = GameObject.Find("hair-back");
         player = GameObject.Find("Player");
         myCamera = Camera.main;
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();

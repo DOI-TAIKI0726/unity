@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 
         //ライトの情報を取得
         MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
-        PlayerHeadLight = GameObject.Find("PlayerHead/Point Light").GetComponent<Light>();
+        PlayerHeadLight = GameObject.Find("hair-back/Point Light").GetComponent<Light>();
 
     }
 
