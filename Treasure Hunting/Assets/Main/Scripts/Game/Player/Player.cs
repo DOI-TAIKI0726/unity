@@ -91,9 +91,10 @@ public class Player : MonoBehaviour
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
 
-        //ライトの情報を取得
+        //ゲームシーンのみで通す
         if (SceneManager.GetActiveScene().name == "Game")
         {
+            //ライトの情報を取得
             MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
         }
         PlayerHeadLight = GameObject.Find("hair-back/Point Light").GetComponent<Light>();

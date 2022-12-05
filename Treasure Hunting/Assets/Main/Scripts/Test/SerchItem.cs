@@ -34,6 +34,7 @@ public class SerchItem : MonoBehaviour
             target = GameObject.Find("goal");
         }
 
+        //nullチェック
         if (target != null)
         {
             //targetの方向を向かせる
