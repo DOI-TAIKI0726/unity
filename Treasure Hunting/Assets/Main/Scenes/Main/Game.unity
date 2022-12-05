@@ -32348,7 +32348,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32055
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -34938,8 +34938,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db75cb3b364cb5d4ba54451b0eec56b1, type: 3}
   max: 10
   buffratio: 0.7
-  Serch: {fileID: 4609056727903115142, guid: 53d9fd3f32958df4a8c1219550fabed6, type: 3}
-  debuffLight: {fileID: 2203575415089761528, guid: 5571cb35127c78342b9ea0a4a0e90010,
+  Serch: {fileID: 838930129151079753, guid: 25a7af57a7066874b85a49b648c1a591, type: 3}
+  debuffLight: {fileID: 667625270092592069, guid: 6ab9b3e78f6565047be9aaab60ef36fa,
     type: 3}
   movebuffTime: 5
   visionbuffTime: 3
@@ -36526,7 +36526,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 30976
+    m_Bits: 31488
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 38af752bc0f431146a4d64c623bccacf, type: 2}
   m_TargetDisplay: 0

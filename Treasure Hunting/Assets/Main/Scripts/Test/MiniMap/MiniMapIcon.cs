@@ -49,8 +49,8 @@ public class MiniMapIcon : MonoBehaviour
     //オブジェクトがミニマップ範囲内にあるか確認
     private bool CheckInsideMap()
     {
-        var CameraPos = minimapCamera.transform.position;
-        var targetPos = iconTarget.transform.position;
+        Vector3 CameraPos = minimapCamera.transform.position;
+        Vector3 targetPos = iconTarget.transform.position;
 
         //直線距離で判定するため、yを0扱いにする
         CameraPos.y = targetPos.y = 0;
@@ -62,7 +62,7 @@ public class MiniMapIcon : MonoBehaviour
     private void DispIcon()
     {
         //アイコンを表示する座標
-        var iconPos = new Vector3(iconTarget.transform.position.x, defaultPosY, iconTarget.transform.position.z);
+        Vector3 iconPos = new Vector3(iconTarget.transform.position.x, defaultPosY, iconTarget.transform.position.z);
 
         //ミニマップ範囲内の場合はそのまま表示する
         if(CheckInsideMap())
@@ -74,8 +74,8 @@ public class MiniMapIcon : MonoBehaviour
 
         //マップ範囲外な場合、ミニマップ端までのベクトルを求めて半透明で表示
         spRender.color = new Color(spRender.color.r, spRender.color.g, spRender.color.b, outRangeAlpha);
-        var centerPos = new Vector3(minimapCamera.transform.position.x, defaultPosY, minimapCamera.transform.position.z);
-        var offset = iconPos - centerPos;
+        Vector3 centerPos = new Vector3(minimapCamera.transform.position.x, defaultPosY, minimapCamera.transform.position.z);
+        Vector3 offset = iconPos - centerPos;
         transform.position = centerPos + Vector3.ClampMagnitude(offset, minimapRangeRaudis - rangeRadiusOffset);
     }
 }
