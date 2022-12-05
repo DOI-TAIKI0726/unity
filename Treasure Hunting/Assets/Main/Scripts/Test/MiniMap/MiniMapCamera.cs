@@ -21,7 +21,7 @@ public class MiniMapCamera : MonoBehaviour
     void Update()
     {
         //プレイたーの位置取得
-        var pos = player.transform.position;
+        Vector3 pos = player.transform.position;
         //ミニカメラのY座標を取得
         pos.y = MiniPosY;
 

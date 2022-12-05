@@ -244,13 +244,13 @@ public class RandomItem : MonoBehaviour
             }
 
             //マップ上のTreasureのタグのオブジェを取得
-            var treasure = GameObject.FindGameObjectsWithTag("Treasure");
+            GameObject[] treasure = GameObject.FindGameObjectsWithTag("Treasure");
             //Treasureのタグのオブジェの子に
             //アイコンを生成
             for (int i = 0; i < treasure.Length; i++)
             {
                 //生成
-                var minimapIcon = (GameObject)Instantiate(Serch, treasure[i].transform.position, Serch.transform.rotation);
+                GameObject minimapIcon = (GameObject)Instantiate(Serch, treasure[i].transform.position, Serch.transform.rotation);
                 //生成したものを子オブジェクトに設定
                 minimapIcon.transform.parent = treasure[i].transform;
             }
@@ -333,7 +333,7 @@ public class RandomItem : MonoBehaviour
             //デバフライトの生成位置
             Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 5f, player.transform.position.z);
             //デバフライトを生成
-            var LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
+            GameObject LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
             //デバフライトをplayerの子オブジェクトに設定
             LightObj.transform.parent = player.transform;
 
