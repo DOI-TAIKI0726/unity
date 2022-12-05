@@ -37,17 +37,20 @@ public class RandomItem : MonoBehaviour
     [SerializeField]
     private GameObject debuffLight;
     //デバフ中にプレイヤーを照らすライト
-    [SerializeField]
-    private GameObject playerLight;
+    //[SerializeField]
+    //private GameObject playerLight;
     //GameManager
     private GameManager gameManagerScript;
     //パスワードパネル
     private GameObject pwPanel;
     //移動系バフの時間
+    [SerializeField]
     private float movebuffTime = 5.0f;
     //視界系バフの時間
+    [SerializeField]
     private float visionbuffTime = 3.0f;
     //スタミナ系のバフの時間
+    [SerializeField]
     private float staminabuffTime = 10.0f;
 
 
@@ -219,7 +222,7 @@ public class RandomItem : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffSpeed(2.0f, movebuffTime);
+                player.GetComponent<Player>().BuffSpeed(2.0f, movebuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -233,16 +236,28 @@ public class RandomItem : MonoBehaviour
             //バフ時間の設定
             if (SceneManager.GetActiveScene().name == "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffSerch(visionbuffTime);
+                player.GetComponent<Player>().BuffSerch(visionbuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
                 player.GetComponent<Player>().BuffSerch(visionbuffTime);
             }
 
-            Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
-            //サーチのオブジェクトを生成
-            Instantiate(Serch, playerPos, Serch.transform.rotation);
+            //マップ上のTreasureのタグのオブジェを取得
+            var treasure = GameObject.FindGameObjectsWithTag("Treasure");
+            //Treasureのタグのオブジェの子に
+            //アイコンを生成
+            for (int i = 0; i < treasure.Length; i++)
+            {
+                //生成
+                var minimapIcon = (GameObject)Instantiate(Serch, treasure[i].transform.position, Serch.transform.rotation);
+                //生成したものを子オブジェクトに設定
+                minimapIcon.transform.parent = treasure[i].transform;
+            }
+
+            //Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
+            ////サーチのオブジェクトを生成
+            //Instantiate(Serch, playerPos, Serch.transform.rotation);
 
             itemcount = visionbuffTime;
         }
@@ -252,7 +267,7 @@ public class RandomItem : MonoBehaviour
             //スタミナ無限状態、バフ時間の設定
             if (SceneManager.GetActiveScene().name == "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffStamina(true, staminabuffTime);
+                player.GetComponent<Player>().BuffStamina(true, staminabuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -279,7 +294,7 @@ public class RandomItem : MonoBehaviour
             //移動速度半減
             if (SceneManager.GetActiveScene().name == "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffSpeed(0.5f, movebuffTime);
+                player.GetComponent<Player>().BuffSpeed(0.5f, movebuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -294,7 +309,7 @@ public class RandomItem : MonoBehaviour
             //引数に-1を入れることで操作を反転させる
             if (SceneManager.GetActiveScene().name == "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffSpeed(-1f, movebuffTime);
+                player.GetComponent<Player>().BuffSpeed(-1f, movebuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -308,22 +323,22 @@ public class RandomItem : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().name== "ItemCheckScene")
             {
-                player.GetComponent<Checkplayer>().BuffLight(visionbuffTime);
-
-                //デバフライトの生成位置
-                //Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 2f, player.transform.position.z);
-                ////デバフライトを生成
-                //var LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
-                ////デバフライトをplayerの子オブジェクトに設定
-                //LightObj.transform.parent = player.transform;
-
-                ////視界デバフ中にプレイヤーを照らすライトを生成
-                //Instantiate(playerLight, playerLight.transform.position, playerLight.transform.rotation);
+                player.GetComponent<Player>().BuffLight(visionbuffTime);
             }
             if (SceneManager.GetActiveScene().name == "Game")
             {
                 player.GetComponent<Player>().BuffLight(visionbuffTime);
             }
+
+            //デバフライトの生成位置
+            Vector3 LightPos = new Vector3(player.transform.position.x, player.transform.position.y + 5f, player.transform.position.z);
+            //デバフライトを生成
+            var LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
+            //デバフライトをplayerの子オブジェクトに設定
+            LightObj.transform.parent = player.transform;
+
+            ////視界デバフ中にプレイヤーを照らすライトを生成
+            //Instantiate(playerLight, playerLight.transform.position, playerLight.transform.rotation);
 
             itemcount = visionbuffTime;
         }
