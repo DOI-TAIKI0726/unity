@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -91,7 +92,10 @@ public class Player : MonoBehaviour
         nowStamina = maxStamina;
 
         //ライトの情報を取得
-        MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        }
         PlayerHeadLight = GameObject.Find("hair-back/Point Light").GetComponent<Light>();
 
     }
@@ -150,8 +154,12 @@ public class Player : MonoBehaviour
                         Destroy(obs);
                     }
 
-                    //ライトを表示する
-                    MainLight.gameObject.SetActive(true);
+                    if (SceneManager.GetActiveScene().name == "Game")
+                    {
+
+                        //ライトを表示する
+                        MainLight.gameObject.SetActive(true);
+                    }
                     PlayerHeadLight.gameObject.SetActive(true);
 
 
@@ -425,8 +433,11 @@ public class Player : MonoBehaviour
         //バフの時間を設定
         buffTime = Bufftime;
 
-        //ライトの非表示
-        MainLight.gameObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            //ライトの非表示
+            MainLight.gameObject.SetActive(false);
+        }
         PlayerHeadLight.gameObject.SetActive(false);
 
         //バフ中の状態にする

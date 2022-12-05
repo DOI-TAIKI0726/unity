@@ -34,8 +34,11 @@ public class SerchItem : MonoBehaviour
             target = GameObject.Find("goal");
         }
 
-        //targetの方向を向かせる
-        transform.LookAt(target.transform);
+        if (target != null)
+        {
+            //targetの方向を向かせる
+            transform.LookAt(target.transform);
+        }
     }
 
     //一番近くのアイテムを取得する処理
