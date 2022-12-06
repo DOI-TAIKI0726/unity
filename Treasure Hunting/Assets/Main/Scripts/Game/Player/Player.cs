@@ -215,6 +215,11 @@ public class Player : MonoBehaviour
                         //スタミナを減少状態にする
                         isStamina = true;
                     }
+                    else
+                    {
+                        //スタミナ回復
+                        isStamina = false;
+                    }
                     //走る状態にする
                     isMoveMode = true;
                 }
@@ -247,8 +252,12 @@ public class Player : MonoBehaviour
                     //走る移動中なら
                     if (moveForward != Vector3.zero)
                     {
-                        //スタミナ減少
-                        nowStamina -= consumptionStamina;
+                        //スタミナバフ中じゃない
+                        if(!isStaminaLimit)
+                        {
+                            //スタミナ減少
+                            nowStamina -= consumptionStamina;
+                        }
                     }
                 }
             }
