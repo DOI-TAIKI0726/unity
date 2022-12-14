@@ -38,6 +38,8 @@ public class TitleManager : QuitPanel
     private bool isStopTitleLogo = false;
     //press any keyがtrueになった状態でキーを押したら
     private bool isInputKey = false;
+    //タイトルロゴ止まってから一瞬待ち時間を入れる
+    private float stopLogoTime = 0.0f;
 
     void Start()
     {
@@ -48,7 +50,7 @@ public class TitleManager : QuitPanel
         fadePanel = GameObject.Find("FadePanel");
         StartQuitPanel();
 
-        //\press any keyを非アクティブにしておく
+        //press any keyを非アクティブにしておく
         pak.SetActive(false);
         //QuitPanelを非アクティブにしておく
         quitPanel.SetActive(false);
@@ -101,7 +103,12 @@ public class TitleManager : QuitPanel
                 //タイトルロゴが停止位置に来たら
                 if (titlelogo.GetComponent<RectTransform>().anchoredPosition.y <= stopTitlelogoPosY)
                 {
-                    isStopTitleLogo = true;
+                    stopLogoTime += Time.deltaTime;
+                    //待ち時間を入れないと何かキーを押したときにすぐ遷移してしまうので一瞬だけ待つ
+                    if (stopLogoTime >= 0.5f)
+                    {
+                        isStopTitleLogo = true;
+                    }
                 }
             }
         }
