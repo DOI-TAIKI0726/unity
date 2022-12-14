@@ -10,12 +10,18 @@ public class GameManager : QuitPanel
 {
     //timerスクリプト
     private timer timerScript;
+    //ItemCheckスクリプト
+    private ItemCheck itemCheckScript;
+    //DDOLスクリプト
+    private DDOL dDOLScript;
 
     void Start()
     {
         StartQuitPanel();
 
         timerScript = GameObject.Find("Timer").GetComponent<timer>();
+        itemCheckScript = this.GetComponent<ItemCheck>();
+        dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
     }
 
     void Update()
@@ -29,6 +35,8 @@ public class GameManager : QuitPanel
         if(timerScript.isTimeUp == true)
         {
             this.GetComponent<AudioSource>().enabled = false;
+            dDOLScript.getTreasurePercent = itemCheckScript.getTreasurePercent;
+            SceneManager.LoadScene("Result");
         }
 
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら

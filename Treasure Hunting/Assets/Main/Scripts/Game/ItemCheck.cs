@@ -22,6 +22,9 @@ public class ItemCheck : MonoBehaviour
     //収集するアイテムの指定数
     [System.NonSerialized]
     public int TotalGather = 3;
+    //アイテム収集率渡す用
+    [System.NonSerialized]
+    public float getTreasurePercent;
 
     void Start()
     {
@@ -72,6 +75,7 @@ public class ItemCheck : MonoBehaviour
         //テキストの表示
         //入手した宝の数チェックのテキスト
         GetTreasureNumText.text = "収集率:" + ((float)GetTreasureNum / (float)TotalTreasure * 100f).ToString("f1") + "%";
+        getTreasurePercent = (float)GetTreasureNum / (float)TotalTreasure * 100f;
         //収集するアイテムのテキスト
         GatherText.text = ":" + GatherCount.ToString() + "/" + TotalGather;
     }
