@@ -26,7 +26,7 @@ public class ReSpoonItem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // ItemBoxObjが存在していない場合
         if (ItemBoxObj == null)

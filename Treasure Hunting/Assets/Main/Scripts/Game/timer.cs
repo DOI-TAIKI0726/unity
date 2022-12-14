@@ -39,8 +39,7 @@ public class timer : MonoBehaviour
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    //aaaaa
-    void Update()
+    void FixedUpdate()
     {
         //タイムアップ
         if(minute == 0 && seconds <= 0)

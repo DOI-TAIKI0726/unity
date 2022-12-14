@@ -21,7 +21,7 @@ public class ItemSpawn : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(isNoChild == true)
         {

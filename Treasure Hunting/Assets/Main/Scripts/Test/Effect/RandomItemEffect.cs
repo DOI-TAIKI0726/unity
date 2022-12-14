@@ -58,8 +58,7 @@ public class RandomItemEffect : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //確認用
         //右シフトを押したらアイテムルーレット

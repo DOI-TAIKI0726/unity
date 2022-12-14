@@ -14,6 +14,8 @@ public class GameManager : QuitPanel
     private ItemCheck itemCheckScript;
     //DDOLスクリプト
     private DDOL dDOLScript;
+    //シーン遷移にかける時間
+    private float transitionTime = 0.0f;
 
     void Start()
     {
@@ -24,7 +26,7 @@ public class GameManager : QuitPanel
         dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
         {
@@ -34,9 +36,13 @@ public class GameManager : QuitPanel
         //タイムアップしたら
         if(timerScript.isTimeUp == true)
         {
+            transitionTime += Time.deltaTime;
             this.GetComponent<AudioSource>().enabled = false;
             dDOLScript.getTreasurePercent = itemCheckScript.getTreasurePercent;
-            SceneManager.LoadScene("Result");
+            if (transitionTime >= 2.0f)
+            {
+                SceneManager.LoadScene("Result");
+            }
         }
 
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
