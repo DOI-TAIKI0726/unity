@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (gameManagerScript.quitPanel.activeSelf == false)
+        if (gameManagerScript.quitPanel.activeSelf == false && gameManagerScript.isEndCountDown == true)
         {
             //スタミナが減少状態ではないならorスタミナが無限なら
             if (isStamina == false || isStaminaLimit == true)
@@ -183,7 +183,7 @@ public class Player : MonoBehaviour
     void Move()
     {
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
-        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false && gameManagerScript.isEndCountDown == true)
         {
             //移動キーの入力を取得
             //縦

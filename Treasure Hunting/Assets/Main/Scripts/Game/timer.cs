@@ -41,50 +41,53 @@ public class timer : MonoBehaviour
 
     void FixedUpdate()
     {
-        //タイムアップ
-        if(minute == 0 && seconds <= 0)
+        if (gameManagerScript.isEndCountDown == true)
         {
-            audioSource.PlayOneShot(timeUpSE);
-            isTimeUp = true;
-        }
-        else
-        {
-            if (gameManagerScript.quitPanel.activeSelf == false)
+            //タイムアップ
+            if (minute == 0 && seconds <= 0)
             {
+                audioSource.PlayOneShot(timeUpSE);
+                isTimeUp = true;
+            }
+            else
+            {
+                if (gameManagerScript.quitPanel.activeSelf == false)
+                {
 
-                //0秒以下になったら分を1引く
-                if (seconds <= 0f)
-                {
-                    minute--;
-                    seconds = 60f + seconds;
-                }
+                    //0秒以下になったら分を1引く
+                    if (seconds <= 0f)
+                    {
+                        minute--;
+                        seconds = 60f + seconds;
+                    }
 
-                //　値が変わった時だけテキストUIを更新
-                if ((int)seconds != (int)oldSeconds)
-                {
-                    timerText.text = minute.ToString("0") + ":" + ((int)seconds).ToString("00");
-                }
+                    //　値が変わった時だけテキストUIを更新
+                    if ((int)seconds != (int)oldSeconds)
+                    {
+                        timerText.text = minute.ToString("0") + ":" + ((int)seconds).ToString("00");
+                    }
 
-                oldSeconds = seconds;
+                    oldSeconds = seconds;
 
-                //00:30のとき文字を赤くする
-                if (minute == 0 && seconds <= changeColSecond)
-                {
-                    timerText.color = textColor;
-                }
+                    //00:30のとき文字を赤くする
+                    if (minute == 0 && seconds <= changeColSecond)
+                    {
+                        timerText.color = textColor;
+                    }
 
-                if(minute <= 0)
-                {
-                    minute = 0;
-                }
-                if(seconds <= 0)
-                {
-                    seconds = 0;
-                }
-                else
-                {
-                    //毎秒引いていく
-                    seconds -= Time.deltaTime;
+                    if (minute <= 0)
+                    {
+                        minute = 0;
+                    }
+                    if (seconds <= 0)
+                    {
+                        seconds = 0;
+                    }
+                    else
+                    {
+                        //毎秒引いていく
+                        seconds -= Time.deltaTime;
+                    }
                 }
             }
         }

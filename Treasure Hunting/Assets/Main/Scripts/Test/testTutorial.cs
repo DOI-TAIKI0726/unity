@@ -99,7 +99,11 @@ public class testTutorial : MonoBehaviour
     {
         //phaseの更新
         ChangePhase(curPhase);
-        
+
+        if (Input.GetKey(KeyCode.Return))
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
 
     void ChangePhase(Phase phase)
@@ -206,10 +210,6 @@ public class testTutorial : MonoBehaviour
                 //Text変更
                 Textdisplay(texts[(int)phase]);
 
-                if (Input.GetKey(KeyCode.Return))
-                {
-                    SceneManager.LoadScene("Game");
-                }
                 break;
         }
     }
