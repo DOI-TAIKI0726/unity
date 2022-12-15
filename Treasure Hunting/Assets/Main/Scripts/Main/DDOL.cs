@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class DDOL : MonoBehaviour
 {
     //アイテム取得率
-    //[System.NonSerialized]
+    [System.NonSerialized]
     public float getTreasurePercent;
 
     void Start()
@@ -20,6 +20,7 @@ public class DDOL : MonoBehaviour
 
     void Update()
     {
+        //ゲームとリザルト以外でいらないので消す
         if(SceneManager.GetActiveScene().name == "Title" || SceneManager.GetActiveScene().name == "Tutorial")
         {
             Destroy(this.gameObject);

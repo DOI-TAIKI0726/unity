@@ -43,23 +43,34 @@ public class GameManager : QuitPanel
             SwitchQuitPanel();
         }
 
-        countDownTime -= Time.deltaTime;
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            countDownTime -= Time.deltaTime;
 
-        if(countDownTime <= 2.0f)
-        {
-            countDownText.text = "2";
+            //countDownTimeの数値に応じてcountDownTextの内容を変更していく
+            if (countDownTime <= 2.0f)
+            {
+                countDownText.text = "2";
+            }
+            if (countDownTime <= 1.0f)
+            {
+                countDownText.text = "1";
+            }
+            if (countDownTime <= 0.0f)
+            {
+                countDownText.text = "0";
+            }
+            if (countDownTime <= -1.0f)
+            {
+                //非アクティブにする
+                countDownText.gameObject.SetActive(false);
+                //カウントダウンを終わらせる
+                isEndCountDown = true;
+            }
         }
-        if (countDownTime <= 1.0f)
+        else
         {
-            countDownText.text = "1";
-        }
-        if (countDownTime <= 0.0f)
-        {
-            countDownText.text = "0";
-        }
-        if (countDownTime <= -1.0f)
-        {
-            countDownText.gameObject.SetActive(false);
+            //ゲームシーン以外ではそもそもカウントダウンしないので最初からtrueにしておく
             isEndCountDown = true;
         }
 

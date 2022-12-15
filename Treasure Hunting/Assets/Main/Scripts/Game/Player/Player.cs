@@ -182,8 +182,9 @@ public class Player : MonoBehaviour
     //移動関連処理
     void Move()
     {
-        //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
-        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false && gameManagerScript.isEndCountDown == true)
+        if (gameManagerScript.quitPanel.activeSelf == false 
+            && GameObject.Find("Password").GetComponent<Canvas>().enabled == false 
+            && gameManagerScript.isEndCountDown == true)
         {
             //移動キーの入力を取得
             //縦
@@ -350,16 +351,6 @@ public class Player : MonoBehaviour
             GameObject.Find("GameManager").GetComponent<ItemCheck>().AddTreasureNum(1);
         }
 
-        ////タグがItemのオブジェクトに当たったら
-        //if (collision.gameObject.tag == "Item")
-        //{
-        //    ////アイテムの削除
-        //    //Destroy(collision.gameObject);
-
-        //    //ルーレット開始の処理
-        //    GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
-        //}
-
         //タグがGatherだった場合
         if (collision.gameObject.tag == "Gather")
         {
@@ -394,9 +385,6 @@ public class Player : MonoBehaviour
         //タグがItemのオブジェクトに当たったら
         if (collider.gameObject.tag == "Item")
         {
-            ////アイテムの削除
-            //Destroy(collision.gameObject);
-
             //ルーレット開始の処理
             GameObject.Find("GameManager").GetComponent<RandomItem>().RouletteStart();
         }
