@@ -27,7 +27,7 @@ public class DisableKeyInput : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.name == "Obstacle" || col.gameObject.tag == "Key")
+        if (col.gameObject.name == "Obstacle" || col.gameObject.tag == "Obstacle")
         {
             //コルーチンを開始
             StartCoroutine("DistableInputCoroutine");
