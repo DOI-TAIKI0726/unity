@@ -30410,7 +30410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30f0e2e201ce7b4a9b4923d4da065fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getTreasurePercent: 0
 --- !u!4 &2105570808
 Transform:
   m_ObjectHideFlags: 0
@@ -33640,7 +33639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205b22877bd6827498f68f3e9253b24f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minute: 3
+  minute: 1
   changeColSecond: 30
   timeUpSE: {fileID: 8300000, guid: 3130930914730124b95e17479abae8c1, type: 3}
 --- !u!1 &3358536049008424026

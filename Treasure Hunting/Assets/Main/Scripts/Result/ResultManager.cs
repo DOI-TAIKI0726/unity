@@ -10,6 +10,8 @@ public class ResultManager : MonoBehaviour
     private DDOL dDOLScript;
     //アイテム収集率表示テキスト
     private Text treasuerPercentText;
+    //resultシーンに遷移した後にすぐ遷移させないで待機時間を設ける
+    private float stayTime = 0.5f;
 
     void Start()
     {
@@ -21,11 +23,17 @@ public class ResultManager : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "Result")
         {
+            stayTime -= Time.deltaTime;
+            //gameシーンから持ってきた変数の内容をテキストに反映する
             treasuerPercentText.text = dDOLScript.getTreasurePercent.ToString("f1");
 
-            if(Input.anyKeyDown)
+            //待機時間終わったら
+            if (stayTime <= 0.0f)
             {
-                SceneManager.LoadScene("Title");
+                if (Input.anyKeyDown)
+                {
+                    SceneManager.LoadScene("Title");
+                }
             }
         }
     }
