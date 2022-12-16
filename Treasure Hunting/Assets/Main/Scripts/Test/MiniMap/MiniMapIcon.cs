@@ -31,7 +31,7 @@ public class MiniMapIcon : MonoBehaviour
         minimapCamera = GameObject.Find("MinimapCamera").GetComponent<Camera>();
         //ミニマップの表示範囲を取得
         minimapRangeRaudis = minimapCamera.orthographicSize;
-
+        //スプライトレンダラーを取得
         spRender = gameObject.GetComponent<SpriteRenderer>();
         //アイコンのY座標を取得
         defaultPosY = transform.position.y;
@@ -49,7 +49,9 @@ public class MiniMapIcon : MonoBehaviour
     //オブジェクトがミニマップ範囲内にあるか確認
     private bool CheckInsideMap()
     {
+        //ミニマップのカメラの位置を取得
         Vector3 CameraPos = minimapCamera.transform.position;
+        //ターゲットの位置を取得
         Vector3 targetPos = iconTarget.transform.position;
 
         //直線距離で判定するため、yを0扱いにする
