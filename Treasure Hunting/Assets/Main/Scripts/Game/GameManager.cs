@@ -21,6 +21,10 @@ public class GameManager : QuitPanel
     private float countDownTime = 3.0f;
     //CountDownText
     private Text countDownText;
+    //タイムアップ表示時間
+    private float timeUpTime;
+    //タイムアップテキスト
+    private Text timeUpText;
 
     //カウントダウンが終わったかどうか
     [System.NonSerialized]
@@ -36,6 +40,7 @@ public class GameManager : QuitPanel
         if (SceneManager.GetActiveScene().name == "Game")
         {
             countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
+            timeUpText = GameObject.Find("TimeUpText").GetComponent<Text>();
         }
     }
 
@@ -66,7 +71,7 @@ public class GameManager : QuitPanel
             if (countDownTime <= -1.0f)
             {
                 //非アクティブにする
-                countDownText.gameObject.SetActive(false);
+                countDownText.enabled = false;
                 //カウントダウンを終わらせる
                 isEndCountDown = true;
             }
@@ -80,6 +85,7 @@ public class GameManager : QuitPanel
         //タイムアップしたら
         if (timerScript.isTimeUp == true)
         {
+            timeUpText.enabled = true;
             transitionTime += Time.deltaTime;
             this.GetComponent<AudioSource>().enabled = false;
             dDOLScript.getTreasurePercent = itemCheckScript.getTreasurePercent;
