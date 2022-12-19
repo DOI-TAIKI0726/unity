@@ -31,8 +31,6 @@ public class PasswordSwitch : MonoBehaviour
             {
                 //パスワードのCanvasを表示する
                 GameObject.Find("Password").GetComponent<Canvas>().enabled = true;
-                ////プレイヤー移動不可能状態にする
-                //col.gameObject.GetComponent<Checkplayer>().isMove = false;
             }
         }
     }

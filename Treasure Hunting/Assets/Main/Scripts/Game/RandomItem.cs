@@ -75,24 +75,24 @@ public class RandomItem : MonoBehaviour
     {
         //確認用
         //右シフトを押したらアイテムルーレット
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            //ルーレット中じゃない場合
-            if (!roulette&&!Img.enabled)
-            {
-                //ルーレット中に切り替える
-                roulette = true;
+        //if (Input.GetKeyDown(KeyCode.RightShift))
+        //{
+        //    //ルーレット中じゃない場合
+        //    if (!roulette&&!Img.enabled)
+        //    {
+        //        //ルーレット中に切り替える
+        //        roulette = true;
 
-                //アイテムの表示
-                Img.enabled = true;
+        //        //アイテムの表示
+        //        Img.enabled = true;
 
-                //ルーレットの始まりはbuff[0]始まり固定
-                Img.sprite = buff[0];
+        //        //ルーレットの始まりはbuff[0]始まり固定
+        //        Img.sprite = buff[0];
 
-                //アイテムが決まるまでの時間を設定
-                count = 2.0f;
-            }
-        }
+        //        //アイテムが決まるまでの時間を設定
+        //        count = 2.0f;
+        //    }
+        //}
 
         if (!gameManagerScript.quitPanel.activeSelf && !pwPanel.GetComponent<Canvas>().enabled)
         {
@@ -255,10 +255,6 @@ public class RandomItem : MonoBehaviour
                 minimapIcon.transform.parent = treasure[i].transform;
             }
 
-            //Vector3 playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 1f, player.transform.position.z);
-            ////サーチのオブジェクトを生成
-            //Instantiate(Serch, playerPos, Serch.transform.rotation);
-
             itemcount = visionbuffTime;
         }
         //スタミナ無限バフ
@@ -336,9 +332,6 @@ public class RandomItem : MonoBehaviour
             GameObject LightObj = (GameObject)Instantiate(debuffLight, LightPos, debuffLight.transform.rotation);
             //デバフライトをplayerの子オブジェクトに設定
             LightObj.transform.parent = player.transform;
-
-            ////視界デバフ中にプレイヤーを照らすライトを生成
-            //Instantiate(playerLight, playerLight.transform.position, playerLight.transform.rotation);
 
             itemcount = visionbuffTime;
         }

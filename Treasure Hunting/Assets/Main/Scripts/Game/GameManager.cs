@@ -36,9 +36,9 @@ public class GameManager : QuitPanel
 
         timerScript = GameObject.Find("Timer").GetComponent<timer>();
         itemCheckScript = this.GetComponent<ItemCheck>();
-        dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
         if (SceneManager.GetActiveScene().name == "Game")
         {
+            dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
             countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
             timeUpText = GameObject.Find("TimeUpText").GetComponent<Text>();
         }

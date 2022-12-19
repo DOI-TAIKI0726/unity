@@ -94,8 +94,6 @@ public class PasswordPanel : MonoBehaviour
             door.GetComponent<DoorOpen>().DoorMove();
             //クリアした状態にする
             clear = true;
-            //プレイヤーを移動可能にする
-            //Player.GetComponent<Checkplayer>().isMove = true;
         }
         //間違えていた場合
         else
@@ -114,7 +112,5 @@ public class PasswordPanel : MonoBehaviour
     {
         //パスワードのCanvasを非表示にする
         GameObject.Find("Password").GetComponent<Canvas>().enabled = false;
-        ////プレイヤーを移動可能にする
-        //Player.GetComponent<Checkplayer>().isMove = true;
     }
 }

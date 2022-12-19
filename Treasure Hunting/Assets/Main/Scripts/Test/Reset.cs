@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Reset : MonoBehaviour
 {
+    //押すオブジェクト
     private GameObject PushObj;
+    //初期位置
     private Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
     {
+        //押すオブジェクトの情報を取得
         PushObj = GameObject.Find("PushCube");
+        //押すオブジェクトの初期位置を取得
         pos = PushObj.transform.position;
     }
 
@@ -24,6 +28,7 @@ public class Reset : MonoBehaviour
     {
         if(col.gameObject.tag=="Player")
         {
+            //初期位置に戻す
             PushObj.transform.position = pos;
         }
     }
