@@ -13,10 +13,16 @@ public class ResultManager : MonoBehaviour
     //resultシーンに遷移した後にすぐ遷移させないで待機時間を設ける
     private float stayTime = 0.5f;
 
+    //
+    private Fade FadeScript;
+    //
+    private bool isInput = false;
+
     void Start()
     {
         dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
         treasuerPercentText = GameObject.Find("TreasuerPercent").GetComponent<Text>();
+        FadeScript = GameObject.Find("FadePanel").GetComponent<Fade>();
     }
 
     void Update()
@@ -30,9 +36,21 @@ public class ResultManager : MonoBehaviour
             //待機時間終わったら
             if (stayTime <= 0.0f)
             {
-                if (Input.anyKeyDown)
+                if (!isInput)
                 {
-                    SceneManager.LoadScene("Title");
+                    if (Input.anyKeyDown)
+                    {
+                        isInput = true;
+                        FadeScript.fadeOut = true;
+                    }
+                }
+                else
+                {
+                    if(!FadeScript.fadeOut)
+                    {
+
+                        SceneManager.LoadScene("Title");
+                    }
                 }
             }
         }

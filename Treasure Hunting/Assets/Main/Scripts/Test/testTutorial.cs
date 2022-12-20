@@ -42,6 +42,10 @@ public class testTutorial : MonoBehaviour
                                "矢印の先にあるスイッチに触れ\n220となるようにクリックしよう",
                                "3つの鍵を取り指定された扉の前で\nEキーを押そう",
                                "チュートリアルは以上です\nEnterキーでゲームスタート"};
+    //フェードスクリプト
+    private Fade FadeScript;
+    //キー入力状態
+    private bool isInput = false;
 
     // Start is called before the first frame update
     void Start()
@@ -91,7 +95,9 @@ public class testTutorial : MonoBehaviour
         keyToggle = keyToggleObj.GetComponent<Toggle>();
         //半透明にする
         SetColorToggle(keyToggle, true);
-        
+
+        //フェードスクリプトの取得
+        FadeScript = GameObject.Find("FadePanel").GetComponent<Fade>();
     }
 
     // Update is called once per frame
@@ -100,7 +106,15 @@ public class testTutorial : MonoBehaviour
         //phaseの更新
         ChangePhase(curPhase);
 
-        if (Input.GetKey(KeyCode.Return))
+        if(!isInput)
+        {
+            if (Input.GetKey(KeyCode.Return))
+            {
+                FadeScript.fadeOut = true;
+                isInput = true;
+            }
+        }
+        else if (FadeScript.fadeOut == false && isInput == true)
         {
             SceneManager.LoadScene("Game");
         }

@@ -28,7 +28,12 @@ public class GameManager : QuitPanel
 
     //カウントダウンが終わったかどうか
     [System.NonSerialized]
-    public bool isEndCountDown = false;
+    public bool isEndCountDown = true;
+
+    //フェードスクリプト
+    private Fade FadeScript;
+    //フェードアウト中か
+    private bool isFade = false;
 
     void Start()
     {
@@ -38,9 +43,11 @@ public class GameManager : QuitPanel
         itemCheckScript = this.GetComponent<ItemCheck>();
         if (SceneManager.GetActiveScene().name == "Game")
         {
+            isEndCountDown = false;
             dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
             countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
             timeUpText = GameObject.Find("TimeUpText").GetComponent<Text>();
+            FadeScript = GameObject.Find("FadePanel").GetComponent<Fade>();
         }
     }
 
@@ -53,28 +60,33 @@ public class GameManager : QuitPanel
 
         if (SceneManager.GetActiveScene().name == "Game")
         {
-            countDownTime -= Time.deltaTime;
+            //フェードインが終わったら処理開始
+            if(!FadeScript.fadeIn)
+            {
+                countDownTime -= Time.deltaTime;
 
-            //countDownTimeの数値に応じてcountDownTextの内容を変更していく
-            if (countDownTime <= 2.0f)
-            {
-                countDownText.text = "2";
+                //countDownTimeの数値に応じてcountDownTextの内容を変更していく
+                if (countDownTime <= 2.0f)
+                {
+                    countDownText.text = "2";
+                }
+                if (countDownTime <= 1.0f)
+                {
+                    countDownText.text = "1";
+                }
+                if (countDownTime <= 0.0f)
+                {
+                    countDownText.text = "0";
+                }
+                if (countDownTime <= -1.0f)
+                {
+                    //非アクティブにする
+                    countDownText.enabled = false;
+                    //カウントダウンを終わらせる
+                    isEndCountDown = true;
+                }
             }
-            if (countDownTime <= 1.0f)
-            {
-                countDownText.text = "1";
-            }
-            if (countDownTime <= 0.0f)
-            {
-                countDownText.text = "0";
-            }
-            if (countDownTime <= -1.0f)
-            {
-                //非アクティブにする
-                countDownText.enabled = false;
-                //カウントダウンを終わらせる
-                isEndCountDown = true;
-            }
+            
         }
         else
         {
@@ -90,6 +102,24 @@ public class GameManager : QuitPanel
             this.GetComponent<AudioSource>().enabled = false;
             dDOLScript.getTreasurePercent = itemCheckScript.getTreasurePercent;
             if (transitionTime >= 2.0f)
+            {
+                //フェードアウト中じゃない場合
+                if(!isFade)
+                {
+                    //フェードアウト開始
+                    FadeScript.fadeOut = true;
+                    //フェードアウト中
+                    isFade = true;
+                }
+            }
+            else
+            {
+                //フェードアウト中じゃない
+                isFade = false;
+            }
+
+            //フェードアウト終了
+            if (!FadeScript.fadeOut && isFade)
             {
                 SceneManager.LoadScene("Result");
             }
