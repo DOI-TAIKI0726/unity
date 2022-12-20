@@ -9,16 +9,18 @@ public class bulletCreate : MonoBehaviour
     private int count;
     private bool randomStart;
     private float fireTime;//発射時間
-    GameObject bulletprefab;//弾Obj
-    GameObject ItemBoxprefab;//ItemBoxObj
+    [SerializeField]
+    private GameObject bulletprefab;//弾Obj
+    [SerializeField]
+    private GameObject ItemBoxprefab;//ItemBoxObj
     //GameManagerスクリプト
     private GameManager gameManagerScript;
 
     void Start()
     {
         // 任意のフォルダから読み込む
-        bulletprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Main/Prefabs/test/bullet.prefab", typeof(GameObject));
-        ItemBoxprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Main/Prefabs/test/ReSpoonItemBox.prefab", typeof(GameObject));
+        //bulletprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Main/Prefabs/test/bullet.prefab", typeof(GameObject));
+        //ItemBoxprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Main/Prefabs/test/ReSpoonItemBox.prefab", typeof(GameObject));
 
 
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
