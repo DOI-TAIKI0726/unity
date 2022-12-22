@@ -16770,11 +16770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d911af58a61cf45a73eabfa685ae4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  runSpeed: 10
-  jumpPower: 300
-  recoveryStamina: 0.1
-  consumptionStamina: 0.7
 --- !u!54 &5628719976163533501
 Rigidbody:
   m_ObjectHideFlags: 0
