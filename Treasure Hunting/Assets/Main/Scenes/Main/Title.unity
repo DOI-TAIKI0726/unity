@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa9322043ae98b4285256b583ec5c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTitlelogoSpeed: 0.1
+  moveTitlelogoSpeed: 0.5
   stopTitlelogoPosY: 100
   fadeSpeed: 0.002
 --- !u!4 &1073545297
