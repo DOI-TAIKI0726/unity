@@ -27,11 +27,6 @@ public class PairSwitch : MonoBehaviour
     //スイッチの揃える正解の色(必ずswitchColorにある色のいずれかと同じにする)
     public Color correctColor;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         //念のため0以下にならないようにする

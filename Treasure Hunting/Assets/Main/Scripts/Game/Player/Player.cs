@@ -15,9 +15,6 @@ public class Player : MonoBehaviour
     //走る速度
     [SerializeField]
     private float runSpeed = 10.0f;
-    //ジャンプ力
-    [SerializeField]
-    private float jumpPower = 300.0f;
     //スタミナ回復速度
     [SerializeField]
     private float recoveryStamina = 0.1f;
@@ -269,19 +266,6 @@ public class Player : MonoBehaviour
                 //キャラクターの向きを進行方向に
                 transform.rotation = Quaternion.LookRotation(moveForward * speedUp);
             }
-
-            //地面についてるなら
-            if (isGround == true)
-            {
-                //SPACEキーを押したら
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    isGround = false;
-                    //上に力を加えてジャンプする
-                    rigidBody.AddForce(0.0f, jumpPower, 0.0f);
-                }
-            }
-
             //動いていないならアニメーション遷移
             if (horizonal == 0 && vertical == 0)
             {

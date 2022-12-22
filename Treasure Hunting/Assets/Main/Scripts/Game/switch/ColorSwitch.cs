@@ -22,11 +22,6 @@ public class ColorSwitch : MonoBehaviour
         pairSwitchScript = GameObject.Find("PairSwitch").GetComponent<PairSwitch>();
     }
 
-    void Update()
-    {
-
-    }
-
     void OnTriggerEnter(Collider collider)
     {
         //クリアしてないなら

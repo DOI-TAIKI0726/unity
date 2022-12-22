@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class testTutorial : MonoBehaviour
 {
     //進行状況の列挙

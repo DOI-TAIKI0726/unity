@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//リザルトシーンの管理クラス
+//Author:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,10 +15,9 @@ public class ResultManager : MonoBehaviour
     private Text treasuerPercentText;
     //resultシーンに遷移した後にすぐ遷移させないで待機時間を設ける
     private float stayTime = 0.5f;
-
-    //
+    //fadeスクリプト
     private Fade FadeScript;
-    //
+    //なにか入力されたか
     private bool isInput = false;
 
     void Start()
@@ -36,9 +38,9 @@ public class ResultManager : MonoBehaviour
             //待機時間終わったら
             if (stayTime <= 0.0f)
             {
-                if (!isInput)
+                if (isInput == false)
                 {
-                    if (Input.anyKeyDown)
+                    if (Input.anyKeyDown == true)
                     {
                         isInput = true;
                         FadeScript.fadeOut = true;
@@ -46,7 +48,7 @@ public class ResultManager : MonoBehaviour
                 }
                 else
                 {
-                    if(!FadeScript.fadeOut)
+                    if(FadeScript.fadeOut == false)
                     {
 
                         SceneManager.LoadScene("Title");

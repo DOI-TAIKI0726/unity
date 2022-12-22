@@ -1,4 +1,4 @@
-﻿//ゲームシーン管理クラス
+﻿//ゲームシーンの管理クラス
 //Author:寺下琉生
 
 using System.Collections;
@@ -25,15 +25,14 @@ public class GameManager : QuitPanel
     private float timeUpTime;
     //タイムアップテキスト
     private Text timeUpText;
-
-    //カウントダウンが終わったかどうか
-    [System.NonSerialized]
-    public bool isEndCountDown = true;
-
     //フェードスクリプト
     private Fade FadeScript;
     //フェードアウト中か
     private bool isFade = false;
+
+    //カウントダウンが終わったかどうか
+    [System.NonSerialized]
+    public bool isEndCountDown = true;
 
     void Start()
     {
@@ -61,8 +60,9 @@ public class GameManager : QuitPanel
         if (SceneManager.GetActiveScene().name == "Game")
         {
             //フェードインが終わったら処理開始
-            if(!FadeScript.fadeIn)
+            if(FadeScript.fadeIn == false)
             {
+                FadeScript.enabled = false;
                 countDownTime -= Time.deltaTime;
 
                 //countDownTimeの数値に応じてcountDownTextの内容を変更していく
@@ -85,8 +85,7 @@ public class GameManager : QuitPanel
                     //カウントダウンを終わらせる
                     isEndCountDown = true;
                 }
-            }
-            
+            }        
         }
         else
         {
@@ -97,6 +96,7 @@ public class GameManager : QuitPanel
         //タイムアップしたら
         if (timerScript.isTimeUp == true)
         {
+            FadeScript.enabled = true;
             timeUpText.enabled = true;
             transitionTime += Time.deltaTime;
             this.GetComponent<AudioSource>().enabled = false;
@@ -104,7 +104,7 @@ public class GameManager : QuitPanel
             if (transitionTime >= 2.0f)
             {
                 //フェードアウト中じゃない場合
-                if(!isFade)
+                if(isFade == false)
                 {
                     //フェードアウト開始
                     FadeScript.fadeOut = true;
@@ -119,7 +119,7 @@ public class GameManager : QuitPanel
             }
 
             //フェードアウト終了
-            if (!FadeScript.fadeOut && isFade)
+            if (FadeScript.fadeOut == false && isFade == true)
             {
                 SceneManager.LoadScene("Result");
             }
