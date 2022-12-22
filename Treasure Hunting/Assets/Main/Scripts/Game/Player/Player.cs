@@ -10,19 +10,13 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     //歩く速度
-    [SerializeField]
     private float walkSpeed = 5.0f;
     //走る速度
-    [SerializeField]
-    private float runSpeed = 10.0f;
+    private float runSpeed = 8.0f;
     //スタミナ回復速度
-    [SerializeField]
     private float recoveryStamina = 0.1f;
     //走っているときのスタミナ消費量
-    [SerializeField]
     private float consumptionStamina = 0.7f;
-    //ジャンプしたときのスタミナ消費量
-
     //最大スタミナ
     private float maxStamina;
     //スタミナゲージのRectTransform
@@ -65,7 +59,6 @@ public class Player : MonoBehaviour
     private bool isRunAnimetion = false;
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
-
     //メインで使っているライト
     private Light MainLight;
     //PlayerHeadのライト
