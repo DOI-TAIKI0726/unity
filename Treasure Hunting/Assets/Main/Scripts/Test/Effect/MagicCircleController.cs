@@ -4,57 +4,59 @@ using UnityEngine;
 
 public class MagicCircleController : MonoBehaviour
 {
+    //魔法陣
     private GameObject ObjMagicCircle;
     // フェードアウトするまでの時間
     public float fadeTime;
-    private float time;
+    //踏んでる間の時間計測
+    private float StepOnTime;
+    //踏んでない間の時間計測
+    private float ExitTime;
+    //スプライトレンダラー
     private SpriteRenderer render;
-    private GameObject ObjPlayer;
+    //スイッチを踏んでいるかどうか
     bool SwitchStepOn;
    
 
     // Start is called before the first frame update
     void Start()
     {
+        //魔法陣を見つけてくる
         ObjMagicCircle = GameObject.Find("MagicCircle");
+        //renderにぶち込む
         render = ObjMagicCircle.GetComponent<SpriteRenderer>();
-        ObjPlayer = GameObject.Find("Player");
+        //魔法陣は最初アクティブに
         ObjMagicCircle.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //スイッチを踏んでいる時
         if (SwitchStepOn == true)
         {
-            Debug.Log("踏み続けている");
-            time += Time.deltaTime;
-            if (time < fadeTime)
+            StepOnTime += Time.deltaTime;
+            if (StepOnTime < fadeTime)
             {
-                if(ObjMagicCircle.activeSelf == true)
-                {
-                    float alpha = 0.1f + time / fadeTime;
-                    Color color = render.color;
-                    color.a = alpha;
-                    render.color = color;
-                }
+                //時間経過でアルファ値上げる
+                float alpha = 0.1f + StepOnTime / fadeTime;
+                Color color = render.color;
+                color.a = alpha;
+                render.color = color;
             }
         }
-        else 
-        {
-            Debug.Log("踏んでない");
-            time += Time.deltaTime;
-            if (time < fadeTime)
+        //スイッチを踏んでいない時
+        else
+        { 
+            ExitTime += Time.deltaTime;
+            if (ExitTime > fadeTime)
             {
-                //ObjMagicCircle.SetActive(false);
-
-                if(ObjMagicCircle.activeSelf == false)
-                {
-                    float alpha = 1.0f - time / fadeTime;
-                    Color color = render.color;
-                    color.a = alpha;
-                    render.color = color;
-                }
+                //時間経過でアルファ値下げる
+                float alpha = 0.1f - ExitTime / fadeTime;
+                Color color = render.color;
+                color.a -= 0.005f;
+                render.color = color;
+                
             }
         }
     }
@@ -62,13 +64,18 @@ public class MagicCircleController : MonoBehaviour
     //踏み続けている間
     void OnCollisionStay(Collision other)
     {
+        //踏んでいる
         SwitchStepOn = true;
+        //踏み続けている時間をリセット
+        ExitTime = 0.0f;
     }
 
-    //踏んでいない
+    //踏んでいない間
     void OnCollisionExit(Collision other)
     {
+        //踏んでいない
         SwitchStepOn = false;
+       
     }
 
 }
