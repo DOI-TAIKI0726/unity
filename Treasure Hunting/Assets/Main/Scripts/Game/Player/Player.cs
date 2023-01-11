@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     {
         //各要素の参照や初期化
         animetor = this.GetComponent<Animator>();
-        staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>(); ;
+        staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
@@ -281,23 +281,6 @@ public class Player : MonoBehaviour
                 //移動アニメーション終了
                 this.animetor.SetBool(param_isRun, false);
             }
-
-            //ジャンプしたらアニメーション遷移
-            if (isGround == false)
-            {
-                //移動アニメーション終了
-                this.animetor.SetBool(param_isRun, false);
-                //待機アニメーション開始(一回待機挟まないと遷移うまくいきません)
-                this.animetor.SetBool(param_isIdel, true);
-                //ジャンプアニメーション開始
-                this.animetor.SetBool(param_isJump, true);
-            }
-            else
-            {
-                //ジャンプアニメーション終了
-                this.animetor.SetBool(param_isJump, false);
-            }
-
         }
         //QuitPanelがアクティブなら
         else
