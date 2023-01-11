@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     //走る速度
     private float runSpeed = 8.0f;
     //スタミナ回復速度
-    private float recoveryStamina = 0.1f;
+    private float recoveryStamina = 0.2f;
     //走っているときのスタミナ消費量
     private float consumptionStamina = 0.7f;
     //最大スタミナ
