@@ -17,7 +17,7 @@ public class QuitPanel : MonoBehaviour
     public GameObject quitPanel;
 
     //各Managerでの初期化等処理
-    public void StartQuitPanel()
+    protected void StartQuitPanel()
     {
         //各要素にアクセス
         quitPanel = GameObject.Find("QuitPanel");
@@ -27,7 +27,7 @@ public class QuitPanel : MonoBehaviour
     }
 
     //QuitPanel表示非表示切り替え
-    public void SwitchQuitPanel()
+    protected void SwitchQuitPanel()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {

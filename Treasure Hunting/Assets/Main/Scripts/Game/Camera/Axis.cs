@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Axis : MonoBehaviour
 {
@@ -25,13 +26,18 @@ public class Axis : MonoBehaviour
     private Camera myCamera;
     //GameManage
     private GameManager gameManagerScript;
+    //TutorialManager
+    private TutorialManager tutorialManagerScript;
     //カメラの初期位置
     private Vector3 cameraPos;
     //X軸の角度を制限するための変数
     private float angleUp = 60f;
     private float angleDown = -60f;
 
+    //rayが当たったかどうか
     private bool isHit = false;
+    //Updateを通ってもいいか
+    private bool isUpdate = false;
 
     void Start()
     {
@@ -39,7 +45,15 @@ public class Axis : MonoBehaviour
         playerHeadObj = GameObject.Find("hair-back");
         player = GameObject.Find("Player");
         myCamera = Camera.main;
-        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            tutorialManagerScript = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        }
 
         //CameraとAxisの向きを最初だけそろえる
         myCamera.transform.localRotation = transform.rotation;
@@ -59,7 +73,23 @@ public class Axis : MonoBehaviour
         RaycastHit hit;
 
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
-        if (gameManagerScript.quitPanel.activeSelf == false && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+        if (gameManagerScript.quitPanel.activeSelf == false
+            && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+            {
+                isUpdate = true;
+            }
+        }
+        else if(SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            if (tutorialManagerScript.quitPanel.activeSelf == false
+                && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+            {
+                isUpdate = true;
+            }
+        }
+        if(isUpdate == true)
         {
             //Axisの位置をPlayer＋axisPosで決める
             transform.position = player.transform.position + axisPos;

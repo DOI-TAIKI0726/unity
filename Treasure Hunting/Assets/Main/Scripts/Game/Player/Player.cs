@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     private Rigidbody rigidBody;
     //GameManagerスクリプト
     private GameManager gameManagerScript;
+    //Tutorialmanagerスクリプト
+    private TutorialManager tutorialManagerScript;
     //スピードの倍率
     private float speedUp = 1f;
     //バフの時間
@@ -59,6 +61,8 @@ public class Player : MonoBehaviour
     private bool isRunAnimetion = false;
     //Jumpアニメーション中かどうか
     private bool isJumpAnimetion = false;
+    //Updateを通っていいか
+    private bool isUpdate = false;
     //メインで使っているライト
     private Light MainLight;
     //PlayerHeadのライト
@@ -77,15 +81,19 @@ public class Player : MonoBehaviour
         animetor = this.GetComponent<Animator>();
         staminagage = GameObject.Find("stamina_gage").GetComponent<RectTransform>();
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
-        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
 
         //ゲームシーンのみで通す
         if (SceneManager.GetActiveScene().name == "Game")
         {
+            gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
             //ライトの情報を取得
             MainLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        }
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            tutorialManagerScript = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         }
         PlayerHeadLight = GameObject.Find("hair-back/Point Light").GetComponent<Light>();
 
@@ -98,7 +106,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (gameManagerScript.quitPanel.activeSelf == false && gameManagerScript.isEndCountDown == true)
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+            if (gameManagerScript.quitPanel.activeSelf == false && gameManagerScript.isEndCountDown == true)
+            {
+                isUpdate = true;
+            }
+        }
+        else if(SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            if(tutorialManagerScript.quitPanel.activeSelf == false)
+            {
+                isUpdate = true;
+            }
+        }
+        if (isUpdate == true)
         {
             //スタミナが減少状態ではないならorスタミナが無限なら
             if (isStamina == false || isStaminaLimit == true)
@@ -172,9 +194,24 @@ public class Player : MonoBehaviour
     //移動関連処理
     void Move()
     {
-        if (gameManagerScript.quitPanel.activeSelf == false 
-            && GameObject.Find("Password").GetComponent<Canvas>().enabled == false 
-            && gameManagerScript.isEndCountDown == true)
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+            if (gameManagerScript.quitPanel.activeSelf == false
+                && GameObject.Find("Password").GetComponent<Canvas>().enabled == false
+                && gameManagerScript.isEndCountDown == true)
+            {
+                isMove = true;
+            }
+        }
+        else if(SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            if (tutorialManagerScript.quitPanel.activeSelf == false
+                && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
+            {
+                isMove = true;
+            }
+        }
+        if(isMove == true)
         {
             //移動キーの入力を取得
             //縦

@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿//チュートリアルシーンの管理クラス
+//Autor:寺下琉生
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class testTutorial : MonoBehaviour
+public class TutorialManager : Manager
 {
     //進行状況の列挙
     private enum Phase
@@ -49,6 +52,8 @@ public class testTutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartManager();
+
         //プレイヤー情報取得
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -102,6 +107,8 @@ public class testTutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateManager();
+
         //phaseの更新
         ChangePhase(curPhase);
 

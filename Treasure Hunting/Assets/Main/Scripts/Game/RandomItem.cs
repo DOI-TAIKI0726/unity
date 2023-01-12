@@ -13,6 +13,7 @@ public class RandomItem : MonoBehaviour
     private float itemcount = 0.0f;          //アイテムの表示時間
     private bool roulette = false;           //ルーレット中かどうか
     private Image Img;                       //バフデバフのImage
+    private bool isRandom = false;
 
     //バフのスプライト
     [SerializeField]
@@ -36,11 +37,10 @@ public class RandomItem : MonoBehaviour
     //デバフのライト
     [SerializeField]
     private GameObject debuffLight;
-    //デバフ中にプレイヤーを照らすライト
-    //[SerializeField]
-    //private GameObject playerLight;
     //GameManager
     private GameManager gameManagerScript;
+    //TutorialManager
+    private TutorialManager tutorialManagerScript;
     //パスワードパネル
     private GameObject pwPanel;
     //移動系バフの時間
@@ -63,38 +63,40 @@ public class RandomItem : MonoBehaviour
         //プレイヤーの情報を取得
         player = GameObject.Find("Player");
 
-        //ゲームマネージャー
-        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            //ゲームマネージャー
+            gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            //チュートリアルマネージャー
+            tutorialManagerScript = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        }
 
         //パスワードパネル
         pwPanel = GameObject.Find("Password");
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        //確認用
-        //右シフトを押したらアイテムルーレット
-        //if (Input.GetKeyDown(KeyCode.RightShift))
-        //{
-        //    //ルーレット中じゃない場合
-        //    if (!roulette&&!Img.enabled)
-        //    {
-        //        //ルーレット中に切り替える
-        //        roulette = true;
-
-        //        //アイテムの表示
-        //        Img.enabled = true;
-
-        //        //ルーレットの始まりはbuff[0]始まり固定
-        //        Img.sprite = buff[0];
-
-        //        //アイテムが決まるまでの時間を設定
-        //        count = 2.0f;
-        //    }
-        //}
-
-        if (!gameManagerScript.quitPanel.activeSelf && !pwPanel.GetComponent<Canvas>().enabled)
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            if (!gameManagerScript.quitPanel.activeSelf
+                && !pwPanel.GetComponent<Canvas>().enabled)
+            {
+                isRandom = true;
+            }
+        }
+        else if (SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            if (!tutorialManagerScript.quitPanel.activeSelf
+                && !pwPanel.GetComponent<Canvas>().enabled)
+            {
+                isRandom = true;
+            }
+        }
+        if (isRandom == true)
         {
             //ルーレット中
             if (roulette)

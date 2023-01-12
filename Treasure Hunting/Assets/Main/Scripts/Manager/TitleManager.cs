@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TitleManager : QuitPanel
+public class TitleManager : Manager
 {
     //タイトルロゴの移動速度
     [SerializeField]

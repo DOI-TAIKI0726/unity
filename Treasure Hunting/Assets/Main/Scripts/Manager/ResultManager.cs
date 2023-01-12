@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ResultManager : MonoBehaviour
+public class ResultManager : Manager
 {
     //DDOLスクリプト
     private DDOL dDOLScript;
