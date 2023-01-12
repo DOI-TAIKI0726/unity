@@ -22,7 +22,7 @@ public class MagicCircleController : MonoBehaviour
     void Start()
     {
         //魔法陣を見つけてくる
-        ObjMagicCircle = GameObject.Find("MagicCircle");
+        ObjMagicCircle = transform.GetChild(0).gameObject;
         //renderにぶち込む
         render = ObjMagicCircle.GetComponent<SpriteRenderer>();
         //魔法陣は最初アクティブに
@@ -62,7 +62,7 @@ public class MagicCircleController : MonoBehaviour
     }
 
     //踏み続けている間
-    void OnCollisionStay(Collision other)
+    void OnTriggerStay(Collider other)
     {
         //踏んでいる
         SwitchStepOn = true;
@@ -71,11 +71,11 @@ public class MagicCircleController : MonoBehaviour
     }
 
     //踏んでいない間
-    void OnCollisionExit(Collision other)
+    void OnTriggerExit(Collider other)
     {
         //踏んでいない
         SwitchStepOn = false;
-       
+        StepOnTime = 0f;
     }
 
 }
