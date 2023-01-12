@@ -1,4 +1,4 @@
-﻿//リザルトシーンの管理クラス
+﻿//リザルトシーン管理クラス
 //Author:寺下琉生
 
 using System.Collections;

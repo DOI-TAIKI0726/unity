@@ -39,6 +39,7 @@ public class timer : MonoBehaviour
         textColor = new Color(1, 0, 0, 1);
 
         audioSource = this.GetComponent<AudioSource>();
+
         if (SceneManager.GetActiveScene().name == "Game")
         {
             gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();

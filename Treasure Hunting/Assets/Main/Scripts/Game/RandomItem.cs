@@ -80,6 +80,7 @@ public class RandomItem : MonoBehaviour
 
     void FixedUpdate()
     {
+        //各シーンのManagerから参照
         if (SceneManager.GetActiveScene().name == "Game")
         {
             if (!gameManagerScript.quitPanel.activeSelf

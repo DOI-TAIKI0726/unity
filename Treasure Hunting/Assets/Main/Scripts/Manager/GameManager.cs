@@ -1,4 +1,4 @@
-﻿//ゲームシーンの管理クラス
+﻿//ゲームシーン管理クラス
 //Author:寺下琉生
 
 using System.Collections;

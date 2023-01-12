@@ -1,4 +1,4 @@
-﻿//各マネージャーの親クラス
+﻿//各マネージャー親クラス
 //Autor:寺下琉生
 
 using System.Collections;

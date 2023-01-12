@@ -106,6 +106,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //各シーンのManagerから参照
         if(SceneManager.GetActiveScene().name == "Game")
         {
             if (gameManagerScript.quitPanel.activeSelf == false && gameManagerScript.isEndCountDown == true)

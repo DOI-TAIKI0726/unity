@@ -1,4 +1,4 @@
-﻿//タイトルシーンの管理クラス
+﻿//タイトルシーン管理クラス
 //Autor:寺下琉生
 
 using System.Collections;

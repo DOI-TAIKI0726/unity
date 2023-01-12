@@ -73,6 +73,7 @@ public class Axis : MonoBehaviour
         RaycastHit hit;
 
         //QuitPanelが非アクティブでパスワードパネルのキャンバスが非アクティブなら
+        //各シーンのManagerから参照
         if(SceneManager.GetActiveScene().name == "Game")
         {
         if (gameManagerScript.quitPanel.activeSelf == false
