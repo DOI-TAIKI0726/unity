@@ -30,14 +30,13 @@ public class GameManager : Manager
 
     //カウントダウンが終わったかどうか
     [System.NonSerialized]
-    public bool isEndCountDown = true;
+    public bool isEndCountDown = false;
 
     void Start()
     {
         StartManager();
          
         itemCheckScript = this.GetComponent<ItemCheck>();
-        isEndCountDown = false;
         dDOLScript = GameObject.Find("DDOL").GetComponent<DDOL>();
         countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
         timeUpText = GameObject.Find("TimeUpText").GetComponent<Text>();

@@ -67,8 +67,7 @@ public class timer : MonoBehaviour
                 }
                 else
                 {
-                    if (gameManagerScript.quitPanel.activeSelf == false
-                        || tutorialManagerScript.quitPanel.activeSelf == false)
+                    if (gameManagerScript.quitPanel.activeSelf == false)
                     {
 
                         //0秒以下になったら分を1引く

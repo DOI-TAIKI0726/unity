@@ -63,17 +63,18 @@ public class Player : MonoBehaviour
     private bool isJumpAnimetion = false;
     //Updateを通っていいか
     private bool isUpdate = false;
+    //ドアを開けられるかどうか
+    private bool isOpenDoor = false;
     //メインで使っているライト
     private Light MainLight;
     //PlayerHeadのライト
     private Light PlayerHeadLight;
+    //移動可能か
+    private bool isMove = false;
 
     //キーが入手されているか
     [System.NonSerialized]
     public bool isKeyuse = false;
-    //移動可能か
-    [System.NonSerialized]
-    public bool isMove = true;
 
     void Start()
     {
@@ -355,8 +356,16 @@ public class Player : MonoBehaviour
             //アイテムの削除
             Destroy(collision.gameObject);
 
-            //収集したアイテム数の加算
-            GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
+            if(SceneManager.GetActiveScene().name == "Game")
+            {
+                //収集したアイテム数の加算
+                GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherAdd();
+            }
+            if(SceneManager.GetActiveScene().name == "Tutorial")
+            {
+                //収集したアイテム数の加算
+                GameObject.Find("TutorialManager").GetComponent<ItemCheck>().GatherAdd();
+            }
         }
     }
 
@@ -367,8 +376,19 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                if(SceneManager.GetActiveScene().name == "Game")
+                {
+                    if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3 && isKeyuse == false)
+                    {
+                        isOpenDoor = true;
+                    }
+                }
+                if(SceneManager.GetActiveScene().name == "Tutorial")
+                {
+                    isOpenDoor = true;
+                }
                 //Keyが3つ揃っていたら
-                if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3 && isKeyuse == false)
+                if(isOpenDoor == true)
                 {
                     //ドアを開く
                     collision.transform.gameObject.GetComponent<DoorOpen>().DoorMove();
