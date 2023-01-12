@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
     //移動関連処理
     void Move()
     {
-        if(SceneManager.GetActiveScene().name == "Game")
+        if (SceneManager.GetActiveScene().name == "Game")
         {
             if (gameManagerScript.quitPanel.activeSelf == false
                 && GameObject.Find("Password").GetComponent<Canvas>().enabled == false
@@ -204,6 +204,11 @@ public class Player : MonoBehaviour
             {
                 isMove = true;
             }
+            else
+            {
+                isMove = false;
+            }
+          
         }
         else if(SceneManager.GetActiveScene().name == "Tutorial")
         {
@@ -211,6 +216,10 @@ public class Player : MonoBehaviour
                 && GameObject.Find("Password").GetComponent<Canvas>().enabled == false)
             {
                 isMove = true;
+            }
+            else
+            {
+                isMove = false;
             }
         }
         if(isMove == true)
