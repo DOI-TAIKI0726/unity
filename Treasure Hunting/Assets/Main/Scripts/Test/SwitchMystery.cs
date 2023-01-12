@@ -27,7 +27,7 @@ public class SwitchMystery : MonoBehaviour
     void Update()
     {
         //レンダラーの更新
-        render.material.color = new Color(render.material.color.r, g, b, render.material.color.a);
+       // render.material.color = new Color(render.material.color.r, g, b, render.material.color.a);
     }
 
     //接地判定
