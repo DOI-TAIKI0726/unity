@@ -380,6 +380,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
         //タグがDoorのオブジェクトに当たったら
         if (collision.gameObject.tag == "Door")
         {
