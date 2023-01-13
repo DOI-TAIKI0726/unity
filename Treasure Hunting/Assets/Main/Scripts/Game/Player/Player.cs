@@ -114,12 +114,20 @@ public class Player : MonoBehaviour
             {
                 isUpdate = true;
             }
+            else
+            {
+                isUpdate = false;
+            }
         }
         else if(SceneManager.GetActiveScene().name == "Tutorial")
         {
             if(tutorialManagerScript.quitPanel.activeSelf == false)
             {
                 isUpdate = true;
+            }
+            else
+            {
+                isUpdate = false;
             }
         }
         if (isUpdate == true)
@@ -207,6 +215,11 @@ public class Player : MonoBehaviour
             else
             {
                 isMove = false;
+
+                if (GameObject.Find("Password").GetComponent<Canvas>().enabled == true)
+                {
+                    isStamina = false;
+                }
             }
           
         }
@@ -220,6 +233,11 @@ public class Player : MonoBehaviour
             else
             {
                 isMove = false;
+
+                if (GameObject.Find("Password").GetComponent<Canvas>().enabled == true)
+                {
+                    isStamina = false;
+                }
             }
         }
         if(isMove == true)
