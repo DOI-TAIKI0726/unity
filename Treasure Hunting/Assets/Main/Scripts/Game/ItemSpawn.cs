@@ -14,7 +14,8 @@ public class ItemSpawn : MonoBehaviour
     //子にItemBoxが無いときに進めるカウント
     private float noItemTime;
     //
-    private bool isNoChild = false;
+    [System.NonSerialized]
+    public bool isNoChild = false;
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class ItemSpawn : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    /*void OnTriggerEnter(Collider collider)
     {
         if(collider.gameObject.tag == "Player")
         {
@@ -45,5 +46,5 @@ public class ItemSpawn : MonoBehaviour
             Destroy(child);
             isNoChild = true;
         }
-    }
+    }*/
 }
