@@ -406,7 +406,7 @@ public class Player : MonoBehaviour
             {
                 if(SceneManager.GetActiveScene().name == "Game")
                 {
-                    if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3 && isKeyuse == false)
+                    if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3)
                     {
                         isOpenDoor = true;
                     }
@@ -416,10 +416,10 @@ public class Player : MonoBehaviour
                     isOpenDoor = true;
                 }
                 //Keyが3つ揃っていたら
-                if(isOpenDoor == true)
+                if(isOpenDoor == true && !isKeyuse)
                 {
                     //ドアを開く
-                    collision.transform.gameObject.GetComponent<DoorOpen>().DoorMove();
+                    collision.transform.gameObject.GetComponent<DoorOpen>().CloseDoor();
                     isKeyuse = true;
                 }
             }
