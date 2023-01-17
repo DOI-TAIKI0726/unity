@@ -26,18 +26,32 @@ public class RotateSwitch : MonoBehaviour
         player_obj = GameObject.FindGameObjectWithTag("Player");
 
         //回転するobjの情報はスイッチobjの子から取得 
-        rotate_obj = transform.GetChild(0).gameObject;
-
+        //rotate_obj = transform.GetChild(0).gameObject;
+        GetChildren(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    void GetChildren(GameObject obj)
     {
-        
+        Transform children = obj.GetComponentInChildren<Transform>();
+        //子要素がいなければ終了
+        if (children.childCount == 0)
+        {
+            return;
+        }
+        foreach (Transform ob in children)
+        {
+            //RotateObjを検索
+            if (ob.name == "RotateObj")
+              {
+                  //RotateObj取得
+                  rotate_obj = ob.transform.gameObject;
+               }
+        }
     }
 
-    //徐々に回転させる処理
-    IEnumerator Rotate()
+
+        //徐々に回転させる処理
+        IEnumerator Rotate()
     {
         //回転速度
         float speed = 1f;
