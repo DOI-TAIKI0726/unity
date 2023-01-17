@@ -55,12 +55,8 @@ public class Player : MonoBehaviour
     private bool isStamina = false;
     //スタミナが減った後、最大まで回復したか
     private bool isMaxStamina = false;
-    //地面についているか
-    private bool isGround = true;
     //Runアニメーション中かどうか
     private bool isRunAnimetion = false;
-    //Jumpアニメーション中かどうか
-    private bool isJumpAnimetion = false;
     //Updateを通っていいか
     private bool isUpdate = false;
     //ドアを開けられるかどうか
@@ -344,12 +340,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //タグがGroundのオブジェクトに当たったら
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGround = true;
-        }
-
         //タグがTreasureのオブジェクトに当たったら
         if(collision.gameObject.tag == "Treasure")
         {
