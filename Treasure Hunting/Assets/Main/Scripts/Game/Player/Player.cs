@@ -110,12 +110,20 @@ public class Player : MonoBehaviour
             {
                 isUpdate = true;
             }
+            else
+            {
+                isUpdate = false;
+            }
         }
         else if(SceneManager.GetActiveScene().name == "Tutorial")
         {
             if(tutorialManagerScript.quitPanel.activeSelf == false)
             {
                 isUpdate = true;
+            }
+            else
+            {
+                isUpdate = false;
             }
         }
         if (isUpdate == true)
@@ -203,6 +211,11 @@ public class Player : MonoBehaviour
             else
             {
                 isMove = false;
+
+                if (GameObject.Find("Password").GetComponent<Canvas>().enabled == true)
+                {
+                    isStamina = false;
+                }
             }
           
         }
@@ -216,6 +229,11 @@ public class Player : MonoBehaviour
             else
             {
                 isMove = false;
+
+                if (GameObject.Find("Password").GetComponent<Canvas>().enabled == true)
+                {
+                    isStamina = false;
+                }
             }
         }
         if(isMove == true)
@@ -370,6 +388,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
         //タグがDoorのオブジェクトに当たったら
         if (collision.gameObject.tag == "Door")
         {
@@ -377,7 +396,7 @@ public class Player : MonoBehaviour
             {
                 if(SceneManager.GetActiveScene().name == "Game")
                 {
-                    if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3 && isKeyuse == false)
+                    if (GameObject.Find("GameManager").GetComponent<ItemCheck>().GatherCount == 3)
                     {
                         isOpenDoor = true;
                     }
@@ -387,10 +406,10 @@ public class Player : MonoBehaviour
                     isOpenDoor = true;
                 }
                 //Keyが3つ揃っていたら
-                if(isOpenDoor == true)
+                if(isOpenDoor == true && !isKeyuse)
                 {
                     //ドアを開く
-                    collision.transform.gameObject.GetComponent<DoorOpen>().DoorMove();
+                    collision.transform.gameObject.GetComponent<DoorOpen>().CloseDoor();
                     isKeyuse = true;
                 }
             }

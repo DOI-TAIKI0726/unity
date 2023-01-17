@@ -5,7 +5,8 @@ using UnityEngine;
 //正解のスイッチにアタッチする
 public class SwitchMystery : MonoBehaviour
 {
-    private GameObject door;    //ドアのオブジェクト
+    private GameObject doorR;    //ドアのオブジェクト
+    private GameObject doorL;    //ドアのオブジェクト
     private float g, b;         //マテリアルの値
     private Renderer render;    //レンダラー
     private bool open = false;  //ドアが開いているか
@@ -16,7 +17,8 @@ public class SwitchMystery : MonoBehaviour
         //レンダラーの情報の取得
         render = GetComponent<Renderer>();
         //ドアのオブジェクトの情報取得
-        door = GameObject.Find("CheckObj/door");
+        doorR = GameObject.Find("CheckObj/door/R");
+        doorL = GameObject.Find("CheckObj/door/L");
 
         //g,bの値をレンダラーから取得
         g = render.material.color.g;
@@ -44,7 +46,8 @@ public class SwitchMystery : MonoBehaviour
             if (!open)
             {
                 //ドアを開ける
-                door.GetComponent<DoorOpen>().DoorMove();
+                doorL.GetComponent<DoorOpen>().CloseDoor();
+                doorR.GetComponent<DoorOpen>().DoorMove();
             }
 
             //ドアを開いている状態
@@ -65,7 +68,8 @@ public class SwitchMystery : MonoBehaviour
             if (open)
             {
                 //ドアを閉める
-                door.GetComponent<DoorOpen>().CloseDoor();
+                doorL.GetComponent<DoorOpen>().DoorMove();
+                doorR.GetComponent<DoorOpen>().CloseDoor();
             }
 
             //ドアが閉まった状態

@@ -17,8 +17,10 @@ public class PasswordPanel : MonoBehaviour
     private int pwMax;
     //パスワードのテキスト
     private Text[] pwText;
-    //ドアのオブジェクト
-    private GameObject door;
+    //ドアのオブジェクトR
+    private GameObject doorR;
+    //ドアのオブジェクトL
+    private GameObject doorL;
     //クリアしたか
     [System.NonSerialized]
     public bool clear = false;
@@ -31,7 +33,8 @@ public class PasswordPanel : MonoBehaviour
         //入力されるデータ数の取得
         pwData = new int[Answer.Length];
         //ドアの情報を取得
-        door = GameObject.Find("PwDoor");
+        doorR = GameObject.Find("PwDoor/R");
+        doorL = GameObject.Find("PwDoor/L");
         //プレイヤーの情報を取得
         Player = GameObject.Find("Player");
         //pwTextのデータ数の設定
@@ -91,7 +94,8 @@ public class PasswordPanel : MonoBehaviour
             //パスワードのCanvasを非表示にする
             GameObject.Find("Password").GetComponent<Canvas>().enabled = false;
             //ドアを開く
-            door.GetComponent<DoorOpen>().DoorMove();
+            doorR.GetComponent<DoorOpen>().DoorMove();
+            doorL.GetComponent<DoorOpen>().CloseDoor();
             //クリアした状態にする
             clear = true;
         }

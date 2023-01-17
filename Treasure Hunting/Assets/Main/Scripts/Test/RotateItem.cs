@@ -28,4 +28,18 @@ public class RotateItem : MonoBehaviour
             gameObject.transform.Rotate(new Vector3(rotX, rotY, rotZ) * Time.deltaTime);
         }
     }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.tag=="Player")
+        {
+            GameObject parent;
+            //親のオブジェクトを取得
+            parent = transform.parent.gameObject;
+            //子を持ってない状態にする
+            parent.GetComponent<ItemSpawn>().isNoChild = true;
+            //削除
+            Destroy(this.gameObject);
+        }
+    }
 }
