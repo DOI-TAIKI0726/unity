@@ -119,7 +119,7 @@ public class Axis : MonoBehaviour
             }
             if(myCamera.transform.localPosition.z >= cameraPos.z)
             {
-                myCamera.transform.localPosition -= new Vector3(0.0f, 0.0f, 0.01f);
+                myCamera.transform.localPosition -= new Vector3(0.0f, 0.0f, 0.015f);
             }
         }
 
