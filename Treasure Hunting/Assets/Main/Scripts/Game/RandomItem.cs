@@ -6,15 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class RandomItem : MonoBehaviour
 {
-    private　float rnd = 0.0f;               //乱数
-    private int type = 0;                    //バフデバフの種類
-    private float data = 0.1f;               //ルーレット中の切り替えの間隔
-    private float count = 0.0f;              //アイテムが決まるまでの時間
-    private float itemcount = 0.0f;          //アイテムの表示時間
-    private bool roulette = false;           //ルーレット中かどうか
-    private Image Img;                       //バフデバフのImage
-    private bool isRandom = false;
-
     //バフのスプライト
     [SerializeField]
     private Sprite[] buff = null;
@@ -30,19 +21,9 @@ public class RandomItem : MonoBehaviour
     //サーチのオブジェクト
     [SerializeField]
     private GameObject Serch;
-    //プレイヤー
-    private GameObject player;
-    //バフの時間
-    private float buffTime = 5.0f;
     //デバフのライト
     [SerializeField]
     private GameObject debuffLight;
-    //GameManager
-    private GameManager gameManagerScript;
-    //TutorialManager
-    private TutorialManager tutorialManagerScript;
-    //パスワードパネル
-    private GameObject pwPanel;
     //移動系バフの時間
     [SerializeField]
     private float movebuffTime = 5.0f;
@@ -52,6 +33,41 @@ public class RandomItem : MonoBehaviour
     //スタミナ系のバフの時間
     [SerializeField]
     private float staminabuffTime = 10.0f;
+    //ルーレット回転音
+    [SerializeField]
+    private AudioClip SE_0;
+    //決定音
+    [SerializeField]
+    private AudioClip SE_1;
+    //バフ音
+    [SerializeField]
+    private AudioClip SE_2;
+    //デバフ音
+    [SerializeField]
+    private AudioClip SE_3;
+
+    //プレイヤー
+    private GameObject player;
+    //バフの時間
+    private float buffTime = 5.0f;
+    //GameManager
+    private GameManager gameManagerScript;
+    //TutorialManager
+    private TutorialManager tutorialManagerScript;
+    //パスワードパネル
+    private GameObject pwPanel;
+    private float rnd = 0.0f;               //乱数
+    private int type = 0;                    //バフデバフの種類
+    private float data = 0.1f;               //ルーレット中の切り替えの間隔
+    private float count = 0.0f;              //アイテムが決まるまでの時間
+    private float itemcount = 0.0f;          //アイテムの表示時間
+    private bool roulette = false;           //ルーレット中かどうか
+    private Image Img;                       //バフデバフのImage
+    private bool isRandom = false;
+    //AudioSource
+    private AudioSource audioSource;
+    //ルーレット用
+    private bool isRoulette = false;
 
 
     // Start is called before the first frame update
@@ -76,6 +92,8 @@ public class RandomItem : MonoBehaviour
 
         //パスワードパネル
         pwPanel = GameObject.Find("Password");
+        //オーディオソース
+        audioSource = GameObject.Find("SE_AudioSource").GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -104,6 +122,11 @@ public class RandomItem : MonoBehaviour
             {
                 if (count > 0.0f)
                 {
+                    if (isRoulette == false)
+                    {
+                        audioSource.PlayOneShot(SE_0);
+                        isRoulette = true;
+                    }
                     //時間経過
                     count -= Time.deltaTime;
 
@@ -145,6 +168,9 @@ public class RandomItem : MonoBehaviour
                 }
                 else
                 {
+                    isRoulette = false;
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(SE_1);
                     //ルーレット終了
                     roulette = false;
                     //乱数の設定
@@ -156,11 +182,13 @@ public class RandomItem : MonoBehaviour
                     //buffratioの値によって確率が変わる
                     if (rnd >= 0.0f && rnd <= max * buffratio)
                     {
+                        audioSource.PlayOneShot(SE_2);
                         Buff();
                     }
                     //デバフ
                     else
                     {
+                        audioSource.PlayOneShot(SE_3);
                         Debuff();
                     }
 

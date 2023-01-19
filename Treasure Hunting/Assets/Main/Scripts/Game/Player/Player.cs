@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    //Item取得音
+    [SerializeField]
+    private AudioClip SE_0;
+
     //歩く速度
     private float walkSpeed = 5.0f;
     //走る速度
@@ -67,6 +71,8 @@ public class Player : MonoBehaviour
     private Light PlayerHeadLight;
     //移動可能か
     private bool isMove = false;
+    //オーディオソース
+    private AudioSource audioSource;
 
     //キーが入手されているか
     [System.NonSerialized]
@@ -80,6 +86,7 @@ public class Player : MonoBehaviour
         rigidBody = GameObject.Find("Player").GetComponent<Rigidbody>();
         maxStamina = GameObject.Find("stamina_gage").GetComponent<RectTransform>().sizeDelta.x;
         nowStamina = maxStamina;
+        audioSource = GameObject.Find("SE_AudioSource").GetComponent<AudioSource>();
 
         //ゲームシーンのみで通す
         if (SceneManager.GetActiveScene().name == "Game")
@@ -361,6 +368,7 @@ public class Player : MonoBehaviour
         //タグがTreasureのオブジェクトに当たったら
         if(collision.gameObject.tag == "Treasure")
         {
+            audioSource.PlayOneShot(SE_0);
             //当たったオブジェクトの削除
             Destroy(collision.gameObject);
             //入手した宝の数に加算する
@@ -370,6 +378,7 @@ public class Player : MonoBehaviour
         //タグがGatherだった場合
         if (collision.gameObject.tag == "Gather")
         {
+            audioSource.PlayOneShot(SE_0);
             //アイテムの削除
             Destroy(collision.gameObject);
 
@@ -388,7 +397,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         //タグがDoorのオブジェクトに当たったら
         if (collision.gameObject.tag == "Door")
         {
