@@ -469,6 +469,7 @@ MonoBehaviour:
   moveTitlelogoSpeed: 0.5
   stopTitlelogoPosY: 100
   fadeSpeed: 0.002
+  SE_0: {fileID: 8300000, guid: 344a9948d1f72d947a9e5ba2281755cd, type: 3}
 --- !u!4 &1073545297
 Transform:
   m_ObjectHideFlags: 0

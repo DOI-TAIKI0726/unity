@@ -18,7 +18,10 @@ public class TitleManager : Manager
     //フェードする速度
     [SerializeField]
     private float fadeSpeed = 0.01f;
-
+    //タイトルからチュートリアルに遷移する時の音
+    [SerializeField]
+    private AudioClip SE_0;
+    
     //背景
     private GameObject background;
     //タイトルロゴ
@@ -27,7 +30,8 @@ public class TitleManager : Manager
     private GameObject pak;
     //FadePanel
     private GameObject fadePanel;
-
+    //AudioSource
+    private AudioSource audioSource;
     //タイトルロゴの初期位置
     private float defaultPos = 700.0f;
     //FadepanelのImage
@@ -43,13 +47,14 @@ public class TitleManager : Manager
 
     void Start()
     {
+        StartQuitPanel();
+
         //各要素にアクセス
         background = GameObject.Find("Background");
         titlelogo = GameObject.Find("Titlelogo");
         pak = GameObject.Find("press any key");
         fadePanel = GameObject.Find("FadePanel");
-        StartQuitPanel();
-
+        audioSource = this.GetComponent<AudioSource>();
         //press any keyを非アクティブにしておく
         pak.SetActive(false);
         //QuitPanelを非アクティブにしておく
@@ -126,12 +131,13 @@ public class TitleManager : Manager
             //なにかキーを押したら
             if (Input.anyKey)
             {
-                //押したキーescapeキーじゃないなら
-                if (Input.GetKey(KeyCode.Escape) == false)
+                //マウスの左右クリックのどちらも押されていないなら
+                if (Input.GetMouseButton(0) == false && Input.GetMouseButton(1) == false)
                 {
-                    //マウスの左右クリックのどちらも押されていないなら
-                    if (Input.GetMouseButton(0) == false && Input.GetMouseButton(1) == false)
+                    if (isInputKey == false)
                     {
+                        audioSource.Stop();
+                        audioSource.PlayOneShot(SE_0);
                         isInputKey = true;
                     }
                 }

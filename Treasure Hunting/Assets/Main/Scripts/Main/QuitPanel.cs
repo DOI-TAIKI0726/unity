@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 //=======================
@@ -29,23 +30,26 @@ public class QuitPanel : MonoBehaviour
     //QuitPanel表示非表示切り替え
     protected void SwitchQuitPanel()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (SceneManager.GetActiveScene().name != "Title")
         {
-            if (quitPanel.activeSelf == false)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                //QuitPanelをアクティブにする
-                quitPanel.SetActive(true);
+                if (quitPanel.activeSelf == false)
+                {
+                    //QuitPanelをアクティブにする
+                    quitPanel.SetActive(true);
 
-                return;
-            }
+                    return;
+                }
 
-            //QuitPanelがアクティブなら
-            if (quitPanel.activeSelf == true)
-            {
-                //QuitPanelを非アクティブにする
-                quitPanel.SetActive(false);
+                //QuitPanelがアクティブなら
+                if (quitPanel.activeSelf == true)
+                {
+                    //QuitPanelを非アクティブにする
+                    quitPanel.SetActive(false);
 
-                return;
+                    return;
+                }
             }
         }
     }
